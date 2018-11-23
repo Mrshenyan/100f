@@ -79,6 +79,7 @@ export default class MainScene extends cc.Component {
                         this.Player.y-=1;
                         Global.instance.CollisionFlag = false;
                         FHArray[i].isHold = false;
+                        return;
                     }
                 }
             }
@@ -255,7 +256,7 @@ export default class MainScene extends cc.Component {
                 }),cc.callFunc(function(){
                     // let Anistate = Ani.play("run");
                     // Anistate.repeatCount = 10;
-                    self.Player.runAction(cc.moveBy(0.665,-15,0));
+                    self.Player.runAction(cc.moveBy(0.665,-30,0));
                 }))
                 self.Player.runAction(spawn);
                 
@@ -271,7 +272,7 @@ export default class MainScene extends cc.Component {
                 let spawn = cc.spawn(cc.callFunc(function(){
                     // let Anistate = Ani.play("run");
                     // Anistate.repeatCount = 10;
-                    self.Player.runAction(cc.moveBy(0.665,+10,0));
+                    self.Player.runAction(cc.moveBy(0.665,30,0));
                 }),cc.callFunc(function(){
                     let Anistate = Ani.play("runR");
                     Anistate.speed = 2;
