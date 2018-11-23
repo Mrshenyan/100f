@@ -1,0 +1,70 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "tanhuang",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.23333333333333334,
+  "sample": 60,
+  "speed": 0.7,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": []
+      }
+    },
+    "props": {
+      "scaleX": [
+        {
+          "frame": 0,
+          "value": 1
+        }
+      ],
+      "scaleY": [
+        {
+          "frame": 0.05,
+          "value": 0.9
+        },
+        {
+          "frame": 0.15,
+          "value": 1.15
+        },
+        {
+          "frame": 0.23333333333333334,
+          "value": 1
+        }
+      ],
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            0,
+            -7
+          ]
+        },
+        {
+          "frame": 0.05,
+          "value": [
+            0,
+            -7
+          ]
+        },
+        {
+          "frame": 0.15,
+          "value": [
+            0,
+            -3
+          ]
+        },
+        {
+          "frame": 0.23333333333333334,
+          "value": [
+            0,
+            -6
+          ]
+        }
+      ]
+    }
+  },
+  "events": []
+}

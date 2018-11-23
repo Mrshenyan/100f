@@ -1,0 +1,583 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "lvdai",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 1.3333333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "paths": {
+      "kuai": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -103,
+                25.7
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                -87,
+                25.7
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                -71,
+                25.7
+              ]
+            }
+          ],
+          "opacity": [
+            {
+              "frame": 0.6666666666666666,
+              "value": 255
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": 255
+            }
+          ]
+        }
+      },
+      "kuai14": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                90,
+                -15.5
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                74,
+                -15.5
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                58,
+                -15.5
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai13": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                59,
+                -15.5
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                43,
+                -15.5
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                27,
+                -15.5
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai12": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                26,
+                -15.5
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                10,
+                -15.5
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                -6,
+                -15.5
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai11": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -6,
+                -15.5
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                -22,
+                -15.5
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                -38,
+                -15.5
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai10": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -38,
+                -15.5
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                -54,
+                -15.5
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                -70,
+                -15.5
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai9": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -70,
+                -15.5
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                -86,
+                -15.5
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                -102,
+                -15.5
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai8": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                122.8,
+                -15.5
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                106.8,
+                -15.5
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                90.8,
+                -15.5
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai6": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                89,
+                25.7
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                105,
+                25.7
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                121,
+                25.7
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai5": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                57,
+                25.7
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                73,
+                25.7
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                89,
+                25.7
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai4": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                25,
+                25.7
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                41,
+                25.7
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                57,
+                25.7
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai3": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -7,
+                25.7
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                9,
+                25.7
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                25,
+                25.7
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      },
+      "kuai2": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -39,
+                25.7
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                -23,
+                25.7
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                -7,
+                25.7
+              ]
+            }
+          ],
+          "opacity": [
+            {
+              "frame": 0.6666666666666666,
+              "value": 255
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": 255
+            }
+          ]
+        }
+      },
+      "kuai1": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -71,
+                25.7
+              ]
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": [
+                -55,
+                25.7
+              ]
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": [
+                -39,
+                25.7
+              ]
+            }
+          ],
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 255
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": 255
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": 255
+            }
+          ]
+        }
+      },
+      "zuo": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "rotation": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": 360
+            }
+          ],
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -102,
+                5
+              ]
+            }
+          ]
+        }
+      },
+      "you": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "rotation": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 1.3333333333333333,
+              "value": 360
+            }
+          ],
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                123,
+                5
+              ]
+            }
+          ]
+        }
+      },
+      "di": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                10.4,
+                0
+              ]
+            }
+          ],
+          "opacity": []
+        }
+      }
+    }
+  },
+  "events": []
+}
