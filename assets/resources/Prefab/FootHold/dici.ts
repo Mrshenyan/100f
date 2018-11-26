@@ -17,6 +17,10 @@ export default class NewClass extends cc.Component {
      */
     @property(Boolean)
     public isHold = false;
+
+    @property(Number)
+    public NodeH:number = 80;
+
     private main:MainScene = null;
     /**
      * 落脚点对应动画
@@ -27,7 +31,7 @@ export default class NewClass extends cc.Component {
     onLoad () {
         this.node.y = -512;
         this.node.x = cc.randomMinus1To1()*140;
-        // this.Ani = this.node.getComponent(cc.Animation);
+        this.Ani = this.node.getComponent(cc.Animation);
     }
 
     start () {
@@ -44,8 +48,6 @@ export default class NewClass extends cc.Component {
         }
     }
 
-
-
     /**
      * 初始化函数
      * @param main 主场景
@@ -61,11 +63,38 @@ export default class NewClass extends cc.Component {
     }
 
     onCollisionEnter(other,self){
+        let rootself = this;//当前根节点
+        if(other.node.x<(-210)){
+            other.node.x = -210;
+        }
+        if(other.node.x>210){
+            other.node.x = 210;
+        }
+        this.AniState = this.Ani.play("dici");
         if(!Global.instance.CollisionFlag){
             console.log(other);
             console.log("4检测到碰撞！！！");
             console.log(self);
-            // other.node.y = this.node.y+50;
+            let spawn
+            try {
+                spawn = cc.spawn(cc.callFunc(function(){
+                    if(rootself.Ani==null){
+                        self.node.isHold = false;
+                        Global.instance.CollisionFlag = false;
+                        return;
+                    }
+                    rootself.AniState = rootself.Ani.play("dici");
+                    rootself.AniState.speed = 0.5;
+                }),cc.callFunc(function(){
+                }))
+                rootself.scheduleOnce(function(){
+                    rootself.node.isHold = false;
+                    Global.instance.CollisionFlag = false;
+                    rootself.Ani.stop();
+                },0.512);
+            } catch (error) {
+                
+            }
             self.node.isHold = true;
             Global.instance.CollisionFlag = true;
         }

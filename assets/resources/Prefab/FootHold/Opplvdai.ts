@@ -15,6 +15,10 @@ export default class NewClass extends cc.Component {
      */
     @property(Boolean)
     public isHold = false;
+
+    @property(Number)
+    public NodeH:number = 69;
+
     private main:MainScene = null;
     /**
      * 落脚点对应动画

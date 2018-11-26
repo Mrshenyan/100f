@@ -15,7 +15,13 @@ export default class Playcontroler extends cc.Component {
 
     update (dt) {
         if(!Global.instance.CollisionFlag){
-            this.node.y -= 1;
+            this.node.y -= Global.instance.InitSpeed;
+        }
+        if(this.node.x<(-210)){
+            this.node.x = -210;
+        }
+        if(this.node.x>210){
+            this.node.x = 210;
         }
     }
 }

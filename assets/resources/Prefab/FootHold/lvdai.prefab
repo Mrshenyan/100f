@@ -77,13 +77,10 @@
       },
       {
         "__id__": 55
-      },
-      {
-        "__id__": 56
       }
     ],
     "_prefab": {
-      "__id__": 57
+      "__id__": 56
     },
     "_id": "",
     "_opacity": 255,
@@ -102,8 +99,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 40,
-      "height": 36
+      "width": 233,
+      "height": 60
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -156,7 +153,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 266,
+      "width": 240,
       "height": 59
     },
     "_rotationX": 0,
@@ -187,7 +184,7 @@
       "__uuid__": "28011c34-005d-48a3-b45b-06280c901c3f"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -221,7 +218,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 6
@@ -767,7 +764,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 24
@@ -858,7 +855,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 27
@@ -949,7 +946,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 30
@@ -1530,7 +1527,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -103.3,
+      "x": -90.8,
       "y": 5
     },
     "_skewX": 0,
@@ -1621,7 +1618,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 120.8,
+      "x": 91.2,
       "y": 5
     },
     "_skewX": 0,
@@ -1667,32 +1664,6 @@
     },
     "fileId": "b2QfDLBDBOT6F2eBbBnmCC",
     "sync": false
-  },
-  {
-    "__type__": "cc.Sprite",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "8cdb44ac-a3f6-449f-b354-7cd48cf84061"
-    },
-    "_type": 0,
-    "_sizeMode": 1,
-    "_fillType": 0,
-    "_fillCenter": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_fillStart": 0,
-    "_fillRange": 0,
-    "_isTrimmedMode": true,
-    "_srcBlendFactor": 770,
-    "_dstBlendFactor": 771,
-    "_atlas": null
   },
   {
     "__type__": "cc.Animation",

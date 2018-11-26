@@ -9,13 +9,21 @@ export default class Global {
      */
     private MainNode = null;
     /**
-     * 碰撞标志
+     * 碰撞标志，默认未碰撞，false
      */
     public CollisionFlag = false;
     /**
      * 碰撞标签
      */
     public CollisionTag = 10;
+    /**
+     * 初始下落速度,7.5px/帧
+     */
+    public InitSpeed = 7.5;
+    /**
+     * player移动速度,4.7px/帧
+     */
+    public moveSpeed = 4.7;
 
     public TheHolder = null;
 

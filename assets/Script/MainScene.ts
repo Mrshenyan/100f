@@ -28,6 +28,11 @@ export default class MainScene extends cc.Component {
     @property(cc.Node)
     LifeDing:cc.Node = null;
 
+    @property(cc.Button)
+    LEFT:cc.Button = null;
+    @property(cc.Button)
+    RIGHT:cc.Button = null;
+
     // LIFE-CYCLE CALLBACKS:
     /**
      * 上一个落脚点生成时间
@@ -46,8 +51,8 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.zIndex = 9;
         Global.instance.setMN(this);
         this.STime = Date.now();
-        let FHolder = cc.instantiate(this.GD);
-        this.FHolderNode.addChild(FHolder,10,"GD");
+        let FHolder = cc.instantiate(this.dici);
+        this.FHolderNode.addChild(FHolder,10,"dici");
         FHolder.isHold = false;
         Global.instance.CollisionFlag = false;
         this.Player.x = FHolder.x;
@@ -58,6 +63,7 @@ export default class MainScene extends cc.Component {
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
+        
     }
 
     start () {
@@ -67,45 +73,12 @@ export default class MainScene extends cc.Component {
     update (dt) {
         this.MoveBg();
         let FHolder;
-        if((this.ETime-this.STime)>1500){//控制落脚点之间的间距
+        if((this.ETime-this.STime)>2250){//控制落脚点之间的间距,间距200px
             this.STime = Date.now();
             FHolder = this.FootHoldGenerator();
         }
-        let FHArray = this.FHolderNode.children;
-        if(FHArray!=null){
-            for(let i=0;i<FHArray.length;i++){
-                if((FHArray[i].isHold)&&Global.instance.CollisionFlag){
-                    if((this.Player.x-27>FHArray[i].x+135)||(this.Player.x+27<FHArray[i].x-135)){
-                        this.Player.y-=1;
-                        Global.instance.CollisionFlag = false;
-                        FHArray[i].isHold = false;
-                        return;
-                    }
-                }
-            }
-        }
-        if(FHArray!=null){
-            for(let i=0;i<FHArray.length;i++){
-                if(this.Player.y<310&&(this.Player.y>(-480))){
-                    if((FHArray[i].isHold)&&Global.instance.CollisionFlag){
-                        this.Player.y = FHArray[i].y + 55;
-                        if(this.Player.y>310){
-                            FHArray[i].isHold = false;
-                            return;
-                        }
-                    }
-                }
-                if(this.Player.y>(-280)&&(!Global.instance.CollisionFlag)){
-                    // this.gameOver();
-                    this.Player.y -= 2;
-                }
-                else {
-                    // this.Player.y -= 2;
-                }
-            }
-        }
-        
-        
+        this.FHolder();
+        console.log(this.Player.x+"我是player 这是我的横坐标");
         if(this.Player.x<-210){
             this.Player.x = -210;
         }
@@ -115,17 +88,41 @@ export default class MainScene extends cc.Component {
         this.ETime = Date.now();
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP,this.onKeyUp,this);
+        // this.LEFT.node.on('touch',this.BtnTurnLeft,this);
+        this.LEFT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
     }
     
 
     /**
-     * 移动背景
+     * 
+     */
+    FHolder(){
+        let self = this
+        let FHArray = this.FHolderNode.children;
+        for(let i=FHArray.length-1;i>=0;i--){
+            if(FHArray[i].isHold){
+                let nameNode:string = FHArray[i].name;
+                self.Player.y = FHArray[i].y + FHArray[i].getComponent(nameNode).NodeH;
+            }
+            if(self.Player.x>(FHArray[i].x+80)){
+                Global.instance.CollisionFlag = false;
+                FHArray[i].isHold = false;
+            }
+            if(self.Player.x<(FHArray[i].x-80)){
+                Global.instance.CollisionFlag = false;
+                FHArray[i].isHold = false;
+            }
+        }
+    }
+
+    /**
+     * 移动背景,初始移动速度200px/s
      */
     MoveBg(){
         let Bg0 = this.Bg.getChildByName("Bg_0");
         let Bg1 = this.Bg.getChildByName("Bg_1");
-        Bg0.y+=1;
-        Bg1.y+=1;
+        Bg0.y+=(200/60);
+        Bg1.y+=(200/60);
         if(Bg0.y>957){
             Bg0.y = -957;
         }
@@ -216,19 +213,23 @@ export default class MainScene extends cc.Component {
         }
         return FHolder;
     }
-
     /**
-     * 按钮触发，向左
+     * 按钮触发，向左，长按事件
      */
     BtnTurnLeft(){
-        console.log("向左！");
+        let self = this;
+        let btnL = self.node.getChildByName("LEFT");
+        console.log("点击了左按钮");
+
     }
 
     /**
-     * 按钮触发，向右
+     * 按钮触发，向右,长按事件,长按响应未解决
      */
     BtnTurnRight(){
-        console.log("向右！");
+        let self = this;
+        let btnR = self.node.getChildByName("RIGHT");
+        console.log("点击了右按钮");
     }
 
     /**
@@ -256,7 +257,7 @@ export default class MainScene extends cc.Component {
                 }),cc.callFunc(function(){
                     // let Anistate = Ani.play("run");
                     // Anistate.repeatCount = 10;
-                    self.Player.runAction(cc.moveBy(0.665,-30,0));
+                    self.Player.runAction(cc.moveBy(0.665,-187.3,0));
                 }))
                 self.Player.runAction(spawn);
                 
@@ -272,7 +273,7 @@ export default class MainScene extends cc.Component {
                 let spawn = cc.spawn(cc.callFunc(function(){
                     // let Anistate = Ani.play("run");
                     // Anistate.repeatCount = 10;
-                    self.Player.runAction(cc.moveBy(0.665,30,0));
+                    self.Player.runAction(cc.moveBy(0.665,187.3,0));
                 }),cc.callFunc(function(){
                     let Anistate = Ani.play("runR");
                     Anistate.speed = 2;
@@ -338,11 +339,6 @@ export default class MainScene extends cc.Component {
         runRight.active = false;
     }
     
-
-    OutOfHolder(){
-
-    }
-
     gameOver(){
         console.log("游戏结束！！！");
     }

@@ -54,8 +54,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 240,
+      "height": 72
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -108,7 +108,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 239,
+      "width": 230,
       "height": 29
     },
     "_rotationX": 0,
@@ -139,7 +139,7 @@
       "__uuid__": "631d7491-d6ea-4a02-9817-4bb99ad1a21e"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -199,7 +199,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 265,
+      "width": 240,
       "height": 43
     },
     "_rotationX": 0,
@@ -230,7 +230,7 @@
       "__uuid__": "2278c1a9-33e6-4bfd-9fb0-8a7392877f78"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -281,7 +281,8 @@
       "__id__": 1
     },
     "_enabled": true,
-    "isHold": false
+    "isHold": false,
+    "NodeH": 72
   },
   {
     "__type__": "cc.BoxCollider",

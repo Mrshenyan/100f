@@ -9,39 +9,6 @@
   "wrapMode": 2,
   "curveData": {
     "paths": {
-      "kuai": {
-        "comps": {
-          "cc.Sprite": {
-            "spriteFrame": []
-          }
-        },
-        "props": {
-          "position": [
-            {
-              "frame": 0,
-              "value": [
-                -72,
-                25.7
-              ]
-            },
-            {
-              "frame": 0.6666666666666666,
-              "value": [
-                -87,
-                25.7
-              ]
-            },
-            {
-              "frame": 1.3333333333333333,
-              "value": [
-                -102,
-                25.7
-              ]
-            }
-          ],
-          "opacity": []
-        }
-      },
       "kuai14": {
         "comps": {
           "cc.Sprite": {
@@ -201,105 +168,6 @@
               "value": [
                 -38,
                 -15.5
-              ]
-            }
-          ],
-          "opacity": []
-        }
-      },
-      "kuai9": {
-        "comps": {
-          "cc.Sprite": {
-            "spriteFrame": []
-          }
-        },
-        "props": {
-          "position": [
-            {
-              "frame": 0,
-              "value": [
-                -102,
-                -15.5
-              ]
-            },
-            {
-              "frame": 0.6666666666666666,
-              "value": [
-                -86,
-                -15.5
-              ]
-            },
-            {
-              "frame": 1.3333333333333333,
-              "value": [
-                -70,
-                -15.5
-              ]
-            }
-          ],
-          "opacity": []
-        }
-      },
-      "kuai8": {
-        "comps": {
-          "cc.Sprite": {
-            "spriteFrame": []
-          }
-        },
-        "props": {
-          "position": [
-            {
-              "frame": 0,
-              "value": [
-                88,
-                -15.5
-              ]
-            },
-            {
-              "frame": 0.6666666666666666,
-              "value": [
-                103.5,
-                -15.5
-              ]
-            },
-            {
-              "frame": 1.3333333333333333,
-              "value": [
-                119,
-                -15.5
-              ]
-            }
-          ],
-          "opacity": []
-        }
-      },
-      "kuai6": {
-        "comps": {
-          "cc.Sprite": {
-            "spriteFrame": []
-          }
-        },
-        "props": {
-          "position": [
-            {
-              "frame": 0,
-              "value": [
-                119,
-                25.7
-              ]
-            },
-            {
-              "frame": 0.6666666666666666,
-              "value": [
-                103,
-                25.7
-              ]
-            },
-            {
-              "frame": 1.3333333333333333,
-              "value": [
-                87,
-                25.7
               ]
             }
           ],
@@ -492,7 +360,7 @@
             {
               "frame": 0,
               "value": [
-                -102,
+                -79.8,
                 5
               ]
             }
@@ -520,7 +388,7 @@
             {
               "frame": 0,
               "value": [
-                123,
+                100.8,
                 5
               ]
             }

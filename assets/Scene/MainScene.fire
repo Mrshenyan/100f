@@ -65,17 +65,17 @@
         "__id__": 51
       },
       {
-        "__id__": 55
+        "__id__": 54
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 59
+        "__id__": 58
       },
       {
-        "__id__": 60
+        "__id__": 59
       }
     ],
     "_prefab": null,
@@ -1905,11 +1905,7 @@
     },
     "duration": 0.1,
     "zoomScale": 1.2,
-    "clickEvents": [
-      {
-        "__id__": 54
-      }
-    ],
+    "clickEvents": [],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": false,
     "_N$normalColor": {
@@ -1949,15 +1945,6 @@
     }
   },
   {
-    "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 2
-    },
-    "component": "MainScene",
-    "handler": "BtnTurnLeft",
-    "customEventData": ""
-  },
-  {
     "__type__": "cc.Node",
     "_name": "RIGHT",
     "_objFlags": 0,
@@ -1969,10 +1956,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 56
+        "__id__": 55
       },
       {
-        "__id__": 57
+        "__id__": 56
       }
     ],
     "_prefab": null,
@@ -2017,7 +2004,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 55
+      "__id__": 54
     },
     "_enabled": false,
     "_spriteFrame": {
@@ -2043,7 +2030,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 55
+      "__id__": 54
     },
     "_enabled": true,
     "transition": 2,
@@ -2065,7 +2052,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 58
+        "__id__": 57
       }
     ],
     "_N$interactable": true,
@@ -2103,7 +2090,7 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 55
+      "__id__": 54
     }
   },
   {
@@ -2171,6 +2158,12 @@
     },
     "LifeDing": {
       "__id__": 10
+    },
+    "LEFT": {
+      "__id__": 53
+    },
+    "RIGHT": {
+      "__id__": 56
     }
   }
 ]

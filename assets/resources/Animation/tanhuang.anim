@@ -3,10 +3,10 @@
   "_name": "tanhuang",
   "_objFlags": 0,
   "_rawFiles": null,
-  "_duration": 0.23333333333333334,
+  "_duration": 0.31666666666666665,
   "sample": 60,
-  "speed": 0.7,
-  "wrapMode": 1,
+  "speed": 0.8,
+  "wrapMode": "2",
   "curveData": {
     "comps": {
       "cc.Sprite": {
@@ -17,10 +17,18 @@
       "scaleX": [
         {
           "frame": 0,
-          "value": 1
+          "value": 0.6
+        },
+        {
+          "frame": 0.31666666666666665,
+          "value": 0.6
         }
       ],
       "scaleY": [
+        {
+          "frame": 0,
+          "value": 0.6
+        },
         {
           "frame": 0.05,
           "value": 0.9
@@ -30,8 +38,12 @@
           "value": 1.15
         },
         {
-          "frame": 0.23333333333333334,
+          "frame": 0.25,
           "value": 1
+        },
+        {
+          "frame": 0.31666666666666665,
+          "value": 0.6
         }
       ],
       "position": [
@@ -57,10 +69,17 @@
           ]
         },
         {
-          "frame": 0.23333333333333334,
+          "frame": 0.25,
           "value": [
             0,
             -6
+          ]
+        },
+        {
+          "frame": 0.31666666666666665,
+          "value": [
+            0,
+            -7
           ]
         }
       ]

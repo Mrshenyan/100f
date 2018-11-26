@@ -14,6 +14,8 @@ export default class NewClass extends cc.Component {
      */
     @property(Boolean)
     public isHold = false;
+    @property(Number)
+    public NodeH:Number = 70;
 
     private main:MainScene = null;
     /**
@@ -60,13 +62,19 @@ export default class NewClass extends cc.Component {
     }
 
     onCollisionEnter(other,self){
+        if(other.node.x<(-210)){
+            other.node.x = -210;
+        }
+        if(other.node.x>210){
+            other.node.x = 210;
+        }
         if(!Global.instance.CollisionFlag){
             console.log(other);
             console.log("1检测到碰撞！！！");
             console.log(self);
-            // other.node.y = this.node.y+50;
             self.node.isHold = true;
             Global.instance.CollisionFlag = true;
+            // other.node.position = self.node.position;
         }
     }
 }

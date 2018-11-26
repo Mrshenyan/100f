@@ -14,6 +14,10 @@ export default class NewClass extends cc.Component {
      */
     @property(Boolean)
     public isHold = false;
+
+    @property(Number)
+    public NodeH:number = 60;
+
     private main:MainScene = null;
     /**
      * 落脚点对应动画
@@ -60,6 +64,12 @@ export default class NewClass extends cc.Component {
     }
 
     onCollisionEnter(other,self){
+        if(other.node.x<(-210)){
+            other.node.x = -210;
+        }
+        if(other.node.x>210){
+            other.node.x = 210;
+        }
         if(!Global.instance.CollisionFlag){
             console.log(other);
             console.log("5检测到碰撞！！！");
