@@ -43,7 +43,9 @@ export default class MainScene extends cc.Component {
      */
     private ETime = 0;
 
+    /** Left*/
     private LkeyDown = false;
+    /** Right*/
     private RkeyDown = false;
 
     onLoad () {
@@ -51,12 +53,13 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.zIndex = 9;
         Global.instance.setMN(this);
         this.STime = Date.now();
-        let FHolder = cc.instantiate(this.dici);
-        this.FHolderNode.addChild(FHolder,10,"dici");
+        let FHolder = cc.instantiate(this.GD);
+        this.FHolderNode.addChild(FHolder,10,"GD");
+        FHolder.getComponent("GD").init(this);
         FHolder.isHold = false;
         Global.instance.CollisionFlag = false;
         this.Player.x = FHolder.x;
-        this.Player.y = 200;
+        this.Player.y = 250;
         this.Player.zIndex = 11;
         
         
@@ -73,26 +76,41 @@ export default class MainScene extends cc.Component {
     update (dt) {
         this.MoveBg();
         let FHolder;
+        
         if((this.ETime-this.STime)>2250){//控制落脚点之间的间距,间距200px
             this.STime = Date.now();
             FHolder = this.FootHoldGenerator();
         }
         this.FHolder();
-        console.log(this.Player.x+"我是player 这是我的横坐标");
-        if(this.Player.x<-210){
-            this.Player.x = -210;
+
+        if(Global.instance.CollisionFlag){
+            console.log("MainSceneUpdateIF碰撞标识："+Global.instance.CollisionFlag)
+            switch(Global.instance.KIND_FootHold){
+                case 2:{
+                    this.Player.x -=2;
+                    break;
+                }
+                case 5:{
+                    this.Player.x +=2;
+                    break;
+                }
+                default:{
+                    break;
+                }
+            }
         }
-        if(this.Player.x>210){
-            this.Player.x = 210;
+        if(this.Player.x<-165){
+            this.Player.x = -165;
         }
+        if(this.Player.x>165){
+            this.Player.x = 165;
+        }
+        console.log("MainSceneUpdate碰撞标识："+Global.instance.CollisionFlag)
         this.ETime = Date.now();
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP,this.onKeyUp,this);
-        // this.LEFT.node.on('touch',this.BtnTurnLeft,this);
         this.LEFT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
     }
-    
-
     /**
      * 
      */
@@ -102,15 +120,18 @@ export default class MainScene extends cc.Component {
         for(let i=FHArray.length-1;i>=0;i--){
             if(FHArray[i].isHold){
                 let nameNode:string = FHArray[i].name;
-                self.Player.y = FHArray[i].y + FHArray[i].getComponent(nameNode).NodeH;
-            }
-            if(self.Player.x>(FHArray[i].x+80)){
-                Global.instance.CollisionFlag = false;
-                FHArray[i].isHold = false;
-            }
-            if(self.Player.x<(FHArray[i].x-80)){
-                Global.instance.CollisionFlag = false;
-                FHArray[i].isHold = false;
+                // self.Player.y = FHArray[i].y + FHArray[i].getComponent(nameNode).NodeH;
+                // Global.instance.TheHolder = FHArray[i];
+                if(self.Player.x>(FHArray[i].x+80)){
+                    Global.instance.CollisionFlag = false;
+                    console.log("MainSceneFHold碰撞标识："+Global.instance.CollisionFlag)
+                    FHArray[i].isHold = false;
+                }
+                if(self.Player.x<(FHArray[i].x-80)){
+                    Global.instance.CollisionFlag = false;
+                    console.log("MainSceneFHold碰撞标识："+Global.instance.CollisionFlag);
+                    FHArray[i].isHold = false;
+                }
             }
         }
     }
@@ -140,72 +161,71 @@ export default class MainScene extends cc.Component {
      */
     FootHoldGenerator(){
         let self = this;
-        this
-        let KindHolder;
+        let KindHolder = Math.ceil(Math.random()*7);
         let FHolder;
-        KindHolder = Math.ceil(Math.random()*7);
+        // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
         switch(KindHolder){
             case 1:{
-                FHolder = cc.instantiate(this.boli);
-                self.FHolderNode.addChild(FHolder,5,"boli");
-                //FHolder.getComponent("boli").init(this);
+                FHolder = cc.instantiate(self.GD);
+                self.FHolderNode.addChild(FHolder,5,"GD");
+                FHolder.getComponent("GD").init(self);
                 FHolder.isHold = false;
                 console.log("产生第一种落脚点");
                 break;
             }
             case 2:{
-                FHolder = cc.instantiate(this.dici);
-                self.FHolderNode.addChild(FHolder,5,"dici");
-                //FHolder.getComponent("dici").init(this);
+                FHolder = cc.instantiate(self.Opplvdai);
+                self.FHolderNode.addChild(FHolder,5,"Opplvdai");
+                FHolder.getComponent("Opplvdai").init(self);
                 FHolder.isHold = false;
                 console.log("产生第二种落脚点");
                 break;
             }
             case 3:{
-                FHolder = cc.instantiate(this.lvdai);
-                self.FHolderNode.addChild(FHolder,5,"lvdai");
-                //FHolder.getComponent("lvdai").init(this);
+                FHolder = cc.instantiate(self.boli);
+                self.FHolderNode.addChild(FHolder,5,"boli");
+                FHolder.getComponent("boli").init(self);
                 FHolder.isHold = false;
                 console.log("产生第三种落脚点");
                 break;
             }
             case 4:{
-                FHolder = cc.instantiate(this.shandian);
-                self.FHolderNode.addChild(FHolder,5,"shandian");
-               // FHolder.getComponent("shandian").init(this);
+                FHolder = cc.instantiate(self.dici);
+                self.FHolderNode.addChild(FHolder,5,"dici");
+               FHolder.getComponent("dici").init(self);
                FHolder.isHold = false;
                 console.log("产生第四种落脚点");
                 break;
             }
             case 5:{
-                FHolder = cc.instantiate(this.tanhuang);
-                self.FHolderNode.addChild(FHolder,5,"tanhuang");
-                //FHolder.getComponent("tanhuang").init(this);
+                FHolder = cc.instantiate(self.lvdai);
+                self.FHolderNode.addChild(FHolder,5,"lvdai");
+                FHolder.getComponent("lvdai").init(self);
                 FHolder.isHold = false;
                 console.log("产生第五种落脚点");
                 break;
             }
             case 6:{
-                FHolder = cc.instantiate(this.Opplvdai);
-                self.FHolderNode.addChild(FHolder,5,"Opplvdai");
-                //FHolder.getComponent("tanhuang").init(this);
+                FHolder = cc.instantiate(self.shandian);
+                self.FHolderNode.addChild(FHolder,5,"shandian");
+                FHolder.getComponent("shandian").init(self);
                 FHolder.isHold = false;
                 console.log("产生第五种落脚点");
                 break;
             }
             case 7:{
-                FHolder = cc.instantiate(this.GD);
-                self.FHolderNode.addChild(FHolder,5,"GD");
-                //FHolder.getComponent("tanhuang").init(this);
+                FHolder = cc.instantiate(self.tanhuang);
+                self.FHolderNode.addChild(FHolder,5,"tanhuang");
+                FHolder.getComponent("tanhuang").init(self);
                 FHolder.isHold = false;
                 console.log("产生第五种落脚点");
                 break;
             }
             default:{
-                FHolder = cc.instantiate(this.boli);
-                self.FHolderNode.addChild(FHolder,5,"boli");
-                //FHolder.getComponent("boli").init(this);
+                FHolder = cc.instantiate(self.GD);
+                self.FHolderNode.addChild(FHolder,5,"GD");
+                FHolder.getComponent("GD").init(self);
                 FHolder.isHold = false;
                 console.log("默认产生第一种落脚点");
             }
@@ -241,6 +261,8 @@ export default class MainScene extends cc.Component {
         let stand = this.Player.getChildByName("stand");
         let runRight = this.Player.getChildByName("runRight");
         let run = this.Player.getChildByName("run");
+        let moveByTime = 1.5;
+        let moveByDes = Global.instance.moveSpeed*120;
         switch(event.keyCode){
             case cc.KEY.left:{
                 self.LkeyDown = true;
@@ -248,19 +270,28 @@ export default class MainScene extends cc.Component {
                 stand.active = false;
                 runRight.active = false;
                 run.active = true;
+                switch(Global.instance.KIND_FootHold){
+                    case 2:{
+                        moveByTime-=0.5;
+                        break;
+                    }
+                    case 5:{
+                        moveByTime+=0.2;
+                        break;
+                    }
+                };
+                if(Global.instance.CollisionFlag){
+                    moveByTime = 1.5;
+                }
                 let Ani = run.getComponent(cc.Animation);
                 let spawn = cc.spawn(cc.callFunc(function(){
                     let Anistate = Ani.play("run");
                     Anistate.speed = 2;
-                    Anistate.repeatCount = 10;
-                    // self.Player.runAction(cc.moveBy(1.33,-10,0));
+                    Anistate.repeatCount = 100;
                 }),cc.callFunc(function(){
-                    // let Anistate = Ani.play("run");
-                    // Anistate.repeatCount = 10;
-                    self.Player.runAction(cc.moveBy(0.665,-187.3,0));
+                    self.Player.runAction(cc.moveBy(moveByTime,-moveByDes,0));
                 }))
                 self.Player.runAction(spawn);
-                
                 break;
             }
             case cc.KEY.right:{
@@ -269,16 +300,27 @@ export default class MainScene extends cc.Component {
                 stand.active = false;
                 runRight.active = true;
                 run.active = false;
+                let moveByTime = 1;
+                switch(Global.instance.KIND_FootHold){
+                    case 2:{
+                        moveByTime+=0.2;
+                        break;
+                    }
+                    case 5:{
+                        moveByTime-=0.5;
+                        break;
+                    }
+                }
+                if(Global.instance.CollisionFlag){
+                    moveByTime = 1.5;
+                }
                 let Ani = runRight.getComponent(cc.Animation);
                 let spawn = cc.spawn(cc.callFunc(function(){
-                    // let Anistate = Ani.play("run");
-                    // Anistate.repeatCount = 10;
-                    self.Player.runAction(cc.moveBy(0.665,187.3,0));
+                    self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
                 }),cc.callFunc(function(){
                     let Anistate = Ani.play("runR");
                     Anistate.speed = 2;
-                    Anistate.repeatCount = 10;
-                    // self.Player.runAction(cc.moveBy(0,0,-1));
+                    Anistate.repeatCount = 100;
                 }))
                 self.Player.runAction(spawn);
                 break;
@@ -287,40 +329,29 @@ export default class MainScene extends cc.Component {
                 return;
             }
         }
-        if(self.LkeyDown||this.RkeyDown){
-            console.log("还没松手呢！！！");
-            if(self.LkeyDown){
-                let Ani = run.getComponent(cc.Animation);
-                let spawn = cc.spawn(cc.callFunc(function(){
-                    let Anistate = Ani.play("run");
-                    // Anistate.repeatCount = 100;
-                    // self.Player.runAction(cc.moveBy(1.33,-10,0));
-                }),cc.callFunc(function(){
-                    // let Anistate = Ani.play("run");
-                    // Anistate.repeatCount = 10;
-                    self.Player.runAction(cc.moveBy(1.33,-6.65,0));
-                }))
-                self.Player.runAction(spawn);
-                console.log("接着跑！！");
-            }
-            else{
-                let Ani = runRight.getComponent(cc.Animation);
-                let spawn = cc.spawn(cc.callFunc(function(){
-                    // let Anistate = Ani.play("run");
-                    // Anistate.repeatCount = 10;
-                    self.Player.runAction(cc.moveBy(0.5,+10,0));
-                }),cc.callFunc(function(){
-                    let Anistate = Ani.play("runR");
-                    Anistate.repeatCount = 100;
-                    // self.Player.runAction(cc.moveBy(0,0,-1));
-                }))
-                self.Player.runAction(spawn);
-                console.log("接着跑！！");
-            }
-        }
-
-        // if(){
-
+        // if(self.LkeyDown||this.RkeyDown){
+        //     console.log("还没松手呢！！！");
+        //     if(self.LkeyDown){
+        //         let Ani = run.getComponent(cc.Animation);
+        //         let spawn = cc.spawn(cc.callFunc(function(){
+        //             let Anistate = Ani.play("run");
+        //         }),cc.callFunc(function(){
+        //             self.Player.runAction(cc.moveBy(moveByTime,-moveByDes/4,0));
+        //         }))
+        //         self.Player.runAction(spawn);
+        //         console.log("接着跑！！");
+        //     }
+        //     else{
+        //         let Ani = runRight.getComponent(cc.Animation);
+        //         let spawn = cc.spawn(cc.callFunc(function(){
+        //             self.Player.runAction(cc.moveBy(moveByTime,+moveByDes/4,0));
+        //         }),cc.callFunc(function(){
+        //             let Anistate = Ani.play("runR");
+        //             Anistate.repeatCount = 100;
+        //         }))
+        //         self.Player.runAction(spawn);
+        //         console.log("接着跑！！");
+        //     }
         // }
     }
     /**
@@ -328,8 +359,9 @@ export default class MainScene extends cc.Component {
      * @param event 抬起左右键触发
      */
     onKeyUp(event){
-
         let self = this;
+        self.LkeyDown = false;
+        this.RkeyDown = false;
         self.Player.stopAllActions();
         let stand = this.Player.getChildByName("stand");
         let runRight = this.Player.getChildByName("runRight");
@@ -341,5 +373,10 @@ export default class MainScene extends cc.Component {
     
     gameOver(){
         console.log("游戏结束！！！");
+    }
+
+    restart(){
+        this.destroy();
+        cc.director.loadScene("MainScene");
     }
 }

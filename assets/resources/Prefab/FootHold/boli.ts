@@ -39,6 +39,9 @@ export default class boli extends cc.Component {
     update (dt) {
         this.node.active = true;
         this.node.y+=2;
+        if(this.node.isHold){
+            Global.instance.TheHolder = this.node;
+        }
         if(this.node.y>360){
             this.node.isHold = false;
             this.node.destroy();
@@ -65,12 +68,14 @@ export default class boli extends cc.Component {
     onCollisionEnter(other,self){
         let spawn;
         let rootself = this;
+        Global.instance.KIND_FootHold = this.KIND_FootHold;
+        Global.instance.TheHolder = this.node;
         console.log(rootself);
-        if(other.node.x<(-210)){
-            other.node.x = -210;
+        if(other.node.x<(-165)){
+            other.node.x = -165;
         }
-        if(other.node.x>210){
-            other.node.x = 210;
+        if(other.node.x>165){
+            other.node.x = 165;
         }
         
         this.AniState = this.Ani.play("boli");

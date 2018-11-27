@@ -4,7 +4,7 @@ import Global from "../../../Script/Global";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class tanhuang extends cc.Component {
     /**
      * 落脚点类型 1：向左传送带
      */
@@ -39,6 +39,9 @@ export default class NewClass extends cc.Component {
     update (dt) {
         this.node.active = true;
         this.node.y += 2;
+        if(this.node.isHold){
+            Global.instance.TheHolder = this.node;
+        }
         if(this.node.y>360){
             this.node.isHold = false;
             this.node.destroy();
@@ -69,13 +72,15 @@ export default class NewClass extends cc.Component {
      */
     onCollisionEnter(other,self){
         let rootself = this;//当前根节点
-        if(other.node.x<(-210)){
-            other.node.x = -210;
+        Global.instance.KIND_FootHold = this.KIND_FootHold;
+        if(other.node.x<(-165)){
+            other.node.x = -165;
         }
-        if(other.node.x>210){
-            other.node.x = 210;
+        if(other.node.x>165){
+            other.node.x = 165;
         }
         if(!Global.instance.CollisionFlag){
+            Global.instance.TheHolder = this.node;
             console.log(other);
             console.log("7检测到碰撞！！！");
             console.log(self);
@@ -83,28 +88,28 @@ export default class NewClass extends cc.Component {
             try {
                 spawn = cc.spawn(cc.callFunc(function(){
                     if(rootself.Ani==null){
-                        self.node.isHold = false;
-                        Global.instance.CollisionFlag = false;
+                        // self.node.isHold = false;
+                        // Global.instance.CollisionFlag = false;
                         return;
                     }
                     rootself.AniState = rootself.Ani.play("tanhuang");
                     rootself.AniState.speed = 0.8;
                 }),cc.callFunc(function(){
-                    other.node.runAction(cc.moveBy(0.3,0,150));
+                    other.node.runAction(cc.moveBy(0.25,0,120));
                     self.node.isHold = false;
                     Global.instance.CollisionFlag = false;
-                }))
+                }));
                 rootself.scheduleOnce(function(){
                     rootself.node.isHold = false;
                     Global.instance.CollisionFlag = false;
                     rootself.Ani.stop();
                 },0.512);
             } catch (error) {
-                
+                return;
             }
             other.node.runAction(spawn);
-            self.node.isHold = true;
-            Global.instance.CollisionFlag = true;
+            // self.node.isHold = true;
+            // Global.instance.CollisionFlag = true;
         }
     }
 }

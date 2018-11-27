@@ -4,7 +4,7 @@ import Global from "../../../Script/Global";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class Opplvdai extends cc.Component {
 
     /**
      * 落脚点类型 1：向左传送带
@@ -41,6 +41,9 @@ export default class NewClass extends cc.Component {
     update (dt) {
         this.node.active = true;
         this.node.y += 2;
+        if(this.node.isHold){
+            Global.instance.TheHolder = this.node;
+        }
         if(this.node.y>360){
             this.node.isHold = false;
             this.node.destroy();
@@ -64,6 +67,8 @@ export default class NewClass extends cc.Component {
     }
 
     onCollisionEnter(other,self){
+        Global.instance.KIND_FootHold = this.KIND_FootHold;
+        Global.instance.TheHolder = this.node;
         if(!Global.instance.CollisionFlag){
             console.log(other);
             console.log("2检测到碰撞！！！");

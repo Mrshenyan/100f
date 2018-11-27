@@ -15,17 +15,25 @@ export default class Global {
     /**
      * 碰撞标签
      */
-    public CollisionTag = 10;
+    public KIND_FootHold = 0;
     /**
-     * 初始下落速度,7.5px/帧
+     * player初始下落速度,5px/帧
      */
-    public InitSpeed = 7.5;
+    public InitSpeed = 5;
     /**
-     * player移动速度,4.7px/帧
+     * player移动速度,1px/帧
      */
-    public moveSpeed = 4.7;
+    public moveSpeed = 1;
 
-    public TheHolder = null;
+    /**
+     * 碰撞的落脚点
+     */
+    public TheHolder;
+
+    /**
+     * 剩余命数
+     */
+    public reLife = new Array();
 
     public static readonly instance = new Global();//全局下不可少
     private constructor() { }

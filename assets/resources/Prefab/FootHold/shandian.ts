@@ -4,7 +4,7 @@ import Global from "../../../Script/Global";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class shandian extends cc.Component {
     /**
      * 落脚点类型 1：向左传送带
      */
@@ -40,10 +40,14 @@ export default class NewClass extends cc.Component {
     update (dt) {
         this.node.active = true;
         this.node.y += 2;
+        if(this.node.isHold){
+            Global.instance.TheHolder = this.node;
+        }
         if(this.node.y>360){
             this.node.isHold = false;
             Global.instance.CollisionFlag = false;
             this.node.destroy();
+            Global.instance.CollisionFlag = false;
         }
     }
 
@@ -63,19 +67,21 @@ export default class NewClass extends cc.Component {
     }
 
     onCollisionEnter(other,self){
-        if(other.node.x<(-210)){
-            other.node.x = -210;
+        Global.instance.KIND_FootHold = this.KIND_FootHold;
+        Global.instance.TheHolder = this.node;
+        if(other.node.x<(-165)){
+            other.node.x = -165;
         }
-        if(other.node.x>210){
-            other.node.x = 210;
+        if(other.node.x>165){
+            other.node.x = 165;
         }
         if(!Global.instance.CollisionFlag){
             console.log(other);
             console.log("6检测到碰撞！！！");
             console.log(self);
             // other.node.y = this.node.y+50;
-            self.node.isHold = true;
-            Global.instance.CollisionFlag = true;
+            self.node.isHold = false;
+            Global.instance.CollisionFlag = false;
         }
     }
 }
