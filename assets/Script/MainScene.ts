@@ -76,15 +76,24 @@ export default class MainScene extends cc.Component {
     update (dt) {
         this.MoveBg();
         let FHolder;
-        
+
         if((this.ETime-this.STime)>2250){//控制落脚点之间的间距,间距200px
             this.STime = Date.now();
             FHolder = this.FootHoldGenerator();
         }
         this.FHolder();
 
+        for(let i=0;i<Global.instance.reLife.length;i++){//命数判断
+            let reLCount=0;
+            if(Global.instance.reLife[i].active){
+                reLCount++;
+            }
+            if(reLCount==0){
+                this.gameOver();
+            }
+        }
         if(Global.instance.CollisionFlag){
-            console.log("MainSceneUpdateIF碰撞标识："+Global.instance.CollisionFlag)
+            // console.log("MainSceneUpdateIF碰撞标识："+Global.instance.CollisionFlag)
             switch(Global.instance.KIND_FootHold){
                 case 2:{
                     this.Player.x -=2;
@@ -105,7 +114,7 @@ export default class MainScene extends cc.Component {
         if(this.Player.x>165){
             this.Player.x = 165;
         }
-        console.log("MainSceneUpdate碰撞标识："+Global.instance.CollisionFlag)
+        // console.log("MainSceneUpdate碰撞标识："+Global.instance.CollisionFlag)
         this.ETime = Date.now();
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP,this.onKeyUp,this);
@@ -124,12 +133,12 @@ export default class MainScene extends cc.Component {
                 // Global.instance.TheHolder = FHArray[i];
                 if(self.Player.x>(FHArray[i].x+80)){
                     Global.instance.CollisionFlag = false;
-                    console.log("MainSceneFHold碰撞标识："+Global.instance.CollisionFlag)
+                    // console.log("MainSceneFHold碰撞标识："+Global.instance.CollisionFlag)
                     FHArray[i].isHold = false;
                 }
                 if(self.Player.x<(FHArray[i].x-80)){
                     Global.instance.CollisionFlag = false;
-                    console.log("MainSceneFHold碰撞标识："+Global.instance.CollisionFlag);
+                    // console.log("MainSceneFHold碰撞标识："+Global.instance.CollisionFlag);
                     FHArray[i].isHold = false;
                 }
             }

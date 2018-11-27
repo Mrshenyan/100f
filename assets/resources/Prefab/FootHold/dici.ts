@@ -81,6 +81,18 @@ export default class dici extends cc.Component {
             console.log("4检测到碰撞！！！");
             console.log(self);
             let spawn
+            for(let i=Global.instance.reLife.length;i>=0;i--){//命数判断
+                let reLCount=0;
+                if(Global.instance.reLife[i].active){
+                    reLCount++;
+                }
+                if(reLCount==0){
+                    this.main.gameOver();
+                }
+                else{
+                    Global.instance.reLife[i].active = false;
+                }
+            }
             try {
                 spawn = cc.spawn(cc.callFunc(function(){
                     if(rootself.Ani==null){

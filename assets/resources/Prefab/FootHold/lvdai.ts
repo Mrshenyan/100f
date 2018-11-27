@@ -47,7 +47,7 @@ export default class lvdai extends cc.Component {
         if(this.node.y>360){
             this.node.isHold = false;
             this.node.destroy();
-            console.log("lvdaisUpdate碰撞标识："+Global.instance.CollisionFlag);
+            // console.log("lvdaisUpdate碰撞标识："+Global.instance.CollisionFlag);
             Global.instance.CollisionFlag = false;
         }
     }
@@ -86,6 +86,6 @@ export default class lvdai extends cc.Component {
             self.node.isHold = true;
             Global.instance.CollisionFlag = true;
         }
-        console.log("lvdaionCollisionEnter碰撞标识："+Global.instance.CollisionFlag);
+        // console.log("lvdaionCollisionEnter碰撞标识："+Global.instance.CollisionFlag);
     }
 }
