@@ -9,6 +9,8 @@ export default class StartScene extends cc.Component {
     StartAniNode:cc.Node = null;
     @property(cc.Node)
     LifeDing:cc.Node = null;
+    @property(cc.Button)
+    testBtn:cc.Button = null;
 
 
     // LIFE-CYCLE CALLBACKS:
@@ -33,6 +35,7 @@ export default class StartScene extends cc.Component {
         this.runAni = this.run.getComponent(cc.Animation);
         this.lvdaiAni = this.lvdai.getComponent(cc.Animation);
         this.playAni();
+        this.testBtnEvent();
     }
 
     start () {
@@ -74,9 +77,56 @@ export default class StartScene extends cc.Component {
         self.destroy();
     }
 
+    /**
+     * use the backSpace start game
+     * @param event 
+     */
     onKeyBackSpace(event){
         if(event.keyCode == cc.KEY.space){
             this.StartGame();
         }
     }
+
+    /**
+     * testBtn event
+     */
+    testBtnEvent(){
+        let self = this;
+        let btnClicked = false;
+        let target;
+        
+        // let BtnEventType = cc.Node.EventType;
+        self.testBtn.node.on(cc.Node.EventType.TOUCH_START,onTouchBegan,self.testBtn);
+        self.testBtn.node.on(cc.Node.EventType.TOUCH_MOVE,onTouchBegan,self.testBtn);
+        self.testBtn.node.on(cc.Node.EventType.TOUCH_CANCEL,onTouchBegan,self.testBtn);
+        self.testBtn.node.on(cc.Node.EventType.TOUCH_END,onTouchBegan,self.testBtn);
+        
+        function onTouchBegan(event){
+            let func = function(){
+                console.log("按下按钮，事件开始")
+            };
+            let sch =  cc.director.getScheduler()
+            let schAlive = sch.isScheduled(func,self.testBtn);
+            let schPause = sch.isTargetPaused(self.testBtn)
+            switch(event.type){
+                case "touchstart":{
+                    console.log("schAlive: "+schAlive+" schPause :"+schPause);
+                    if(!schAlive){
+                        sch.schedule(func,self.testBtn,0);
+                    };
+                    if(schPause){
+                       sch.resumeTarget(self.testBtn);
+                    }
+                    btnClicked = true;
+                    break;
+                }
+                case "touchend":{
+                    sch.pauseTarget(self.testBtn);
+                    btnClicked = false;
+                    break;
+                }
+            }
+        }
+    }
+    
 }

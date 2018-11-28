@@ -46,26 +46,7 @@ export default class GD extends cc.Component {
             this.node.destroy();
             Global.instance.CollisionFlag = false;
         }
-        this.CheckLife();
-    }
-
-    /**
-     * 剩余命数检查
-     * @param  
-     */
-    CheckLife(){
-        let self = this;
-        let Ls = new Array();
-        for(let i=0;i<self.LifeDing.length;i++){
-            if(self.LifeDing[i].name=="lifeBG"){
-                Ls.push(self.LifeDing[i]);
-            }
-        }
-        for(let i=0;i<Ls.length;i++){
-            if(Ls[i].active){
-                Global.instance.reLife.push(Ls[i]);//player剩余的命数
-            }
-        }
+        this.main.CheckLife();
     }
 
     /**

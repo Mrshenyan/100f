@@ -752,7 +752,7 @@
     },
     "_enabled": true,
     "isHold": false,
-    "NodeH": 40
+    "NodeH": 56
   },
   {
     "__type__": "cc.BoxCollider",

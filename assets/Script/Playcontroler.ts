@@ -7,7 +7,12 @@ export default class Playcontroler extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {}
+    parent:cc.Node = null;
+    MainScene:cc.Component = null;
+    // onLoad () {
+    //     this.parent = this.node.parent;
+    //     this.MainScene = this.parent.getComponent("MainScene");
+    // }
 
     start () {
 
@@ -23,12 +28,6 @@ export default class Playcontroler extends cc.Component {
         }
         if(this.node.y>315||this.node.y<(-500)){//碰到顶，或超出屏幕减一条命/碰到顶就下落。。
             Global.instance.CollisionFlag = false;
-            for(let i=0;i<Global.instance.reLife.length;i++){
-                if(Global.instance.reLife[i].active){
-                    Global.instance.reLife[i].active = false;
-                    return;
-                }
-            }
         }
         if(!Global.instance.CollisionFlag){
             this.node.y -= Global.instance.InitSpeed;
@@ -44,3 +43,10 @@ export default class Playcontroler extends cc.Component {
         // console.log("PlayerControlerUpdate碰撞标识："+Global.instance.CollisionFlag)
     }
 }
+
+/**
+ * 1.下落速度加快；
+ * 2.玻璃：先停一会在碎掉；
+ * 3.传送带速度快一点；
+ * 4.
+ */

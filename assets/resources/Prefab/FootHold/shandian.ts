@@ -30,7 +30,6 @@ export default class shandian extends cc.Component {
         this.Ani = this.node.getComponent(cc.Animation);
         this.AniState = this.Ani.play("shandian");
         this.AniState.repeatCount = 100;
-        
     }
 
     start () {
@@ -69,6 +68,7 @@ export default class shandian extends cc.Component {
     onCollisionEnter(other,self){
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
+        Global.instance.Injured = true;
         if(other.node.x<(-165)){
             other.node.x = -165;
         }

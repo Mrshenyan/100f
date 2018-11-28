@@ -62,7 +62,7 @@ export default class MainScene extends cc.Component {
         this.Player.y = 250;
         this.Player.zIndex = 11;
         
-        
+        // Global.instance.reLife = this.LifeDing.children;
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
@@ -82,16 +82,7 @@ export default class MainScene extends cc.Component {
             FHolder = this.FootHoldGenerator();
         }
         this.FHolder();
-
-        for(let i=0;i<Global.instance.reLife.length;i++){//命数判断
-            let reLCount=0;
-            if(Global.instance.reLife[i].active){
-                reLCount++;
-            }
-            if(reLCount==0){
-                this.gameOver();
-            }
-        }
+        this.reduceLife();
         if(Global.instance.CollisionFlag){
             // console.log("MainSceneUpdateIF碰撞标识："+Global.instance.CollisionFlag)
             switch(Global.instance.KIND_FootHold){
@@ -119,6 +110,9 @@ export default class MainScene extends cc.Component {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP,this.onKeyUp,this);
         this.LEFT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
+        this.LEFT.node.on(cc.Node.EventType.TOUCH_END,this.BtnTurnLeft,this);
+        this.RIGHT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
+        this.RIGHT.node.on(cc.Node.EventType.TOUCH_END,this.BtnTurnRight,this);
     }
     /**
      * 
@@ -245,20 +239,130 @@ export default class MainScene extends cc.Component {
     /**
      * 按钮触发，向左，长按事件
      */
-    BtnTurnLeft(){
+    BtnTurnLeft(event){
         let self = this;
-        let btnL = self.node.getChildByName("LEFT");
-        console.log("点击了左按钮");
-
+        self.LkeyDown = true;
+        this.BtnLorR(event);
     }
 
     /**
      * 按钮触发，向右,长按事件,长按响应未解决
      */
-    BtnTurnRight(){
+    BtnTurnRight(event){
         let self = this;
-        let btnR = self.node.getChildByName("RIGHT");
+        self.RkeyDown = true;
         console.log("点击了右按钮");
+        this.BtnLorR(event);
+    }
+
+    BtnLorR(event){
+        let self = this;
+        let schedule = cc.director.getScheduler();
+        let stand = self.Player.getChildByName("stand");
+        let runRight = self.Player.getChildByName("runRight");
+        let run = self.Player.getChildByName("run");
+        let Ani;//the animation of player
+        let spawn;//an action queue of player
+        let Anistate;//the Ani's state
+        let Anistring;//the name of Ani
+        let moveByTime = 1.5;
+        let moveByDes = Global.instance.moveSpeed*120;
+        let scheduleState:boolean = false;//the schedule's state
+        let schedulePause:boolean = true;
+        let target:cc.Button = null;//the target which is binged to schedule
+        if(self.LkeyDown){
+            target = self.LEFT;
+            moveByDes = -moveByDes;
+            scheduleState = schedule.isScheduled(func,target);
+            schedulePause = schedule.isTargetPaused(target);
+            Ani = run.getComponent(cc.Animation);
+            Anistring = "run";
+            stand.active = false;
+            runRight.active = false;
+            run.active = true;
+            switch(Global.instance.KIND_FootHold){
+                case 2:{
+                    moveByTime-=0.5;
+                    break;
+                }
+                case 5:{
+                    moveByTime+=0.2;
+                    break;
+                }
+            };
+        }
+        if(self.RkeyDown){
+            target = self.RIGHT;
+            moveByDes = moveByDes;
+            scheduleState = schedule.isScheduled(func,target);
+            schedulePause = schedule.isTargetPaused(target);
+            Ani = runRight.getComponent(cc.Animation);
+            Anistring = "runR";
+            stand.active = false;
+            runRight.active = true;
+            run.active = false;
+            switch(Global.instance.KIND_FootHold){
+                case 2:{
+                    moveByTime+=0.2;
+                    break;
+                }
+                case 5:{
+                    moveByTime-=0.5;
+                    break;
+                }
+            };
+        }
+        switch(event.type){
+            case "touchstart":{
+                if(!scheduleState){
+                    schedule.schedule(func,target,0);
+                };
+                if(schedulePause){
+                    schedule.resumeTarget(target);
+                };
+                break;
+            }
+            case "touchend":{
+                schedule.pauseTarget(target);
+                self.Player.stopAllActions();
+                Ani.stop(Anistring);
+                switch(Anistring){
+                    case "run":{
+                        run.active = false;
+                        runRight.active = false;
+                        stand.active = true;
+                        self.LkeyDown = false;
+                        self.RkeyDown = false;
+                        moveByDes = Global.instance.moveSpeed;
+                        break;
+                    }
+                    case "runR":{
+                        run.active = false;
+                        runRight.active = false;
+                        stand.active = true;
+                        self.LkeyDown = false;
+                        self.RkeyDown = false;
+                        moveByDes = Global.instance.moveSpeed;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        
+        function func(){
+            if(Global.instance.CollisionFlag){
+                moveByTime = 1.5;
+            }
+            spawn = cc.spawn(cc.callFunc(function(){
+                self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
+            }),cc.callFunc(function(){
+                Anistate = Ani.play(Anistring);
+                Anistate.speed = 2;
+                Anistate.repeatCount = 100;
+            }))
+            self.Player.runAction(spawn);
+        }
     }
 
     /**
@@ -338,30 +442,6 @@ export default class MainScene extends cc.Component {
                 return;
             }
         }
-        // if(self.LkeyDown||this.RkeyDown){
-        //     console.log("还没松手呢！！！");
-        //     if(self.LkeyDown){
-        //         let Ani = run.getComponent(cc.Animation);
-        //         let spawn = cc.spawn(cc.callFunc(function(){
-        //             let Anistate = Ani.play("run");
-        //         }),cc.callFunc(function(){
-        //             self.Player.runAction(cc.moveBy(moveByTime,-moveByDes/4,0));
-        //         }))
-        //         self.Player.runAction(spawn);
-        //         console.log("接着跑！！");
-        //     }
-        //     else{
-        //         let Ani = runRight.getComponent(cc.Animation);
-        //         let spawn = cc.spawn(cc.callFunc(function(){
-        //             self.Player.runAction(cc.moveBy(moveByTime,+moveByDes/4,0));
-        //         }),cc.callFunc(function(){
-        //             let Anistate = Ani.play("runR");
-        //             Anistate.repeatCount = 100;
-        //         }))
-        //         self.Player.runAction(spawn);
-        //         console.log("接着跑！！");
-        //     }
-        // }
     }
     /**
      * 抬起动画停止
@@ -382,10 +462,54 @@ export default class MainScene extends cc.Component {
     
     gameOver(){
         console.log("游戏结束！！！");
+        cc.director.pause();
     }
 
     restart(){
         this.destroy();
         cc.director.loadScene("MainScene");
+    }
+    /** 
+     * 受到伤害，命数减一
+    */
+    reduceLife(){
+        let self = this;
+        let Ls = new Array();
+        let reLCount=0;
+        for(let i=0;i<self.LifeDing.children.length-1;i++){
+            if(self.LifeDing.children[i].name=="lifeBG"){
+                Ls.push(self.LifeDing.children[i]);
+            }
+        }
+        for(let i=0;i<Ls.length-1;i++){
+            if(Ls[i].active){
+                Global.instance.reLife.push(Ls[i]);//player剩余的命数
+            }
+            if(i==0){
+                let len = Global.instance.reLife.length;
+                if(Global.instance.Injured){
+                    Global.instance.reLife[len-1].active = false;
+                }
+            }
+        }
+        if(Global.instance.reLife.length==0){
+            self.gameOver();
+        }
+    }
+
+    /**
+     * 检查命数
+     */
+    CheckLife(){
+        let self = this;
+        //if(Global.instance.Injured){
+        for(let i=Global.instance.reLife.length-1;i<0;i--){
+            if(i==Global.instance.reLife.length-1){
+                Global.instance.reLife[i].active = false;
+            }
+        }
+        //}
+        self.reduceLife();
+        Global.instance.Injured = false;
     }
 }

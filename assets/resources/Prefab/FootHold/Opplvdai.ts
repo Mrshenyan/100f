@@ -32,6 +32,7 @@ export default class Opplvdai extends cc.Component {
         this.Ani = this.node.getComponent(cc.Animation);
         this.AniState = this.Ani.play("Opplvdai");
         this.AniState.repeatCount = 100;
+        this.AniState.speed = 2;
     }
 
     start () {

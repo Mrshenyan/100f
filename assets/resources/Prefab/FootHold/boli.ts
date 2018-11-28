@@ -70,6 +70,9 @@ export default class boli extends cc.Component {
         let rootself = this;
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
+        self.node.isHold = true;
+        Global.instance.CollisionFlag = true;
+        this.main.CheckLife();
         console.log(rootself);
         if(other.node.x<(-165)){
             other.node.x = -165;
@@ -77,39 +80,11 @@ export default class boli extends cc.Component {
         if(other.node.x>165){
             other.node.x = 165;
         }
-        
-        this.AniState = this.Ani.play("boli");
-        rootself.node.isHold = false;
-        Global.instance.CollisionFlag = false;
-        self.destroy();
-        // if(!Global.instance.CollisionFlag){
-        //     console.log(other);
-        //     console.log("3检测到碰撞！！！");
-        //     console.log(self);
-        //     try {
-        //         spawn = cc.spawn(cc.callFunc(function(){
-        //             if(rootself.Ani==null){
-        //                 self.node.isHold = false;
-        //                 Global.instance.CollisionFlag = false;
-        //                 return;
-        //             }
-        //             rootself.AniState = rootself.Ani.play("boli");
-        //             rootself.AniState.speed = 1;
-        //         }),cc.callFunc(function(){
-        //             self.node.isHold = false;
-        //             Global.instance.CollisionFlag = false;
-        //         }))
-        //         rootself.scheduleOnce(function(){
-        //             rootself.node.isHold = false;
-        //             Global.instance.CollisionFlag = false;
-        //             rootself.Ani.stop();
-        //         },0.512);
-        //     } catch (error) {
-                
-        //     }
-        //     // other.node.y = this.node.y+50;
-        //     self.node.isHold = true;
-        //     Global.instance.CollisionFlag = true;
-        // }
+        this.scheduleOnce(function(){
+            this.AniState = this.Ani.play("boli");
+            rootself.node.isHold = false;
+            Global.instance.CollisionFlag = false;
+            self.destroy();
+        },0.5);
     }
 }

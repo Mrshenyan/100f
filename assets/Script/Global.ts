@@ -19,7 +19,7 @@ export default class Global {
     /**
      * player初始下落速度,5px/帧
      */
-    public InitSpeed = 5;
+    public InitSpeed = 6;
     /**
      * player移动速度,1px/帧
      */
@@ -34,9 +34,13 @@ export default class Global {
      * 剩余命数
      */
     public reLife = new Array();
-
+    /**
+     * 受到伤害标志
+     */
+    public Injured = false;
     public static readonly instance = new Global();//全局下不可少
     private constructor() { }
+    
 
     /**
      * 开始场景节点获取

@@ -69,6 +69,9 @@ export default class dici extends cc.Component {
         let rootself = this;//当前根节点
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
+        self.node.isHold = true;
+        Global.instance.CollisionFlag = true;
+        Global.instance.Injured = true;
         if(other.node.x<(-165)){
             other.node.x = -165;
         }
@@ -81,18 +84,19 @@ export default class dici extends cc.Component {
             console.log("4检测到碰撞！！！");
             console.log(self);
             let spawn
-            for(let i=Global.instance.reLife.length;i>=0;i--){//命数判断
-                let reLCount=0;
-                if(Global.instance.reLife[i].active){
-                    reLCount++;
-                }
-                if(reLCount==0){
-                    this.main.gameOver();
-                }
-                else{
-                    Global.instance.reLife[i].active = false;
-                }
-            }
+            this.main.CheckLife();
+            // for(let i=Global.instance.reLife.length;i>=0;i--){//命数判断
+            //     let reLCount=0;
+            //     if(Global.instance.reLife[i].active){
+            //         reLCount++;
+            //     }
+            //     if(reLCount==0){
+            //         this.main.gameOver();
+            //     }
+            //     else{
+            //         Global.instance.reLife[i].active = false;
+            //     }
+            // }
             try {
                 spawn = cc.spawn(cc.callFunc(function(){
                     if(rootself.Ani==null){
@@ -105,8 +109,6 @@ export default class dici extends cc.Component {
             } catch (error) {
                 return;
             }
-            self.node.isHold = true;
-            Global.instance.CollisionFlag = true;
         }
     }
 }

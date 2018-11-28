@@ -31,7 +31,7 @@ export default class lvdai extends cc.Component {
         this.Ani = this.node.getComponent(cc.Animation);
         this.AniState = this.Ani.play("lvdai");
         this.AniState.repeatCount = 100;
-
+        this.AniState.speed = 2;
     }
 
     start () {
