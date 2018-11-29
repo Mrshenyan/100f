@@ -69,11 +69,11 @@ export default class shandian extends cc.Component {
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
         Global.instance.Injured = true;
-        if(other.node.x<(-165)){
-            other.node.x = -165;
+        if(other.node.x<(-175)){
+            other.node.x = -175;
         }
-        if(other.node.x>165){
-            other.node.x = 165;
+        if(other.node.x>175){
+            other.node.x = 175;
         }
         if(!Global.instance.CollisionFlag){
             console.log(other);

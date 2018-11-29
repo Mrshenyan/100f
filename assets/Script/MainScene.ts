@@ -18,6 +18,8 @@ export default class MainScene extends cc.Component {
     Opplvdai:cc.Prefab = null;
     @property(cc.Prefab)
     GD:cc.Prefab = null;
+    @property(cc.Prefab)
+    failure:cc.Prefab = null;
 
     @property(cc.Node)
     Player:cc.Node = null;
@@ -52,6 +54,7 @@ export default class MainScene extends cc.Component {
         this.LifeDing.zIndex = 10;
         this.FHolderNode.zIndex = 9;
         Global.instance.setMN(this);
+        Global.instance.OverFlag = false;
         this.STime = Date.now();
         let FHolder = cc.instantiate(this.GD);
         this.FHolderNode.addChild(FHolder,10,"GD");
@@ -99,11 +102,14 @@ export default class MainScene extends cc.Component {
                 }
             }
         }
-        if(this.Player.x<-165){
-            this.Player.x = -165;
+        if(this.Player.x<-175){
+            this.Player.x = -175;
         }
-        if(this.Player.x>165){
-            this.Player.x = 165;
+        if(this.Player.x>175){
+            this.Player.x = 175;
+        }
+        if(this.Player.y<(-500)){
+            this.gameOver();
         }
         // console.log("MainSceneUpdate碰撞标识："+Global.instance.CollisionFlag)
         this.ETime = Date.now();
@@ -115,11 +121,13 @@ export default class MainScene extends cc.Component {
         this.RIGHT.node.on(cc.Node.EventType.TOUCH_END,this.BtnTurnRight,this);
     }
     /**
-     * 
+     * player 移出落脚点
      */
     FHolder(){
         let self = this
         let FHArray = this.FHolderNode.children;
+        let Ani;//the Animation of Player when player fall down
+        let Anistate;//the state of Ani;
         for(let i=FHArray.length-1;i>=0;i--){
             if(FHArray[i].isHold){
                 let nameNode:string = FHArray[i].name;
@@ -461,13 +469,30 @@ export default class MainScene extends cc.Component {
     }
     
     gameOver(){
-        console.log("游戏结束！！！");
-        cc.director.pause();
+        let self = this;
+        let failure;
+        let Ani;
+        let Anistate;
+        if(!Global.instance.OverFlag){
+            Global.instance.OverFlag = true;
+            console.log("游戏结束！！！");
+            failure = cc.instantiate(self.failure);
+            self.node.addChild(failure);
+            Ani = failure.getComponent(cc.Animation);//the animation of failure;
+            Anistate = Ani.play("shibai");//the state of Ani;
+            Anistate.speed = 1;
+            Anistate.repeatCount = 1;
+            self.scheduleOnce(()=>cc.director.pause(),1.5);
+        }
+        else{
+            return;
+        }
     }
 
     restart(){
-        this.destroy();
         cc.director.loadScene("MainScene");
+        cc.director.resume();
+        this.destroy();
     }
     /** 
      * 受到伤害，命数减一
@@ -512,4 +537,9 @@ export default class MainScene extends cc.Component {
         self.reduceLife();
         Global.instance.Injured = false;
     }
+
+    /**
+     * player与背景边缘的碰撞检测
+     */
+    
 }

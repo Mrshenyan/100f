@@ -38,6 +38,12 @@ export default class Global {
      * 受到伤害标志
      */
     public Injured = false;
+
+    /**
+     * 失败标志
+     */
+    public OverFlag = false;
+
     public static readonly instance = new Global();//全局下不可少
     private constructor() { }
     

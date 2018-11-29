@@ -73,11 +73,11 @@ export default class tanhuang extends cc.Component {
     onCollisionEnter(other,self){
         let rootself = this;//当前根节点
         Global.instance.KIND_FootHold = this.KIND_FootHold;
-        if(other.node.x<(-165)){
-            other.node.x = -165;
+        if(other.node.x<(-175)){
+            other.node.x = -175;
         }
-        if(other.node.x>165){
-            other.node.x = 165;
+        if(other.node.x>175){
+            other.node.x = 175;
         }
         if(!Global.instance.CollisionFlag){
             Global.instance.TheHolder = this.node;

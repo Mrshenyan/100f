@@ -72,11 +72,11 @@ export default class dici extends cc.Component {
         self.node.isHold = true;
         Global.instance.CollisionFlag = true;
         Global.instance.Injured = true;
-        if(other.node.x<(-165)){
-            other.node.x = -165;
+        if(other.node.x<(-175)){
+            other.node.x = -175;
         }
-        if(other.node.x>165){
-            other.node.x = 165;
+        if(other.node.x>175){
+            other.node.x = 175;
         }
         this.AniState = this.Ani.play("dici");
         if(!Global.instance.CollisionFlag){
@@ -85,18 +85,6 @@ export default class dici extends cc.Component {
             console.log(self);
             let spawn
             this.main.CheckLife();
-            // for(let i=Global.instance.reLife.length;i>=0;i--){//命数判断
-            //     let reLCount=0;
-            //     if(Global.instance.reLife[i].active){
-            //         reLCount++;
-            //     }
-            //     if(reLCount==0){
-            //         this.main.gameOver();
-            //     }
-            //     else{
-            //         Global.instance.reLife[i].active = false;
-            //     }
-            // }
             try {
                 spawn = cc.spawn(cc.callFunc(function(){
                     if(rootself.Ani==null){

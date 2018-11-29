@@ -63,7 +63,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 189
+        "__id__": 188
       }
     ],
     "_prefab": null,
@@ -149,7 +149,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 188
+        "__id__": 187
       }
     ],
     "_prefab": null,
@@ -5995,13 +5995,14 @@
     "_active": true,
     "_components": [
       {
+        "__id__": 185
+      },
+      {
         "__id__": 186
       }
     ],
-    "_prefab": {
-      "__id__": 187
-    },
-    "_id": "be5WmtR6lJL6cNMEfiiqJa",
+    "_prefab": null,
+    "_id": "079OFPDGBPU4171jwEKJHi",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -6023,8 +6024,8 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleX": 0.6,
+    "_scaleY": 0.6,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -6052,10 +6053,8 @@
         "__id__": 184
       }
     ],
-    "_prefab": {
-      "__id__": 185
-    },
-    "_id": "40jlGTSpxIM4X04wEAc1QK",
+    "_prefab": null,
+    "_id": "22O7jzVXlMUbBqIOdVF1Iv",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -6072,7 +6071,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 79,
+      "width": -79,
       "height": 102
     },
     "_rotationX": 0,
@@ -6100,7 +6099,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "9946bab3-4c9a-4ed8-bced-2beceaf721c9"
+      "__uuid__": "13189421-b720-46f0-b84b-37f4a299cac7"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -6116,17 +6115,6 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_atlas": null
-  },
-  {
-    "__type__": "cc.PrefabInfo",
-    "root": {
-      "__id__": 182
-    },
-    "asset": {
-      "__uuid__": "227be76a-ea2e-4141-84c7-f301a2f248b5"
-    },
-    "fileId": "40jlGTSpxIM4X04wEAc1QK",
-    "sync": false
   },
   {
     "__type__": "cc.Animation",
@@ -6147,15 +6135,15 @@
     "playOnLoad": false
   },
   {
-    "__type__": "cc.PrefabInfo",
-    "root": {
+    "__type__": "852955JeQZA3b0Sd7F/2V9x",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
       "__id__": 182
     },
-    "asset": {
-      "__uuid__": "227be76a-ea2e-4141-84c7-f301a2f248b5"
-    },
-    "fileId": "be5WmtR6lJL6cNMEfiiqJa",
-    "sync": false
+    "_enabled": true,
+    "label": null,
+    "text": "hello"
   },
   {
     "__type__": "cc.Animation",
