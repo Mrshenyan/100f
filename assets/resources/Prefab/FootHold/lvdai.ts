@@ -73,11 +73,11 @@ export default class lvdai extends cc.Component {
         Global.instance.TheHolder = this.node;
         // self.node.isHold = true;
         // Global.instance.CollisionFlag = true;
-        if(other.node.x<(-175)){
-            other.node.x = -175;
+        if(other.node.x<(-180)){
+            other.node.x = -180;
         }
-        if(other.node.x>175){
-            other.node.x = 175;
+        if(other.node.x>180){
+            other.node.x = 180;
         }
         if(!Global.instance.CollisionFlag){
             console.log(other);

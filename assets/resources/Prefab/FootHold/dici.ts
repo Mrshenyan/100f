@@ -72,11 +72,11 @@ export default class dici extends cc.Component {
         self.node.isHold = true;
         Global.instance.CollisionFlag = true;
         Global.instance.Injured = true;
-        if(other.node.x<(-175)){
-            other.node.x = -175;
+        if(other.node.x<(-180)){
+            other.node.x = -180;
         }
-        if(other.node.x>175){
-            other.node.x = 175;
+        if(other.node.x>180){
+            other.node.x = 180;
         }
         this.AniState = this.Ani.play("dici");
         if(!Global.instance.CollisionFlag){
@@ -100,3 +100,9 @@ export default class dici extends cc.Component {
         }
     }
 }
+
+/**
+ * 地刺部分还有逻辑没完善
+ * 应该是落下之后碰撞标志位没有及时重置
+ * 还有就是好像在地刺上移动一段距离就会自动下落
+ */

@@ -102,11 +102,11 @@ export default class MainScene extends cc.Component {
                 }
             }
         }
-        if(this.Player.x<-175){
-            this.Player.x = -175;
+        if(this.Player.x<-180){
+            this.Player.x = -180;
         }
-        if(this.Player.x>175){
-            this.Player.x = 175;
+        if(this.Player.x>180){
+            this.Player.x = 180;
         }
         if(this.Player.y<(-500)){
             this.gameOver();
@@ -274,10 +274,14 @@ export default class MainScene extends cc.Component {
         let Anistate;//the Ani's state
         let Anistring;//the name of Ani
         let moveByTime = 1.5;
-        let moveByDes = Global.instance.moveSpeed*120;
+        let moveByDes;
         let scheduleState:boolean = false;//the schedule's state
         let schedulePause:boolean = true;
         let target:cc.Button = null;//the target which is binged to schedule
+        if(!Global.instance.CollisionFlag){
+            Global.instance.moveSpeed = 0.5;
+        }
+        moveByDes = Global.instance.moveSpeed*160;
         if(self.LkeyDown){
             target = self.LEFT;
             moveByDes = -moveByDes;

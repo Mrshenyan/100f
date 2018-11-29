@@ -19,7 +19,6 @@ export default class Playcontroler extends cc.Component {
     }
 
     update (dt) {
-        // console.log("PlayerControlerUpdate碰撞标识："+Global.instance.CollisionFlag)
         if(this.node.y>315||this.node.y<(-500)){//碰到顶，或超出屏幕减一条命/碰到顶就下落。。
             Global.instance.CollisionFlag = false;
         }
@@ -34,37 +33,30 @@ export default class Playcontroler extends cc.Component {
             this.node.y = Global.instance.TheHolder.y 
                 + Global.instance.TheHolder.getComponent(name).NodeH-10;//here ,this way isnot a good Processing method,should be optimizated
         }
-        // console.log("PlayerControlerUpdate碰撞标识："+Global.instance.CollisionFlag)
     }
+
+    /**
+     * player与墙壁的碰撞检测
+     * @param other 被撞物体
+     * @param self 碰撞体
+     */
     onCollisionEnter(other,self){
         
         switch(other.node.name){
             case "Bg_0CollisionR":{
-                self.node.x = 175;
-                console.log(other);
-                console.log("我碰撞到了墙壁"+other.node.name);
-                console.log(self);
+                self.node.x = 180;
                 break;
             }
             case "Bg_0CollisionL":{
-                self.node.x = -175;
-                console.log(other);
-                console.log("我碰撞到了墙壁"+other.node.name);
-                console.log(self);
+                self.node.x = -180;
                 break;
             }
             case "Bg_1CollisionR":{
-                self.node.x = 175;
-                console.log(other);
-                console.log("我碰撞到了墙壁"+other.node.name);
-                console.log(self);
+                self.node.x = 180;
                 break;
             }
             case "Bg_1CollisionL":{
-                self.node.x = -175;
-                console.log(other);
-                console.log("我碰撞到了墙壁"+other.node.name);
-                console.log(self);
+                self.node.x = -180;
                 break;
             }
             default:{
