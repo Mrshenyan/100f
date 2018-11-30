@@ -72,14 +72,6 @@ export default class boli extends cc.Component {
         Global.instance.TheHolder = this.node;
         self.node.isHold = true;
         Global.instance.CollisionFlag = true;
-        this.main.CheckLife();
-        console.log(rootself);
-        if(other.node.x<(-175)){
-            other.node.x = -175;
-        }
-        if(other.node.x>175){
-            other.node.x = 175;
-        }
         this.scheduleOnce(function(){
             this.AniState = this.Ani.play("boli");
             rootself.node.isHold = false;

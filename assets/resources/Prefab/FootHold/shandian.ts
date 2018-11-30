@@ -39,12 +39,8 @@ export default class shandian extends cc.Component {
     update (dt) {
         this.node.active = true;
         this.node.y += 2;
-        if(this.node.isHold){
-            Global.instance.TheHolder = this.node;
-        }
         if(this.node.y>360){
             this.node.isHold = false;
-            Global.instance.CollisionFlag = false;
             this.node.destroy();
             Global.instance.CollisionFlag = false;
         }
@@ -69,12 +65,6 @@ export default class shandian extends cc.Component {
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
         Global.instance.Injured = true;
-        if(other.node.x<(-180)){
-            other.node.x = -180;
-        }
-        if(other.node.x>180){
-            other.node.x = 180;
-        }
         if(!Global.instance.CollisionFlag){
             console.log(other);
             console.log("6检测到碰撞！！！");

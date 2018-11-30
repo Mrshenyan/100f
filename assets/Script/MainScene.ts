@@ -54,32 +54,24 @@ export default class MainScene extends cc.Component {
         this.LifeDing.zIndex = 10;
         this.FHolderNode.zIndex = 9;
         Global.instance.setMN(this);
-        Global.instance.OverFlag = false;
         this.STime = Date.now();
-        let FHolder = cc.instantiate(this.GD);
-        this.FHolderNode.addChild(FHolder,10,"GD");
-        FHolder.getComponent("GD").init(this);
-        FHolder.isHold = false;
-        Global.instance.CollisionFlag = false;
+        let FHolder = cc.instantiate(this.boli);
+        this.FHolderNode.addChild(FHolder,10,"boli");
+        FHolder.getComponent("boli").init(this);
         this.Player.x = FHolder.x;
         this.Player.y = 250;
         this.Player.zIndex = 11;
-        
-        // Global.instance.reLife = this.LifeDing.children;
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
-        
     }
 
     start () {
-
     }
 
     update (dt) {
         this.MoveBg();
         let FHolder;
-
         if((this.ETime-this.STime)>2250){//控制落脚点之间的间距,间距200px
             this.STime = Date.now();
             FHolder = this.FootHoldGenerator();
@@ -87,7 +79,6 @@ export default class MainScene extends cc.Component {
         this.FHolder();
         this.reduceLife();
         if(Global.instance.CollisionFlag){
-            // console.log("MainSceneUpdateIF碰撞标识："+Global.instance.CollisionFlag)
             switch(Global.instance.KIND_FootHold){
                 case 2:{
                     this.Player.x -=2;
@@ -111,7 +102,9 @@ export default class MainScene extends cc.Component {
         if(this.Player.y<(-500)){
             this.gameOver();
         }
-        // console.log("MainSceneUpdate碰撞标识："+Global.instance.CollisionFlag)
+        if(Global.instance.reLife.length==0){
+            this.gameOver();
+        }
         this.ETime = Date.now();
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP,this.onKeyUp,this);
@@ -131,16 +124,12 @@ export default class MainScene extends cc.Component {
         for(let i=FHArray.length-1;i>=0;i--){
             if(FHArray[i].isHold){
                 let nameNode:string = FHArray[i].name;
-                // self.Player.y = FHArray[i].y + FHArray[i].getComponent(nameNode).NodeH;
-                // Global.instance.TheHolder = FHArray[i];
                 if(self.Player.x>(FHArray[i].x+80)){
                     Global.instance.CollisionFlag = false;
-                    // console.log("MainSceneFHold碰撞标识："+Global.instance.CollisionFlag)
                     FHArray[i].isHold = false;
                 }
-                if(self.Player.x<(FHArray[i].x-80)){
+                else if(self.Player.x<(FHArray[i].x-80)){
                     Global.instance.CollisionFlag = false;
-                    // console.log("MainSceneFHold碰撞标识："+Global.instance.CollisionFlag);
                     FHArray[i].isHold = false;
                 }
             }
@@ -173,6 +162,7 @@ export default class MainScene extends cc.Component {
     FootHoldGenerator(){
         let self = this;
         let KindHolder = Math.ceil(Math.random()*7);
+        KindHolder = 3;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -204,8 +194,8 @@ export default class MainScene extends cc.Component {
             case 4:{
                 FHolder = cc.instantiate(self.dici);
                 self.FHolderNode.addChild(FHolder,5,"dici");
-               FHolder.getComponent("dici").init(self);
-               FHolder.isHold = false;
+                FHolder.getComponent("dici").init(self);
+                FHolder.isHold = false;
                 console.log("产生第四种落脚点");
                 break;
             }
@@ -505,45 +495,29 @@ export default class MainScene extends cc.Component {
         let self = this;
         let Ls = new Array();
         let reLCount=0;
-        for(let i=0;i<self.LifeDing.children.length-1;i++){
+        for(let i=self.LifeDing.children.length-1;i>=0;i--){
             if(self.LifeDing.children[i].name=="lifeBG"){
+                if(Global.instance.CollisionFlag&&Global.instance.Injured){
+                    self.LifeDing.children[i].destroy();
+                    Global.instance.Injured = false;
+                }
                 Ls.push(self.LifeDing.children[i]);
             }
         }
-        for(let i=0;i<Ls.length-1;i++){
+        for(let i=self.LifeDing.children.length-1;i>=0;i--){
+            if(self.LifeDing.children[i].name=="lifeBG"){
+                if(Global.instance.CollisionWithDing){
+                    self.LifeDing.children[i].destroy();
+                    Global.instance.CollisionWithDing = false;
+                }
+                Ls.push(self.LifeDing.children[i]);
+            }
+        }
+        Global.instance.reLife = [];
+        for(let i=0;i<Ls.length;i++){
             if(Ls[i].active){
                 Global.instance.reLife.push(Ls[i]);//player剩余的命数
             }
-            if(i==0){
-                let len = Global.instance.reLife.length;
-                if(Global.instance.Injured){
-                    Global.instance.reLife[len-1].active = false;
-                }
-            }
-        }
-        if(Global.instance.reLife.length==0){
-            self.gameOver();
         }
     }
-
-    /**
-     * 检查命数
-     */
-    CheckLife(){
-        let self = this;
-        //if(Global.instance.Injured){
-        for(let i=Global.instance.reLife.length-1;i<0;i--){
-            if(i==Global.instance.reLife.length-1){
-                Global.instance.reLife[i].active = false;
-            }
-        }
-        //}
-        self.reduceLife();
-        Global.instance.Injured = false;
-    }
-
-    /**
-     * player与背景边缘的碰撞检测
-     */
-    
 }

@@ -9,11 +9,15 @@ export default class Global {
      */
     private MainNode = null;
     /**
-     * 碰撞标志，默认未碰撞，false
+     * 落脚点碰撞标志，默认未碰撞，false
      */
     public CollisionFlag = false;
     /**
-     * 碰撞标签
+     * 顶碰撞标准，默认未碰撞，false
+     */
+    public CollisionWithDing = false;
+    /**
+     * 落脚点碰撞标签
      */
     public KIND_FootHold = 0;
     /**

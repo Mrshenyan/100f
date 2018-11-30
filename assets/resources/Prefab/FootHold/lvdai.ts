@@ -41,9 +41,6 @@ export default class lvdai extends cc.Component {
     update (dt) {
         this.node.active = true;
         this.node.y += 2;
-        if(this.node.isHold){
-            Global.instance.TheHolder = this.node;
-        }
         if(this.node.y>360){
             this.node.isHold = false;
             this.node.destroy();
@@ -71,14 +68,6 @@ export default class lvdai extends cc.Component {
         let rootself = this;//当前根节点
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
-        // self.node.isHold = true;
-        // Global.instance.CollisionFlag = true;
-        if(other.node.x<(-180)){
-            other.node.x = -180;
-        }
-        if(other.node.x>180){
-            other.node.x = 180;
-        }
         if(!Global.instance.CollisionFlag){
             console.log(other);
             console.log("5检测到碰撞！！！");

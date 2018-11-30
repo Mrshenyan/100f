@@ -1,12 +1,10 @@
 import MainScene from "../../../Script/MainScene";
 import Global from "../../../Script/Global";
 
-
 const {ccclass, property} = cc._decorator;
 
-
 @ccclass
-export default class dici extends cc.Component {
+export default class NewClass extends cc.Component {
 
     /**
      * 落脚点类型 1：向左传送带
@@ -28,8 +26,10 @@ export default class dici extends cc.Component {
     Ani:cc.Animation = null;
     AniState = null;
 
+    // LIFE-CYCLE CALLBACKS:
+
     onLoad () {
-        this.node.y = -512;
+        this.node.y = -500;
         this.node.x = cc.randomMinus1To1()*140;
         this.Ani = this.node.getComponent(cc.Animation);
     }
@@ -40,69 +40,43 @@ export default class dici extends cc.Component {
 
     update (dt) {
         this.node.active = true;
-        this.node.y+=2;
-        if(this.node.isHold){
-            Global.instance.TheHolder = this.node;
-        }
+        this.node.y += 2;
         if(this.node.y>360){
+            if(this.node.isHold){
+                Global.instance.CollisionFlag = false;
+            }
             this.node.isHold = false;
             this.node.destroy();
-            Global.instance.CollisionFlag = false;
         }
-    }
 
-    /**
-     * 初始化函数
-     * @param main 主场景
-     */
-    public init(main:MainScene){
-        this.main = main;
-    }
-    /**
-     * 获取落脚点类型
-     */
-    public getKind(){
-        return this.KIND_FootHold;
+        if(!Global.instance.CollisionFlag){
+            this.node.isHold = false;
+        }
     }
 
     onCollisionEnter(other,self){
-        let rootself = this;//当前根节点
-        Global.instance.KIND_FootHold = this.KIND_FootHold;
+        let rootself = this;
+        console.log("我被撞到了");
+        // Global.instance.CollisionFlag = true;
         Global.instance.TheHolder = this.node;
-        self.node.isHold = true;
-        Global.instance.CollisionFlag = true;
+        this.node.isHold = true;
         Global.instance.Injured = true;
-        if(other.node.x<(-180)){
-            other.node.x = -180;
-        }
-        if(other.node.x>180){
-            other.node.x = 180;
-        }
-        this.AniState = this.Ani.play("dici");
         if(!Global.instance.CollisionFlag){
-            console.log(other);
-            console.log("4检测到碰撞！！！");
-            console.log(self);
+            Global.instance.CollisionFlag = true;
             let spawn
-            this.main.CheckLife();
-            try {
-                spawn = cc.spawn(cc.callFunc(function(){
-                    if(rootself.Ani==null){
-                        self.node.isHold = false;
-                        return;
-                    }
-                    rootself.AniState = rootself.Ani.play("dici");
-                }),cc.callFunc(function(){
-                }));
-            } catch (error) {
-                return;
-            }
+            spawn = cc.spawn(cc.callFunc(function(){
+                if(rootself.Ani==null){
+                    return;
+                }
+                rootself.AniState = rootself.Ani.play("dici");
+                rootself.AniState.repeatCount = 100;
+            }),cc.callFunc(function(){
+            }));
+            other.node.runAction(spawn);
         }
     }
-}
 
-/**
- * 地刺部分还有逻辑没完善
- * 应该是落下之后碰撞标志位没有及时重置
- * 还有就是好像在地刺上移动一段距离就会自动下落
- */
+    init(main:MainScene){
+        this.main = main;
+    }
+}

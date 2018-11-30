@@ -274,17 +274,6 @@
     "playOnLoad": false
   },
   {
-    "__type__": "8cd7f3tl5ZHsoB8OcVMklWh",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "isHold": false,
-    "NodeH": 56
-  },
-  {
     "__type__": "cc.BoxCollider",
     "_name": "",
     "_objFlags": 0,
@@ -303,6 +292,17 @@
       "width": 228.8,
       "height": 44.3
     }
+  },
+  {
+    "__type__": "6716cKnH+ZFHoUln1bHKGgS",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "isHold": false,
+    "NodeH": 56
   },
   {
     "__type__": "cc.PrefabInfo",
