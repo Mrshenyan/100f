@@ -40,6 +40,7 @@ export default class Opplvdai extends cc.Component {
     }
 
     update (dt) {
+        console.log(Global.instance.CollisionFlag);
         this.node.active = true;
         this.node.y += Global.instance.FHFallSpeed;
         if(this.node.isHold){

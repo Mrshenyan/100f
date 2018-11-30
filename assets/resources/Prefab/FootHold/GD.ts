@@ -36,6 +36,7 @@ export default class GD extends cc.Component {
     }
 
     update (dt) {
+        console.log(Global.instance.CollisionFlag);
         this.node.active = true;
         this.node.y += Global.instance.FHFallSpeed;
         if(this.node.y>360){

@@ -39,6 +39,7 @@ export default class tanhuang extends cc.Component {
     }
 
     update (dt) {
+        console.log(Global.instance.CollisionFlag);
         this.node.active = true;
         this.node.y += Global.instance.FHFallSpeed;
         if(this.node.y>360){
@@ -95,7 +96,7 @@ export default class tanhuang extends cc.Component {
                     Global.instance.CollisionFlag = false;
                 }));
                 rootself.scheduleOnce(function(){
-                    rootself.node.isHold = false;
+                    self.node.isHold = false;
                     Global.instance.CollisionFlag = false;
                     rootself.Ani.stop();
                 },0.512);

@@ -70,6 +70,7 @@ export default class MainScene extends cc.Component {
     }
 
     update (dt) {
+        console.log(Global.instance.CollisionFlag);
         this.MoveBg();
         let FHolder;
         if((this.ETime-this.STime)>2250){//控制落脚点之间的间距,间距200px
