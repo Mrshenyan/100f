@@ -7,12 +7,12 @@ export default class Playcontroler extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
-    parent:cc.Node = null;
+    // parent:cc.Node = null;
     MainScene:cc.Component = null;
-    // onLoad () {
-    //     this.parent = this.node.parent;
-    //     this.MainScene = this.parent.getComponent("MainScene");
-    // }
+    onLoad () {
+        // this.parent = this.node.parent;
+        this.MainScene = Global.instance.getMN();
+    }
 
     start () {
 
@@ -57,6 +57,10 @@ export default class Playcontroler extends cc.Component {
             }
             case "Bg_1CollisionL":{
                 self.node.x = -180;
+                break;
+            }
+            case "ding":{
+                Global.instance.CollisionWithDing = true;
                 break;
             }
             default:{

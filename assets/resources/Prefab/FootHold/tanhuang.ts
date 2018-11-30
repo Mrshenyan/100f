@@ -39,9 +39,6 @@ export default class tanhuang extends cc.Component {
     update (dt) {
         this.node.active = true;
         this.node.y += 2;
-        if(this.node.isHold){
-            Global.instance.TheHolder = this.node;
-        }
         if(this.node.y>360){
             this.node.isHold = false;
             this.node.destroy();
