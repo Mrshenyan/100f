@@ -40,7 +40,7 @@ export default class tanhuang extends cc.Component {
 
     update (dt) {
         this.node.active = true;
-        this.node.y += 2;
+        this.node.y += Global.instance.FHFallSpeed;
         if(this.node.y>360){
             this.node.isHold = false;
             this.node.destroy();
@@ -72,12 +72,6 @@ export default class tanhuang extends cc.Component {
     onCollisionEnter(other,self){
         let rootself = this;//当前根节点
         Global.instance.KIND_FootHold = this.KIND_FootHold;
-        if(other.node.x<(-180)){
-            other.node.x = -180;
-        }
-        if(other.node.x>180){
-            other.node.x = 180;
-        }
         if(!this.gainSc){
             this.main.Score();
             this.gainSc = true;
@@ -91,8 +85,6 @@ export default class tanhuang extends cc.Component {
             try {
                 spawn = cc.spawn(cc.callFunc(function(){
                     if(rootself.Ani==null){
-                        // self.node.isHold = false;
-                        // Global.instance.CollisionFlag = false;
                         return;
                     }
                     rootself.AniState = rootself.Ani.play("tanhuang");
@@ -111,8 +103,6 @@ export default class tanhuang extends cc.Component {
                 return;
             }
             other.node.runAction(spawn);
-            // self.node.isHold = true;
-            // Global.instance.CollisionFlag = true;
         }
     }
 }

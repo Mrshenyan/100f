@@ -38,7 +38,7 @@ export default class shandian extends cc.Component {
 
     update (dt) {
         this.node.active = true;
-        this.node.y += 2;
+        this.node.y += Global.instance.FHFallSpeed;
         if(this.node.y>360){
             this.node.isHold = false;
             this.node.destroy();
@@ -70,7 +70,6 @@ export default class shandian extends cc.Component {
             console.log(other);
             console.log("6检测到碰撞！！！");
             console.log(self);
-            // other.node.y = this.node.y+50;
             self.node.isHold = false;
             Global.instance.CollisionFlag = false;
         }

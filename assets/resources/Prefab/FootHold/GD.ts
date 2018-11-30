@@ -37,7 +37,7 @@ export default class GD extends cc.Component {
 
     update (dt) {
         this.node.active = true;
-        this.node.y += 2;
+        this.node.y += Global.instance.FHFallSpeed;
         if(this.node.y>360){
             this.node.isHold = false;
             this.node.destroy();

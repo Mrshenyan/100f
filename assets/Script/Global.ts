@@ -30,6 +30,11 @@ export default class Global {
     public moveSpeed = 1;
 
     /**
+     * 落脚点移动速度
+     */
+    public FHFallSpeed = 2;
+
+    /**
      * 碰撞的落脚点
      */
     public TheHolder;
@@ -50,7 +55,6 @@ export default class Global {
 
     public static readonly instance = new Global();//全局下不可少
     private constructor() { }
-    
 
     /**
      * 开始场景节点获取
@@ -78,4 +82,14 @@ export default class Global {
     public setMN(mn){
         this.MainNode = mn
     }
+
+
 }
+
+/**
+ * 这里应当添加当前局分数存储，
+ * 只需要游戏最高分
+ * 从服务器获取的分数也是先与本地分数对比，交换，
+ * 拿到最高分，上传；
+ * 之后刷新排行榜
+ */

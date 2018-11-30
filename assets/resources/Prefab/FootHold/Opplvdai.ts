@@ -41,7 +41,7 @@ export default class Opplvdai extends cc.Component {
 
     update (dt) {
         this.node.active = true;
-        this.node.y += 2;
+        this.node.y += Global.instance.FHFallSpeed;
         if(this.node.isHold){
             Global.instance.TheHolder = this.node;
         }

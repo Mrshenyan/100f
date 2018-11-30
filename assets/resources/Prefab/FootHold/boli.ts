@@ -38,7 +38,7 @@ export default class boli extends cc.Component {
 
     update (dt) {
         this.node.active = true;
-        this.node.y+=2;
+        this.node.y += Global.instance.FHFallSpeed;
         if(this.node.isHold){
             Global.instance.TheHolder = this.node;
         }
@@ -66,7 +66,7 @@ export default class boli extends cc.Component {
     }
 
     onCollisionEnter(other,self){
-        let spawn;
+        // let spawn;
         let rootself = this;
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;

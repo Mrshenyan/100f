@@ -19,9 +19,6 @@ export default class Playcontroler extends cc.Component {
     }
 
     update (dt) {
-        if(this.node.y>315||this.node.y<(-500)){//碰到顶，或超出屏幕减一条命/碰到顶就下落。。
-            Global.instance.CollisionFlag = false;
-        }
         if(!Global.instance.CollisionFlag){
             this.node.y -= Global.instance.InitSpeed;
         }

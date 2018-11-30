@@ -55,9 +55,9 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.zIndex = 9;
         Global.instance.setMN(this);
         this.STime = Date.now();
-        let FHolder = cc.instantiate(this.GD);
-        this.FHolderNode.addChild(FHolder,10,"GD");
-        FHolder.getComponent("GD").init(this);
+        let FHolder = cc.instantiate(this.dici);
+        this.FHolderNode.addChild(FHolder,10,"dici");
+        FHolder.getComponent("dici").init(this);
         this.Player.x = FHolder.x;
         this.Player.y = 250;
         this.Player.zIndex = 11;
@@ -103,7 +103,7 @@ export default class MainScene extends cc.Component {
             this.gameOver();
         }
         if(Global.instance.reLife.length==0){
-            this.gameOver();
+            // this.gameOver();
         }
         this.ETime = Date.now();
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
@@ -164,7 +164,7 @@ export default class MainScene extends cc.Component {
     FootHoldGenerator(){
         let self = this;
         let KindHolder = Math.ceil(Math.random()*7);
-        // KindHolder = 3;
+        // KindHolder = 4;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -271,7 +271,7 @@ export default class MainScene extends cc.Component {
         let schedulePause:boolean = true;
         let target:cc.Button = null;//the target which is binged to schedule
         if(!Global.instance.CollisionFlag){
-            Global.instance.moveSpeed = 0.5;
+            Global.instance.moveSpeed = 1;
         }
         moveByDes = Global.instance.moveSpeed*160;
         if(self.LkeyDown){
@@ -286,7 +286,7 @@ export default class MainScene extends cc.Component {
             run.active = true;
             switch(Global.instance.KIND_FootHold){
                 case 2:{
-                    moveByTime-=0.5;
+                    moveByTime-=0.4;
                     break;
                 }
                 case 5:{
@@ -311,7 +311,7 @@ export default class MainScene extends cc.Component {
                     break;
                 }
                 case 5:{
-                    moveByTime-=0.5;
+                    moveByTime-=0.4;
                     break;
                 }
             };
@@ -535,3 +535,7 @@ export default class MainScene extends cc.Component {
         scLabel.string = sc.toString();
     }
 }
+/**
+ * 这边，玩家死亡之后销魂游戏主场景，打开游戏结算场景
+ * 进行后续的排行榜绘制。
+ */

@@ -40,7 +40,7 @@ export default class lvdai extends cc.Component {
 
     update (dt) {
         this.node.active = true;
-        this.node.y += 2;
+        this.node.y += Global.instance.FHFallSpeed;
         if(this.node.y>360){
             this.node.isHold = false;
             this.node.destroy();
@@ -76,6 +76,5 @@ export default class lvdai extends cc.Component {
             self.node.isHold = true;
             Global.instance.CollisionFlag = true;
         }
-        // console.log("lvdaionCollisionEnter碰撞标识："+Global.instance.CollisionFlag);
     }
 }
