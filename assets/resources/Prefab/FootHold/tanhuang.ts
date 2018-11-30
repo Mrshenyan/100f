@@ -17,6 +17,8 @@ export default class tanhuang extends cc.Component {
     @property(Number)
     public NodeH:number = 30;
 
+
+    private gainSc = false;
     private main:MainScene = null;
     /**
      * 落脚点对应动画
@@ -75,6 +77,10 @@ export default class tanhuang extends cc.Component {
         }
         if(other.node.x>180){
             other.node.x = 180;
+        }
+        if(!this.gainSc){
+            this.main.Score();
+            this.gainSc = true;
         }
         if(!Global.instance.CollisionFlag){
             Global.instance.TheHolder = this.node;

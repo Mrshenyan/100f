@@ -65,6 +65,7 @@ export default class shandian extends cc.Component {
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
         Global.instance.Injured = true;
+        this.main.Score();
         if(!Global.instance.CollisionFlag){
             console.log(other);
             console.log("6检测到碰撞！！！");

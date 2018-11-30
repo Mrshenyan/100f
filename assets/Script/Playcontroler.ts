@@ -41,7 +41,6 @@ export default class Playcontroler extends cc.Component {
      * @param self 碰撞体
      */
     onCollisionEnter(other,self){
-        
         switch(other.node.name){
             case "Bg_0CollisionR":{
                 self.node.x = 180;

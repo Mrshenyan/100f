@@ -61,6 +61,7 @@ export default class NewClass extends cc.Component {
         Global.instance.TheHolder = this.node;
         this.node.isHold = true;
         Global.instance.Injured = true;
+        this.main.Score();
         if(!Global.instance.CollisionFlag){
             Global.instance.CollisionFlag = true;
             let spawn

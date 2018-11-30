@@ -70,6 +70,7 @@ export default class Opplvdai extends cc.Component {
     onCollisionEnter(other,self){
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
+        this.main.Score();
         if(!Global.instance.CollisionFlag){
             console.log(other);
             console.log("2检测到碰撞！！！");

@@ -55,9 +55,9 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.zIndex = 9;
         Global.instance.setMN(this);
         this.STime = Date.now();
-        let FHolder = cc.instantiate(this.boli);
-        this.FHolderNode.addChild(FHolder,10,"boli");
-        FHolder.getComponent("boli").init(this);
+        let FHolder = cc.instantiate(this.GD);
+        this.FHolderNode.addChild(FHolder,10,"GD");
+        FHolder.getComponent("GD").init(this);
         this.Player.x = FHolder.x;
         this.Player.y = 250;
         this.Player.zIndex = 11;
@@ -127,10 +127,12 @@ export default class MainScene extends cc.Component {
                 if(self.Player.x>(FHArray[i].x+80)){
                     Global.instance.CollisionFlag = false;
                     FHArray[i].isHold = false;
+                    // this.Score();
                 }
                 else if(self.Player.x<(FHArray[i].x-80)){
                     Global.instance.CollisionFlag = false;
                     FHArray[i].isHold = false;
+                    // this.Score();
                 }
             }
         }
@@ -162,7 +164,7 @@ export default class MainScene extends cc.Component {
     FootHoldGenerator(){
         let self = this;
         let KindHolder = Math.ceil(Math.random()*7);
-        KindHolder = 3;
+        // KindHolder = 3;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -487,6 +489,7 @@ export default class MainScene extends cc.Component {
         cc.director.loadScene("MainScene");
         cc.director.resume();
         this.destroy();
+        // this.Score();
     }
     /** 
      * 受到伤害，命数减一
@@ -519,5 +522,16 @@ export default class MainScene extends cc.Component {
                 Global.instance.reLife.push(Ls[i]);//player剩余的命数
             }
         }
+    }
+
+    /**
+     * 每下落一层，分数加一。
+     */
+    Score(){
+        let self = this.node;
+        let scLabel = this.LifeDing.getChildByName("Floor").getComponent(cc.Label);
+        let sc = parseInt(scLabel.string);
+        sc++;
+        scLabel.string = sc.toString();
     }
 }
