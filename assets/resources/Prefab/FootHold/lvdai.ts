@@ -71,9 +71,9 @@ export default class lvdai extends cc.Component {
         Global.instance.TheHolder = this.node;
         this.main.Score();
         if(!Global.instance.CollisionFlag){
-            console.log(other);
-            console.log("5检测到碰撞！！！");
-            console.log(self);
+            // console.log(other);
+            // console.log("5检测到碰撞！！！");
+            // console.log(self);
             self.node.isHold = true;
             Global.instance.CollisionFlag = true;
         }

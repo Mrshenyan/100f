@@ -73,9 +73,9 @@ export default class Opplvdai extends cc.Component {
         Global.instance.TheHolder = this.node;
         this.main.Score();
         if(!Global.instance.CollisionFlag){
-            console.log(other);
-            console.log("2检测到碰撞！！！");
-            console.log(self);
+            // console.log(other);
+            // console.log("2检测到碰撞！！！");
+            // console.log(self);
             // other.node.y = this.node.y+50;
             self.node.isHold = true;
             Global.instance.CollisionFlag = true;

@@ -79,9 +79,9 @@ export default class tanhuang extends cc.Component {
         }
         if(!Global.instance.CollisionFlag){
             Global.instance.TheHolder = this.node;
-            console.log(other);
-            console.log("7检测到碰撞！！！");
-            console.log(self);
+            // console.log(other);
+            // console.log("7检测到碰撞！！！");
+            // console.log(self);
             let spawn
             try {
                 spawn = cc.spawn(cc.callFunc(function(){

@@ -175,7 +175,7 @@ export default class MainScene extends cc.Component {
                 self.FHolderNode.addChild(FHolder,5,"GD");
                 FHolder.getComponent("GD").init(self);
                 FHolder.isHold = false;
-                console.log("产生第一种落脚点");
+                // console.log("产生第一种落脚点");
                 break;
             }
             case 2:{
@@ -183,7 +183,7 @@ export default class MainScene extends cc.Component {
                 self.FHolderNode.addChild(FHolder,5,"Opplvdai");
                 FHolder.getComponent("Opplvdai").init(self);
                 FHolder.isHold = false;
-                console.log("产生第二种落脚点");
+                // console.log("产生第二种落脚点");
                 break;
             }
             case 3:{
@@ -191,7 +191,7 @@ export default class MainScene extends cc.Component {
                 self.FHolderNode.addChild(FHolder,5,"boli");
                 FHolder.getComponent("boli").init(self);
                 FHolder.isHold = false;
-                console.log("产生第三种落脚点");
+                // console.log("产生第三种落脚点");
                 break;
             }
             case 4:{
@@ -199,7 +199,7 @@ export default class MainScene extends cc.Component {
                 self.FHolderNode.addChild(FHolder,5,"dici");
                 FHolder.getComponent("dici").init(self);
                 FHolder.isHold = false;
-                console.log("产生第四种落脚点");
+                // console.log("产生第四种落脚点");
                 break;
             }
             case 5:{
@@ -207,7 +207,7 @@ export default class MainScene extends cc.Component {
                 self.FHolderNode.addChild(FHolder,5,"lvdai");
                 FHolder.getComponent("lvdai").init(self);
                 FHolder.isHold = false;
-                console.log("产生第五种落脚点");
+                // console.log("产生第五种落脚点");
                 break;
             }
             case 6:{
@@ -215,7 +215,7 @@ export default class MainScene extends cc.Component {
                 self.FHolderNode.addChild(FHolder,5,"shandian");
                 FHolder.getComponent("shandian").init(self);
                 FHolder.isHold = false;
-                console.log("产生第五种落脚点");
+                // console.log("产生第五种落脚点");
                 break;
             }
             case 7:{
@@ -223,7 +223,7 @@ export default class MainScene extends cc.Component {
                 self.FHolderNode.addChild(FHolder,5,"tanhuang");
                 FHolder.getComponent("tanhuang").init(self);
                 FHolder.isHold = false;
-                console.log("产生第五种落脚点");
+                // console.log("产生第五种落脚点");
                 break;
             }
             default:{
@@ -231,7 +231,7 @@ export default class MainScene extends cc.Component {
                 self.FHolderNode.addChild(FHolder,5,"GD");
                 FHolder.getComponent("GD").init(self);
                 FHolder.isHold = false;
-                console.log("默认产生第一种落脚点");
+                // console.log("默认产生第一种落脚点");
             }
                 break;
         }
@@ -272,7 +272,7 @@ export default class MainScene extends cc.Component {
         let schedulePause:boolean = true;
         let target:cc.Button = null;//the target which is binged to schedule
         if(!Global.instance.CollisionFlag){
-            Global.instance.moveSpeed = 1;
+            Global.instance.moveSpeed = 0.5;
         }
         moveByDes = Global.instance.moveSpeed*160;
         if(self.LkeyDown){
@@ -384,7 +384,7 @@ export default class MainScene extends cc.Component {
         switch(event.keyCode){
             case cc.KEY.left:{
                 self.LkeyDown = true;
-                console.log("我按下了左键");
+                // console.log("我按下了左键");
                 stand.active = false;
                 runRight.active = false;
                 run.active = true;
@@ -414,7 +414,7 @@ export default class MainScene extends cc.Component {
             }
             case cc.KEY.right:{
                 self.RkeyDown = true;
-                console.log("我按下了右键");
+                // console.log("我按下了右键");
                 stand.active = false;
                 runRight.active = true;
                 run.active = false;

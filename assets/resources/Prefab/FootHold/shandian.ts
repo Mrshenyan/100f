@@ -68,9 +68,9 @@ export default class shandian extends cc.Component {
         Global.instance.Injured = true;
         this.main.Score();
         if(!Global.instance.CollisionFlag){
-            console.log(other);
-            console.log("6检测到碰撞！！！");
-            console.log(self);
+            // console.log(other);
+            // console.log("6检测到碰撞！！！");
+            // console.log(self);
             self.node.isHold = false;
             Global.instance.CollisionFlag = false;
         }
