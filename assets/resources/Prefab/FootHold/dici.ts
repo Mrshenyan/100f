@@ -89,6 +89,6 @@ export default class NewClass extends cc.Component {
 /**
  * 地刺的问题貌似还没有解决
  * 不知道哪里有问题
- * 地磁的问题到底是碰撞标志位被修改了。
+ * 地刺的问题到底是碰撞标志位被修改了。
  * 
  */

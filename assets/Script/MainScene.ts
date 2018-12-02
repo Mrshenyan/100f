@@ -534,6 +534,11 @@ export default class MainScene extends cc.Component {
         let sc = parseInt(scLabel.string);
         sc++;
         scLabel.string = sc.toString();
+        let lv = sc%50;
+        if(lv>Global.instance.LevelAddFlag){
+            Global.instance.LevelAddFlag = lv;
+            Global.instance.InitSpeed++;//每下落50曾，player下落速度加1
+        }
     }
 }
 /**
