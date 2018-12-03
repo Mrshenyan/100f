@@ -17,17 +17,17 @@
       "scaleX": [
         {
           "frame": 0,
-          "value": 0.6
+          "value": 1
         },
         {
           "frame": 0.31666666666666665,
-          "value": 0.6
+          "value": 1
         }
       ],
       "scaleY": [
         {
           "frame": 0,
-          "value": 0.6
+          "value": 1
         },
         {
           "frame": 0.05,
@@ -43,7 +43,7 @@
         },
         {
           "frame": 0.31666666666666665,
-          "value": 0.6
+          "value": 1
         }
       ],
       "position": [

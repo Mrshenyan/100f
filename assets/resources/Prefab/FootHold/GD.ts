@@ -36,13 +36,15 @@ export default class GD extends cc.Component {
     }
 
     update (dt) {
-        console.log(Global.instance.CollisionFlag);
+        // console.log(Global.instance.CollisionFlag);
         this.node.active = true;
         this.node.y += Global.instance.FHFallSpeed;
         if(this.node.y>360){
-            this.node.isHold = false;
+            if(this.node.isHold){
+                this.node.isHold = false;
+                Global.instance.CollisionFlag = false;
+            }
             this.node.destroy();
-            Global.instance.CollisionFlag = false;
         }
         // this.main.reduceLife();
     }

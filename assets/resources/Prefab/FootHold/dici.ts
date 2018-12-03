@@ -38,23 +38,21 @@ export default class NewClass extends cc.Component {
     }
 
     update (dt) {
-        console.log(Global.instance.CollisionFlag);
+        // console.log(Global.instance.CollisionFlag);
         this.node.active = true;
         this.node.y += Global.instance.FHFallSpeed;
+        if(!Global.instance.CollisionFlag){
+            this.node.isHold = false;
+        }
+        if(this.node.isHold){
+            Global.instance.CollisionFlag = true;
+        }
         if(this.node.y>360){
             if(this.node.isHold){
                 Global.instance.CollisionFlag = false;
                 this.node.isHold = false;
             }
-            this.node.isHold = false;
             this.node.destroy();
-        }
-        if(!Global.instance.CollisionFlag){
-            this.node.isHold = false;
-        }
-        
-        if(this.node.isHold){
-            Global.instance.CollisionFlag = true;
         }
     }
     /**

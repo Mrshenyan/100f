@@ -70,7 +70,7 @@ export default class MainScene extends cc.Component {
     }
 
     update (dt) {
-        console.log(Global.instance.CollisionFlag);
+        // console.log(Global.instance.CollisionFlag);
         this.MoveBg();
         let FHolder;
         if((this.ETime-this.STime)>2250){//控制落脚点之间的间距,间距200px
@@ -126,8 +126,11 @@ export default class MainScene extends cc.Component {
             if(FHArray[i].isHold){
                 let nameNode:string = FHArray[i].name;
                 if(self.Player.x>(FHArray[i].x+80)){
+                    
+                    console.log("打印出地刺已经溢出的的落脚标志看看（FHolder）："+FHArray[i].isHold);
                     Global.instance.CollisionFlag = false;
                     FHArray[i].isHold = false;
+                    
                     // this.Score();
                 }
                 else if(self.Player.x<(FHArray[i].x-80)){
@@ -135,6 +138,10 @@ export default class MainScene extends cc.Component {
                     FHArray[i].isHold = false;
                     // this.Score();
                 }
+            }
+            if(FHArray[i].name == "dici"){
+                console.log("打印出地刺的碰撞标志看看："+Global.instance.CollisionFlag);
+                console.log("打印出地刺的落脚标志看看："+FHArray[i].isHold);
             }
         }
     }
@@ -501,7 +508,7 @@ export default class MainScene extends cc.Component {
         let reLCount=0;
         for(let i=self.LifeDing.children.length-1;i>=0;i--){
             if(self.LifeDing.children[i].name=="lifeBG"){
-                if(Global.instance.CollisionFlag&&Global.instance.Injured){
+                if(Global.instance.Injured){
                     self.LifeDing.children[i].destroy();
                     Global.instance.Injured = false;
                 }
