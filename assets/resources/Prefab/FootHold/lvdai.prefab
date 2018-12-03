@@ -77,10 +77,13 @@
       },
       {
         "__id__": 55
+      },
+      {
+        "__id__": 56
       }
     ],
     "_prefab": {
-      "__id__": 56
+      "__id__": 57
     },
     "_id": "",
     "_opacity": 255,
@@ -1717,6 +1720,26 @@
     "_enabled": true,
     "isHold": false,
     "NodeH": 60
+  },
+  {
+    "__type__": "cc.BoxCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "tag": 0,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 4.5
+    },
+    "_size": {
+      "__type__": "cc.Size",
+      "width": 200,
+      "height": 50
+    }
   },
   {
     "__type__": "cc.PrefabInfo",

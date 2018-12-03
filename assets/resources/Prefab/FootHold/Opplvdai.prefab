@@ -77,13 +77,10 @@
       },
       {
         "__id__": 55
-      },
-      {
-        "__id__": 56
       }
     ],
     "_prefab": {
-      "__id__": 57
+      "__id__": 56
     },
     "_id": "",
     "_opacity": 255,
@@ -1716,17 +1713,6 @@
     "_enabled": true,
     "isHold": false,
     "NodeH": 60
-  },
-  {
-    "__type__": "c3fcdYkt9FMtJg2+HeTUXjw",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "isHold": false,
-    "NodeH": 69
   },
   {
     "__type__": "cc.PrefabInfo",
