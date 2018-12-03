@@ -488,6 +488,7 @@ export default class MainScene extends cc.Component {
             Anistate = Ani.play("shibai");//the state of Ani;
             Anistate.speed = 1;
             Anistate.repeatCount = 1;
+            self.StoregeScore();
             self.scheduleOnce(()=>cc.director.pause(),0.48);
         }
         else{
