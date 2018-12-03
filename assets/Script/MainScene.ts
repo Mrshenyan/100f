@@ -79,14 +79,14 @@ export default class MainScene extends cc.Component {
         }
         this.FHolder();
         this.reduceLife();
-        if(Global.instance.CollisionFlag){
+        if(Global.instance.CollisionFlag){//左右传送带减速
             switch(Global.instance.KIND_FootHold){
                 case 2:{
-                    this.Player.x -=2;
+                    this.Player.x -=1.2;
                     break;
                 }
                 case 5:{
-                    this.Player.x +=2;
+                    this.Player.x +=1.2;
                     break;
                 }
                 default:{

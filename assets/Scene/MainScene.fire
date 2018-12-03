@@ -1790,9 +1790,7 @@
     "root": {
       "__id__": 42
     },
-    "asset": {
-      "__uuid__": "6d620c34-1b5a-4520-81eb-0341c0cdd78d"
-    },
+    "asset": null,
     "fileId": "20tFyRVA1C7YrZc0yiUOw/",
     "sync": false
   },
@@ -1804,14 +1802,8 @@
       "__id__": 42
     },
     "_enabled": true,
-    "_defaultClip": {
-      "__uuid__": "740bee97-0b1f-49c4-b210-2378db0a5e0d"
-    },
-    "_clips": [
-      {
-        "__uuid__": "740bee97-0b1f-49c4-b210-2378db0a5e0d"
-      }
-    ],
+    "_defaultClip": null,
+    "_clips": [],
     "playOnLoad": false
   },
   {
@@ -1830,9 +1822,7 @@
     "root": {
       "__id__": 42
     },
-    "asset": {
-      "__uuid__": "6d620c34-1b5a-4520-81eb-0341c0cdd78d"
-    },
+    "asset": null,
     "fileId": "36hIVrIAtM57gFimgdRvb2",
     "sync": false
   },
@@ -1980,9 +1970,7 @@
     "root": {
       "__id__": 49
     },
-    "asset": {
-      "__uuid__": "227be76a-ea2e-4141-84c7-f301a2f248b5"
-    },
+    "asset": null,
     "fileId": "40jlGTSpxIM4X04wEAc1QK",
     "sync": false
   },
@@ -2020,9 +2008,7 @@
     "root": {
       "__id__": 49
     },
-    "asset": {
-      "__uuid__": "227be76a-ea2e-4141-84c7-f301a2f248b5"
-    },
+    "asset": null,
     "fileId": "be5WmtR6lJL6cNMEfiiqJa",
     "sync": false
   },
@@ -2172,9 +2158,7 @@
     "root": {
       "__id__": 56
     },
-    "asset": {
-      "__uuid__": "c3f1a898-c4f2-46e9-8f49-f9094feaaf6b"
-    },
+    "asset": null,
     "fileId": "32mH/2ogxMcKdz/9KV08nI",
     "sync": false
   },
@@ -2212,9 +2196,7 @@
     "root": {
       "__id__": 56
     },
-    "asset": {
-      "__uuid__": "c3f1a898-c4f2-46e9-8f49-f9094feaaf6b"
-    },
+    "asset": null,
     "fileId": "59ls+sMo1K9p0jxPII9Mqp",
     "sync": false
   },
@@ -2824,28 +2806,28 @@
     },
     "_enabled": true,
     "boli": {
-      "__uuid__": "e3a95c96-e9d7-4389-9876-f3ae2dfc8c5d"
+      "__uuid__": "f491440c-802b-4fe0-af0a-a723921a69b3"
     },
     "dici": {
-      "__uuid__": "3d929f60-c51b-444c-bc25-0ec5c66c82f7"
+      "__uuid__": "4b68f660-8187-48d5-94dd-cc0806b6066c"
     },
     "lvdai": {
-      "__uuid__": "9f807c89-2aa1-4443-abba-ad994cfc1e4d"
+      "__uuid__": "50d06a62-c5f5-4006-bedd-31269825be06"
     },
     "shandian": {
-      "__uuid__": "bd0bca03-3cad-4117-aa6d-1dbcf3e2be0b"
+      "__uuid__": "768609d9-e5dc-46e0-959b-72ced48a16e4"
     },
     "tanhuang": {
-      "__uuid__": "5f8a3989-cfe3-455c-81fb-e686db5764a0"
+      "__uuid__": "79b1fce5-471a-43e7-b84a-e645a30e2b87"
     },
     "Opplvdai": {
-      "__uuid__": "9a7cb527-61a5-42b7-9a1b-e009861df5fd"
+      "__uuid__": "8d81e8d7-8bec-4da8-ba20-3800b78dbe18"
     },
     "GD": {
-      "__uuid__": "f1b3b136-ac03-4ea1-be3e-ebbfb13c650f"
+      "__uuid__": "4805a27d-7055-4c34-bc1c-f097d1100fca"
     },
     "failure": {
-      "__uuid__": "e8bd22ad-1976-4628-b295-3ea6130d7908"
+      "__uuid__": "e5a6633e-87fa-4ad6-909d-4e4694956fff"
     },
     "Player": {
       "__id__": 41

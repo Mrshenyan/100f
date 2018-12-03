@@ -26,13 +26,10 @@
       },
       {
         "__id__": 6
-      },
-      {
-        "__id__": 7
       }
     ],
     "_prefab": {
-      "__id__": 8
+      "__id__": 7
     },
     "_id": "",
     "_opacity": 255,
@@ -51,8 +48,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 240,
-      "height": 70
+      "width": 0,
+      "height": 0
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -68,7 +65,7 @@
     "_localZOrder": 0,
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
-    "groupIndex": 2
+    "groupIndex": 0
   },
   {
     "__type__": "cc.Node",
@@ -105,7 +102,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 240,
+      "width": 257,
       "height": 69
     },
     "_rotationX": 0,
@@ -136,7 +133,7 @@
       "__uuid__": "79b73fe5-d592-4a77-902f-8715e5f6855c"
     },
     "_type": 0,
-    "_sizeMode": 0,
+    "_sizeMode": 1,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -156,7 +153,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "f1b3b136-ac03-4ea1-be3e-ebbfb13c650f"
+      "__uuid__": "4805a27d-7055-4c34-bc1c-f097d1100fca"
     },
     "fileId": "11vJramZxMxqrQrVqIYcld",
     "sync": false
@@ -180,26 +177,6 @@
     "playOnLoad": false
   },
   {
-    "__type__": "cc.BoxCollider",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "tag": 1,
-    "_offset": {
-      "__type__": "cc.Vec2",
-      "x": -0.7,
-      "y": 10.4
-    },
-    "_size": {
-      "__type__": "cc.Size",
-      "width": 200,
-      "height": 48.4
-    }
-  },
-  {
     "__type__": "3b92asAQBZGJZpKL/qRD3e3",
     "_name": "",
     "_objFlags": 0,
@@ -208,7 +185,7 @@
     },
     "_enabled": true,
     "isHold": false,
-    "NodeH": 66
+    "NodeH": 70
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -216,7 +193,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "f1b3b136-ac03-4ea1-be3e-ebbfb13c650f"
+      "__uuid__": "4805a27d-7055-4c34-bc1c-f097d1100fca"
     },
     "fileId": "06fA3uJ15AO4wSxtiyTPHL",
     "sync": false

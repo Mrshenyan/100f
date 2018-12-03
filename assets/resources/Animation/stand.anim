@@ -1,49 +1,18 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "stand",
+  "_name": "zhanli",
   "_objFlags": 0,
   "_rawFiles": null,
-  "_duration": 0.2833333333333333,
+  "_duration": 0.5833333333333334,
   "sample": 60,
   "speed": 1,
-  "wrapMode": 1,
+  "wrapMode": 2,
   "curveData": {
     "paths": {
-      "st0": {
+      "cx0": {
         "comps": {
           "cc.Sprite": {
-            "spriteFrame": [
-              {
-                "frame": 0,
-                "value": {
-                  "__uuid__": "0e77c28b-854e-41e2-822f-af6e4512a1e5"
-                }
-              },
-              {
-                "frame": 0.06666666666666667,
-                "value": {
-                  "__uuid__": "b3612fed-9c35-422d-aa07-de3f7ed82430"
-                }
-              },
-              {
-                "frame": 0.13333333333333333,
-                "value": {
-                  "__uuid__": "0cca4095-0898-483e-8c69-b475ef9520d8"
-                }
-              },
-              {
-                "frame": 0.2,
-                "value": {
-                  "__uuid__": "a1f583de-ba75-4d0e-9a07-c9eb13097927"
-                }
-              },
-              {
-                "frame": 0.26666666666666666,
-                "value": {
-                  "__uuid__": "5a747f1d-0556-4295-be70-e985deecdff9"
-                }
-              }
-            ]
+            "spriteFrame": []
           }
         },
         "props": {
@@ -51,35 +20,153 @@
             {
               "frame": 0,
               "value": [
-                1,
+                0,
+                42
+              ]
+            },
+            {
+              "frame": 0.31666666666666665,
+              "value": [
+                0,
+                43
+              ]
+            },
+            {
+              "frame": 0.5833333333333334,
+              "value": [
+                0,
+                42
+              ]
+            }
+          ]
+        }
+      },
+      "cx3": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -8,
+                -16
+              ]
+            }
+          ]
+        }
+      },
+      "cx30": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                8,
+                -16
+              ]
+            }
+          ]
+        }
+      },
+      "cx2": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                -18,
+                3
+              ]
+            },
+            {
+              "frame": 0.31666666666666665,
+              "value": [
+                -17,
+                3
+              ]
+            },
+            {
+              "frame": 0.5833333333333334,
+              "value": [
+                -18,
+                3
+              ]
+            }
+          ]
+        }
+      },
+      "cx20": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                18,
+                3
+              ]
+            },
+            {
+              "frame": 0.31666666666666665,
+              "value": [
+                17,
+                3
+              ]
+            },
+            {
+              "frame": 0.5833333333333334,
+              "value": [
+                18,
+                3
+              ]
+            }
+          ]
+        }
+      },
+      "cx1": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": []
+          }
+        },
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                0,
                 0
               ]
             },
             {
-              "frame": 0.06666666666666667,
+              "frame": 0.31666666666666665,
               "value": [
-                1,
-                0
+                0,
+                2
               ]
             },
             {
-              "frame": 0.13333333333333333,
+              "frame": 0.5833333333333334,
               "value": [
-                1,
-                0
-              ]
-            },
-            {
-              "frame": 0.2,
-              "value": [
-                1,
-                0
-              ]
-            },
-            {
-              "frame": 0.26666666666666666,
-              "value": [
-                1,
+                0,
                 0
               ]
             }
