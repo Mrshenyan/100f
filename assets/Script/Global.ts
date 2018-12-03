@@ -58,6 +58,14 @@ export default class Global {
      */
     LevelAddFlag = 0;
 
+    /**
+     * 本地分数存储
+     */
+    public LocalScore = {
+        BestScore:0,
+        SecondScore:0,
+        ThirdScore:0
+    }
     public static readonly instance = new Global();//全局下不可少
     private constructor() { }
 

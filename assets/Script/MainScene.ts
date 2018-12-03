@@ -55,9 +55,9 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.zIndex = 9;
         Global.instance.setMN(this);
         this.STime = Date.now();
-        let FHolder = cc.instantiate(this.dici);
-        this.FHolderNode.addChild(FHolder,10,"dici");
-        FHolder.getComponent("dici").init(this);
+        let FHolder = cc.instantiate(this.tanhuang);
+        this.FHolderNode.addChild(FHolder,10,"tanhuang");
+        FHolder.getComponent("tanhuang").init(this);
         this.Player.x = FHolder.x;
         this.Player.y = 250;
         this.Player.zIndex = 11;
@@ -104,7 +104,7 @@ export default class MainScene extends cc.Component {
             this.gameOver();
         }
         if(Global.instance.reLife.length==0){
-            // this.gameOver();
+            this.gameOver();
         }
         this.ETime = Date.now();
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
@@ -124,13 +124,10 @@ export default class MainScene extends cc.Component {
         let Anistate;//the state of Ani;
         for(let i=FHArray.length-1;i>=0;i--){
             if(FHArray[i].isHold){
-                let nameNode:string = FHArray[i].name;
+                // let nameNode:string = FHArray[i].name;
                 if(self.Player.x>(FHArray[i].x+80)){
-                    
-                    console.log("打印出地刺已经溢出的的落脚标志看看（FHolder）："+FHArray[i].isHold);
                     Global.instance.CollisionFlag = false;
                     FHArray[i].isHold = false;
-                    
                     // this.Score();
                 }
                 else if(self.Player.x<(FHArray[i].x-80)){
@@ -138,10 +135,6 @@ export default class MainScene extends cc.Component {
                     FHArray[i].isHold = false;
                     // this.Score();
                 }
-            }
-            if(FHArray[i].name == "dici"){
-                console.log("打印出地刺的碰撞标志看看："+Global.instance.CollisionFlag);
-                console.log("打印出地刺的落脚标志看看："+FHArray[i].isHold);
             }
         }
     }
@@ -345,7 +338,7 @@ export default class MainScene extends cc.Component {
                         stand.active = true;
                         self.LkeyDown = false;
                         self.RkeyDown = false;
-                        moveByDes = Global.instance.moveSpeed;
+                        moveByDes = Global.instance.moveSpeed/2;
                         break;
                     }
                     case "runR":{
@@ -354,7 +347,7 @@ export default class MainScene extends cc.Component {
                         stand.active = true;
                         self.LkeyDown = false;
                         self.RkeyDown = false;
-                        moveByDes = Global.instance.moveSpeed;
+                        moveByDes = Global.instance.moveSpeed/2;
                         break;
                     }
                 }
@@ -477,16 +470,25 @@ export default class MainScene extends cc.Component {
         let failure;
         let Ani;
         let Anistate;
+        let LessScore;
+        let Score;
+        self.LEFT.node.active = false;
+        self.RIGHT.node.active = false;
         if(!Global.instance.OverFlag){
             Global.instance.OverFlag = true;
             console.log("游戏结束！！！");
             failure = cc.instantiate(self.failure);
+            failure.y = -20;
+            LessScore = failure.getChildByName("jl").getChildByName("LessScore");
+            Score = failure.getChildByName("cj").getChildByName("Score");
             self.node.addChild(failure);
+            Score.getComponent(cc.Label).string = 
+                self.LifeDing.getChildByName("Floor").getComponent(cc.Label).string;
             Ani = failure.getComponent(cc.Animation);//the animation of failure;
             Anistate = Ani.play("shibai");//the state of Ani;
             Anistate.speed = 1;
             Anistate.repeatCount = 1;
-            self.scheduleOnce(()=>cc.director.pause(),1.5);
+            self.scheduleOnce(()=>cc.director.pause(),0.48);
         }
         else{
             return;
@@ -496,6 +498,9 @@ export default class MainScene extends cc.Component {
     restart(){
         cc.director.loadScene("MainScene");
         cc.director.resume();
+        Global.instance.OverFlag = false;
+        this.LEFT.node.active = true;
+        this.RIGHT.node.active = true;
         this.destroy();
         // this.Score();
     }
@@ -545,6 +550,23 @@ export default class MainScene extends cc.Component {
         if(lv>Global.instance.LevelAddFlag){
             Global.instance.LevelAddFlag = lv;
             Global.instance.InitSpeed++;//每下落50曾，player下落速度加1
+        }
+    }
+
+    /**
+     * 本地分数存储
+     */
+    StoregeScore(){
+        let CurrentScore = parseInt(
+                this.LifeDing.getChildByName("Floor").getComponent(cc.Label).string);
+        if(CurrentScore>Global.instance.LocalScore.ThirdScore){
+            if(CurrentScore>Global.instance.LocalScore.SecondScore){
+                if(CurrentScore>Global.instance.LocalScore.BestScore){
+                    Global.instance.LocalScore.BestScore = CurrentScore;
+                }
+                Global.instance.LocalScore.SecondScore = CurrentScore;
+            }
+            Global.instance.LocalScore.ThirdScore = CurrentScore;
         }
     }
 }
