@@ -82,11 +82,11 @@ export default class MainScene extends cc.Component {
         if(Global.instance.CollisionFlag){//左右传送带减速
             switch(Global.instance.KIND_FootHold){
                 case 2:{
-                    this.Player.x -=1.2;
+                    this.Player.x -= 1;
                     break;
                 }
                 case 5:{
-                    this.Player.x +=1.2;
+                    this.Player.x += 1;
                     break;
                 }
                 default:{
@@ -179,9 +179,9 @@ export default class MainScene extends cc.Component {
                 break;
             }
             case 2:{
-                FHolder = cc.instantiate(self.Opplvdai);
-                self.FHolderNode.addChild(FHolder,5,"Opplvdai");
-                FHolder.getComponent("Opplvdai").init(self);
+                FHolder = cc.instantiate(self.lvdai);
+                self.FHolderNode.addChild(FHolder,5,"lvdai");
+                FHolder.getComponent("lvdai").init(self);
                 FHolder.isHold = false;
                 // console.log("产生第二种落脚点");
                 break;
@@ -256,6 +256,10 @@ export default class MainScene extends cc.Component {
         this.BtnLorR(event);
     }
 
+    /**
+     * btn触发事件
+     * @param event 按钮触发事件
+     */
     BtnLorR(event){
         let self = this;
         let schedule = cc.director.getScheduler();
@@ -465,6 +469,9 @@ export default class MainScene extends cc.Component {
         runRight.active = false;
     }
     
+    /**
+     * gameover
+     */
     gameOver(){
         let self = this;
         let failure;
@@ -496,6 +503,9 @@ export default class MainScene extends cc.Component {
         }
     }
 
+    /**
+     * restart
+     */
     restart(){
         cc.director.loadScene("MainScene");
         cc.director.resume();
@@ -505,6 +515,7 @@ export default class MainScene extends cc.Component {
         this.destroy();
         // this.Score();
     }
+
     /** 
      * 受到伤害，命数减一
     */

@@ -7,7 +7,7 @@ const {ccclass, property} = cc._decorator;
 export default class Opplvdai extends cc.Component {
 
     /**
-     * 落脚点类型 1：向左传送带
+     * 落脚点类型 2：向右传送带
      */
     private KIND_FootHold = 2;
     /**
@@ -72,6 +72,7 @@ export default class Opplvdai extends cc.Component {
     }
 
     onCollisionEnter(other,self){
+        let rootself = this;//当前根节点
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
         this.main.Score();

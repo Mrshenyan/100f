@@ -6,7 +6,7 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class lvdai extends cc.Component {
     /**
-     * 落脚点类型 1：向左传送带
+     * 落脚点类型 5：向左传送带
      */
     private KIND_FootHold = 5;
     /**
@@ -26,12 +26,24 @@ export default class lvdai extends cc.Component {
     AniState = null;
 
     onLoad () {
+        let kind = Math.random();
         this.node.y = -512;
         this.node.x = cc.randomMinus1To1()*140;
         this.Ani = this.node.getComponent(cc.Animation);
         this.AniState = this.Ani.play("lvdai");
+        if(kind<=0.5){
+            this.KIND_FootHold = 2;   
+            
+        }
+        else{
+            this.KIND_FootHold = 5;
+            this.AniState.wrapMode = cc.WrapMode.Reverse;//设置动画的播放方式为倒放
+        }
         this.AniState.repeatCount = 100;
         this.AniState.speed = 2;
+        /**
+         * 这里有点问题，设置模式貌似不奏效。一旦成功可以减小包体
+         */
     }
 
     start () {
