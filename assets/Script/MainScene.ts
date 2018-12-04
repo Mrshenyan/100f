@@ -530,8 +530,13 @@ export default class MainScene extends cc.Component {
             Anistate = Ani.play("shibai");//the state of Ani;
             Anistate.speed = 1;
             Anistate.repeatCount = 1;
+            
             self.StoregeScore();
-            self.scheduleOnce(()=>cc.director.pause(),0.48);
+            // self.scheduleOnce(function(){
+            //     FAnistate = FAni.play();
+            // },4);
+            // self.scheduleOnce(()=>cc.director.pause(),0.48);//如果直接暂停这个就会导致后面的动画不能播放。
+            
         }
         else{
             return;
@@ -543,12 +548,9 @@ export default class MainScene extends cc.Component {
      * 复活按钮的回调函数
      */
     FBtnCB(self){
-        console.log("这是一个复活按钮的测试");
-        console.log(self);
         this.destroy();
         cc.director.loadScene("EndScene");
-        
-        
+
     }
 
     /**

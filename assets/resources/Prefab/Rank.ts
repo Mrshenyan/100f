@@ -9,12 +9,11 @@ export default class Rank extends cc.Component {
     Ani = null;
     Anistate = null;
     onLoad () {
-        let localS = Global.instance.getLocalScore();
-        let remoteS = Global.instance.getRemoteScore();
-        this.Ani = this.node.getComponent(cc.Animation);
-        this.Anistate = this.Ani.play();
-        this.Anistate.speed = 1;
-        this.Anistate.repeatCount = 10
+        // let localS = Global.instance.getLocalScore();
+        // let remoteS = Global.instance.getRemoteScore();
+        // this.Ani = this.node.getComponent(cc.Animation);
+        // this.Anistate = this.Ani.play();
+        // this.Anistate.speed = 1;
     }
 
     start () {

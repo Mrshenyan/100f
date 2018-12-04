@@ -12,19 +12,20 @@ export default class NewClass extends cc.Component {
     onLoad () {
         this.rInfo = cc.instantiate(this.RankInfo);
         this.node.addChild(this.rInfo);
+        // this.scheduleOnce(function(){
+        //     this.PlayAni();
+        // },1);
     }
 
     start () {
-
+        this.PlayAni();
     }
 
     update (dt) {
-        // this.scheduleOnce(function(){
+    }
 
-        //     this.Ani = this.rInfo.getComponent(cc.Animation);
-        //     this.Anistate = this.Ani.play();
-        //     this.Anistate.speed = 1;
-        //     this.Anistate.repeatCount = 10
-        // })
+    PlayAni(){
+        this.Ani = this.rInfo.getComponent(cc.Animation);
+        this.Anistate = this.Ani.play();
     }
 }
