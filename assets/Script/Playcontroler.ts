@@ -19,14 +19,11 @@ export default class Playcontroler extends cc.Component {
     }
 
     update (dt) {
-        // console.log("player's update "+Global.instance.CollisionFlag);
         if(!Global.instance.CollisionFlag){
             this.node.y -= Global.instance.InitSpeed;
         }
         else{
             let name = Global.instance.TheHolder.name;
-            // console.log("the holder name : " + Global.instance.TheHolder.name);
-            // console.log("the Collision state is : "+Global.instance.CollisionFlag);
             if(name == ""){
                 return;
             }

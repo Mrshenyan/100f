@@ -15,10 +15,10 @@ export default class tanhuang extends cc.Component {
     @property(Boolean)
     public isHold = false;
     @property(Number)
-    public NodeH:number = 30;
+    public NodeH:number = 60;
 
 
-    private gainSc = false;
+    private gainSc = false;//弹簧加分标志
     private main:MainScene = null;
     /**
      * 落脚点对应动画
@@ -78,12 +78,16 @@ export default class tanhuang extends cc.Component {
     onCollisionEnter(other,self){
         let rootself = this;//当前根节点
         Global.instance.KIND_FootHold = this.KIND_FootHold;
+
         if(!this.gainSc){
             this.main.Score();
             this.gainSc = true;
         }
         if(!Global.instance.CollisionFlag){
             Global.instance.TheHolder = this.node;
+            Global.instance.CollisionFlag = true;
+            rootself.isHold = true;
+            other.y = self.y+60;
             // console.log(other);
             // console.log("7检测到碰撞！！！");
             // console.log(self);
@@ -96,13 +100,15 @@ export default class tanhuang extends cc.Component {
                     rootself.AniState = rootself.Ani.play("tanhuang");
                     rootself.AniState.speed = 0.8;
                 }),cc.callFunc(function(){
-                    other.node.runAction(cc.moveBy(0.25,0,120));
+                    other.node.runAction(cc.moveBy(0.25,0,100));
                     self.node.isHold = false;
+                    rootself.isHold = false;
                     Global.instance.CollisionFlag = false;
                 }));
                 rootself.scheduleOnce(function(){
                     self.node.isHold = false;
                     Global.instance.CollisionFlag = false;
+                    rootself.isHold = false;
                     rootself.Ani.stop();
                 },0.512);
             } catch (error) {

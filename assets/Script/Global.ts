@@ -23,7 +23,7 @@ export default class Global {
     /**
      * player初始下落速度,5px/帧
      */
-    public InitSpeed = 6;
+    public InitSpeed = 10;
     /**
      * player移动速度,1px/帧
      */
@@ -61,13 +61,35 @@ export default class Global {
     /**
      * 本地分数存储
      */
-    public LocalScore = {
+    private LocalScore = {
         BestScore:0,
         SecondScore:0,
         ThirdScore:0
     }
+    /**
+     * 远程分数存储
+     */
+    private remoteScore = new Array();
+    /**
+     * 网络连接标志位
+     */
+    public NetStatus = false;
     public static readonly instance = new Global();//全局下不可少
     private constructor() { }
+
+    /**
+     * return the local score
+     */
+    public getLocalScore(){
+        return this.LocalScore;
+    }
+
+    /**
+     * return the remote score
+     */
+    public getRemoteScore(){
+        return this.remoteScore;
+    }
 
     /**
      * 开始场景节点获取

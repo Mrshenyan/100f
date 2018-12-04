@@ -33,7 +33,6 @@ export default class lvdai extends cc.Component {
         this.AniState = this.Ani.play("lvdai");
         if(kind<=0.5){
             this.KIND_FootHold = 2;   
-            
         }
         else{
             this.KIND_FootHold = 5;

@@ -53,7 +53,7 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 0.6,
+    "_scaleX": 0.55,
     "_scaleY": 0.6,
     "_position": {
       "__type__": "cc.Vec2",
@@ -188,7 +188,7 @@
     },
     "_enabled": true,
     "isHold": false,
-    "NodeH": 120
+    "NodeH": 60
   },
   {
     "__type__": "cc.BoxCollider",

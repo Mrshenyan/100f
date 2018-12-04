@@ -20,6 +20,8 @@ export default class MainScene extends cc.Component {
     GD:cc.Prefab = null;
     @property(cc.Prefab)
     failure:cc.Prefab = null;
+    @property(cc.Prefab)
+    fuhuo:cc.Prefab = null;
 
     @property(cc.Node)
     Player:cc.Node = null;
@@ -55,9 +57,9 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.zIndex = 9;
         Global.instance.setMN(this);
         this.STime = Date.now();
-        let FHolder = cc.instantiate(this.tanhuang);
-        this.FHolderNode.addChild(FHolder,10,"tanhuang");
-        FHolder.getComponent("tanhuang").init(this);
+        let FHolder = cc.instantiate(this.GD);
+        this.FHolderNode.addChild(FHolder,10,"GD");
+        FHolder.getComponent("GD").init(this);
         this.Player.x = FHolder.x;
         this.Player.y = 250;
         this.Player.zIndex = 11;
@@ -82,11 +84,11 @@ export default class MainScene extends cc.Component {
         if(Global.instance.CollisionFlag){//左右传送带减速
             switch(Global.instance.KIND_FootHold){
                 case 2:{
-                    this.Player.x -= 1;
+                    this.Player.x += 1;
                     break;
                 }
                 case 5:{
-                    this.Player.x += 1;
+                    this.Player.x -= 1;
                     break;
                 }
                 default:{
@@ -165,7 +167,7 @@ export default class MainScene extends cc.Component {
     FootHoldGenerator(){
         let self = this;
         let KindHolder = Math.ceil(Math.random()*7);
-        // KindHolder = 4;
+        // KindHolder = 1;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -267,20 +269,17 @@ export default class MainScene extends cc.Component {
         let runRight = self.Player.getChildByName("runRight");
         let run = self.Player.getChildByName("run");
         let Ani;//the animation of player
-        let spawn;//an action queue of player
         let Anistate;//the Ani's state
         let Anistring;//the name of Ani
-        let moveByTime = 1.5;
+        let moveByTime = 1;
         let moveByDes;
         let scheduleState:boolean = false;//the schedule's state
         let schedulePause:boolean = true;
         let target:cc.Button = null;//the target which is binged to schedule
-        if(!Global.instance.CollisionFlag){
-            Global.instance.moveSpeed = 0.5;
-        }
         moveByDes = Global.instance.moveSpeed*160;
         if(self.LkeyDown){
             target = self.LEFT;
+            moveByTime = 1;
             moveByDes = -moveByDes;
             scheduleState = schedule.isScheduled(func,target);
             schedulePause = schedule.isTargetPaused(target);
@@ -289,19 +288,26 @@ export default class MainScene extends cc.Component {
             stand.active = false;
             runRight.active = false;
             run.active = true;
+            if(!Global.instance.CollisionFlag){
+                moveByTime = 0.5;
+            }
+            else{
+                moveByTime = 0.5;
+            }
             switch(Global.instance.KIND_FootHold){
                 case 2:{
-                    moveByTime-=0.4;
+                    moveByTime-=0.1;
                     break;
                 }
                 case 5:{
-                    moveByTime+=0.2;
+                    moveByTime+=0.1;
                     break;
                 }
             };
         }
         if(self.RkeyDown){
             target = self.RIGHT;
+            moveByTime = 1;
             moveByDes = moveByDes;
             scheduleState = schedule.isScheduled(func,target);
             schedulePause = schedule.isTargetPaused(target);
@@ -310,13 +316,19 @@ export default class MainScene extends cc.Component {
             stand.active = false;
             runRight.active = true;
             run.active = false;
+            if(!Global.instance.CollisionFlag){
+                moveByTime = 10;
+            }
+            else{
+                moveByTime = 10;
+            }
             switch(Global.instance.KIND_FootHold){
                 case 2:{
-                    moveByTime+=0.2;
+                    moveByTime+=0.1;
                     break;
                 }
                 case 5:{
-                    moveByTime-=0.4;
+                    moveByTime-=0.1;
                     break;
                 }
             };
@@ -358,17 +370,19 @@ export default class MainScene extends cc.Component {
                 break;
             }
         }
-        
         function func(){
             if(Global.instance.CollisionFlag){
-                moveByTime = 1.5;
+                moveByTime = 10;
             }
-            spawn = cc.spawn(cc.callFunc(function(){
+            else{
+                moveByTime = 10;
+            }
+            let spawn = cc.spawn(cc.callFunc(function(){
                 self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
             }),cc.callFunc(function(){
-                Anistate = Ani.play(Anistring);
-                Anistate.speed = 2;
-                Anistate.repeatCount = 100;
+                Anistate = Ani.playAdditive(Anistring);
+                // Anistate.speed = 1;
+                // Anistate.repeatCount = 100;
             }))
             self.Player.runAction(spawn);
         }
@@ -394,16 +408,19 @@ export default class MainScene extends cc.Component {
                 run.active = true;
                 switch(Global.instance.KIND_FootHold){
                     case 2:{
-                        moveByTime-=0.5;
+                        moveByTime-=0.1;
                         break;
                     }
                     case 5:{
-                        moveByTime+=0.2;
+                        moveByTime+=0.1;
                         break;
                     }
                 };
                 if(Global.instance.CollisionFlag){
-                    moveByTime = 1.5;
+                    moveByTime = 1
+                }
+                else{
+                    moveByTime = 1
                 }
                 let Ani = run.getComponent(cc.Animation);
                 let spawn = cc.spawn(cc.callFunc(function(){
@@ -411,7 +428,7 @@ export default class MainScene extends cc.Component {
                     Anistate.speed = 2;
                     Anistate.repeatCount = 100;
                 }),cc.callFunc(function(){
-                    self.Player.runAction(cc.moveBy(moveByTime,-moveByDes,0));
+                    self.Player.runAction(cc.moveBy(moveByTime,-160,0));
                 }))
                 self.Player.runAction(spawn);
                 break;
@@ -425,20 +442,23 @@ export default class MainScene extends cc.Component {
                 let moveByTime = 1;
                 switch(Global.instance.KIND_FootHold){
                     case 2:{
-                        moveByTime+=0.2;
+                        moveByTime+=0.1;
                         break;
                     }
                     case 5:{
-                        moveByTime-=0.5;
+                        moveByTime-=0.1;
                         break;
                     }
                 }
                 if(Global.instance.CollisionFlag){
-                    moveByTime = 1.5;
+                    moveByTime = 1
+                }
+                else{
+                    moveByTime = 1
                 }
                 let Ani = runRight.getComponent(cc.Animation);
                 let spawn = cc.spawn(cc.callFunc(function(){
-                    self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
+                    self.Player.runAction(cc.moveBy(moveByTime,160,0));
                 }),cc.callFunc(function(){
                     let Anistate = Ani.play("runR");
                     Anistate.speed = 2;
@@ -479,19 +499,34 @@ export default class MainScene extends cc.Component {
         let Anistate;
         let LessScore;
         let Score;
+        let fuhuo;
+        let FAni;
+        let FAnistate;
         self.LEFT.node.active = false;
         self.RIGHT.node.active = false;
+        failure = cc.instantiate(self.failure);
+        fuhuo = cc.instantiate(self.fuhuo);
+        let fhuoBtnRank = fuhuo.getChildByName("cd").getChildByName("RankScene").getComponent(cc.Button);
+        let clickEventHandler = new cc.Component.EventHandler();
+        clickEventHandler.target = self.node;
+        clickEventHandler.component = "MainScene";
+        clickEventHandler.handler = "FBtnCB";
+        clickEventHandler.customEventData = null;
+        fhuoBtnRank.clickEvents.push(clickEventHandler);
         if(!Global.instance.OverFlag){
             Global.instance.OverFlag = true;
             console.log("游戏结束！！！");
-            failure = cc.instantiate(self.failure);
+            
             failure.y = -20;
+            fuhuo.y = 0;
             LessScore = failure.getChildByName("jl").getChildByName("LessScore");
             Score = failure.getChildByName("cj").getChildByName("Score");
             self.node.addChild(failure);
+            self.node.addChild(fuhuo);
             Score.getComponent(cc.Label).string = 
                 self.LifeDing.getChildByName("Floor").getComponent(cc.Label).string;
             Ani = failure.getComponent(cc.Animation);//the animation of failure;
+            FAni = fuhuo.getComponent(cc.Animation);
             Anistate = Ani.play("shibai");//the state of Ani;
             Anistate.speed = 1;
             Anistate.repeatCount = 1;
@@ -501,6 +536,19 @@ export default class MainScene extends cc.Component {
         else{
             return;
         }
+    }
+
+
+    /**
+     * 复活按钮的回调函数
+     */
+    FBtnCB(self){
+        console.log("这是一个复活按钮的测试");
+        console.log(self);
+        this.destroy();
+        cc.director.loadScene("EndScene");
+        
+        
     }
 
     /**
@@ -569,16 +617,18 @@ export default class MainScene extends cc.Component {
      * 本地分数存储
      */
     StoregeScore(){
+        let self = this;
+        let localS = Global.instance.getLocalScore();//the temp of local score;
         let CurrentScore = parseInt(
                 this.LifeDing.getChildByName("Floor").getComponent(cc.Label).string);
-        if(CurrentScore>Global.instance.LocalScore.ThirdScore){
-            if(CurrentScore>Global.instance.LocalScore.SecondScore){
-                if(CurrentScore>Global.instance.LocalScore.BestScore){
-                    Global.instance.LocalScore.BestScore = CurrentScore;
+        if(CurrentScore>localS.ThirdScore){
+            if(CurrentScore>localS.SecondScore){
+                if(CurrentScore>localS.BestScore){
+                    localS.BestScore = CurrentScore;
                 }
-                Global.instance.LocalScore.SecondScore = CurrentScore;
+                localS.SecondScore = CurrentScore;
             }
-            Global.instance.LocalScore.ThirdScore = CurrentScore;
+            localS.ThirdScore = CurrentScore;
         }
     }
 }
