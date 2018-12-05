@@ -21,8 +21,14 @@ export default class NewClass extends cc.Component {
     update (dt) {
     }
 
+    /**
+     * 排行榜的动画播放
+     */
     PlayAni(){
         this.Ani = this.rInfo.getComponent(cc.Animation);
-        this.Anistate = this.Ani.play();
+        this.scheduleOnce(function(){
+            this.Anistate = this.Ani.play();
+            
+        })
     }
 }

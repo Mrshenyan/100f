@@ -64,7 +64,8 @@ export default class Global {
     private LocalScore = {
         BestScore:0,
         SecondScore:0,
-        ThirdScore:0
+        ThirdScore:0,
+        length:3,
     }
     /**
      * 远程分数存储

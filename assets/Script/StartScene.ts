@@ -30,6 +30,7 @@ export default class StartScene extends cc.Component {
     onLoad () {
         this.LifeDing.zIndex = 5;
         Global.instance.setSN(this);
+        Global.instance.OverFlag = false;
         this.lvdai = this.StartAniNode.getChildByName("lvdai");
         this.run = this.StartAniNode.getChildByName("run");
         this.runAni = this.run.getComponent(cc.Animation);
