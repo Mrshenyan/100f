@@ -12,9 +12,6 @@ export default class NewClass extends cc.Component {
     onLoad () {
         this.rInfo = cc.instantiate(this.RankInfo);
         this.node.addChild(this.rInfo);
-        // this.scheduleOnce(function(){
-        //     this.PlayAni();
-        // },1);
     }
 
     start () {
