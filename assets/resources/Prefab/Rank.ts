@@ -11,7 +11,7 @@ export default class Rank extends cc.Component {
     onLoad () {
         let localS = Global.instance.getLocalScore();
         for(let i=0;i<localS.length;i++){
-            
+
         }
     }
 
@@ -28,6 +28,7 @@ export default class Rank extends cc.Component {
     CloseRank(){
         console.log("this button is used to close this rank Scene");
         this.destroy();
+        Global.instance.OverFlag = false;
         cc.director.loadScene("StartScene");
     }
 }

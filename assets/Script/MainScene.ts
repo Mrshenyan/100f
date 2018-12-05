@@ -148,14 +148,19 @@ export default class MainScene extends cc.Component {
     MoveBg(){
         let Bg0 = this.Bg.getChildByName("Bg_0");
         let Bg1 = this.Bg.getChildByName("Bg_1");
-        Bg0.y+=(200/60);
-        Bg1.y+=(200/60);
-        if(Bg0.y>957){
-            Bg0.y = -957;
+        if(Global.instance.OverFlag){
         }
-        if(Bg1.y>957){
-            Bg1.y = -957;
+        else{
+            Bg0.y+=(200/60);
+            Bg1.y+=(200/60);
+            if(Bg0.y>957){
+                Bg0.y = -957;
+            }
+            if(Bg1.y>957){
+                Bg1.y = -957;
+            }
         }
+        
     }
     /**
      * 移动落脚点,暂空

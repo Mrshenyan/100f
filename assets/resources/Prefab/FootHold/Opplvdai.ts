@@ -41,18 +41,21 @@ export default class Opplvdai extends cc.Component {
 
     update (dt) {
         // console.log(Global.instance.CollisionFlag);
-        this.node.active = true;
-        this.node.y += Global.instance.FHFallSpeed;
-        if(this.node.isHold){
-            Global.instance.CollisionFlag = true;
-            Global.instance.TheHolder = this.node;
-        }
-        if(this.node.y>360){
+        if(Global.instance.OverFlag){}
+        else{
+            this.node.active = true;
+            this.node.y += Global.instance.FHFallSpeed;
             if(this.node.isHold){
-                this.node.isHold = false;
-                Global.instance.CollisionFlag = false;
+                Global.instance.CollisionFlag = true;
+                Global.instance.TheHolder = this.node;
             }
-            this.node.destroy();
+            if(this.node.y>360){
+                if(this.node.isHold){
+                    this.node.isHold = false;
+                    Global.instance.CollisionFlag = false;
+                }
+                this.node.destroy();
+            }
         }
     }
 
