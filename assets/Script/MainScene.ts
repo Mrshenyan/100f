@@ -273,7 +273,7 @@ export default class MainScene extends cc.Component {
         let Ani;//the animation of player
         let Anistate;//the Ani's state
         let Anistring;//the name of Ani
-        let moveByTime = 10;
+        let moveByTime = 1;
         let scheduleState:boolean = false;//the schedule's state
         let schedulePause:boolean = true;
         let target:cc.Button = null;//the target which is binged to schedule
@@ -290,7 +290,7 @@ export default class MainScene extends cc.Component {
             runRight.active = false;
             run.active = true;
             if(!Global.instance.CollisionFlag){
-                moveByTime = 10;
+                moveByTime = 1;
             }
             else{
                 switch(Global.instance.KIND_FootHold){
@@ -318,7 +318,7 @@ export default class MainScene extends cc.Component {
             runRight.active = true;
             run.active = false;
             if(!Global.instance.CollisionFlag){
-                moveByTime = 10;
+                moveByTime = 1;
             }
             else{
                 switch(Global.instance.KIND_FootHold){
