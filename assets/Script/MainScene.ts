@@ -75,7 +75,7 @@ export default class MainScene extends cc.Component {
         // console.log(Global.instance.CollisionFlag);
         this.MoveBg();
         let FHolder;
-        if((this.ETime-this.STime)>2250){//控制落脚点之间的间距,间距200px
+        if((this.ETime-this.STime)>1800){//控制落脚点之间的间距,间距200px
             this.STime = Date.now();
             FHolder = this.FootHoldGenerator();
         }
@@ -347,6 +347,8 @@ export default class MainScene extends cc.Component {
                 schedule.pauseTarget(target);
                 self.Player.stopAllActions();
                 Ani.stop(Anistring);
+                moveByTime = 1;
+                moveByDes = Global.instance.moveSpeed*160;
                 switch(Anistring){
                     case "run":{
                         run.active = false;
@@ -378,15 +380,14 @@ export default class MainScene extends cc.Component {
                 moveByTime = 10;
             }
             let spawn = cc.spawn(cc.callFunc(function(){
-                self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
-            }),cc.callFunc(function(){
                 Anistate = Ani.playAdditive(Anistring);
-                // Anistate.speed = 1;
-                // Anistate.repeatCount = 100;
+            }),cc.callFunc(function(){
+                self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
             }))
             self.Player.runAction(spawn);
         }
     }
+
 
     /**
      * 向左，向右
@@ -398,14 +399,18 @@ export default class MainScene extends cc.Component {
         let runRight = this.Player.getChildByName("runRight");
         let run = this.Player.getChildByName("run");
         let moveByTime = 1.5;
-        let moveByDes = Global.instance.moveSpeed*120;
+        let moveByDes = 160;// Global.instance.moveSpeed*120;
+        let Ani;
+        let Anistate;
+        let AniName;
         switch(event.keyCode){
             case cc.KEY.left:{
                 self.LkeyDown = true;
-                // console.log("我按下了左键");
                 stand.active = false;
                 runRight.active = false;
                 run.active = true;
+                AniName = "run";
+                moveByDes = -moveByDes;
                 switch(Global.instance.KIND_FootHold){
                     case 2:{
                         moveByTime-=0.1;
@@ -422,24 +427,17 @@ export default class MainScene extends cc.Component {
                 else{
                     moveByTime = 1
                 }
-                let Ani = run.getComponent(cc.Animation);
-                let spawn = cc.spawn(cc.callFunc(function(){
-                    let Anistate = Ani.play("run");
-                    Anistate.speed = 2;
-                    Anistate.repeatCount = 100;
-                }),cc.callFunc(function(){
-                    self.Player.runAction(cc.moveBy(moveByTime,-160,0));
-                }))
-                self.Player.runAction(spawn);
+                AniPlayer(run,AniName);
                 break;
             }
             case cc.KEY.right:{
                 self.RkeyDown = true;
-                // console.log("我按下了右键");
                 stand.active = false;
                 runRight.active = true;
                 run.active = false;
                 let moveByTime = 1;
+                AniName = "runR";
+                moveByDes = moveByDes;
                 switch(Global.instance.KIND_FootHold){
                     case 2:{
                         moveByTime+=0.1;
@@ -456,19 +454,22 @@ export default class MainScene extends cc.Component {
                 else{
                     moveByTime = 1
                 }
-                let Ani = runRight.getComponent(cc.Animation);
-                let spawn = cc.spawn(cc.callFunc(function(){
-                    self.Player.runAction(cc.moveBy(moveByTime,160,0));
-                }),cc.callFunc(function(){
-                    let Anistate = Ani.play("runR");
-                    Anistate.speed = 2;
-                    Anistate.repeatCount = 100;
-                }))
-                self.Player.runAction(spawn);
+                AniPlayer(runRight,AniName);
                 break;
             }
             default:{
                 return;
+            }
+            function AniPlayer(Key,AniName){
+                Ani = Key.getComponent(cc.Animation);
+                let spawn = cc.spawn(cc.callFunc(function(){
+                    self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
+                }),cc.callFunc(function(){
+                    Anistate = Ani.play(AniName);
+                    Anistate.speed = 2;
+                    Anistate.repeatCount = 100;
+                }))
+                self.Player.runAction(spawn);
             }
         }
     }
@@ -516,7 +517,6 @@ export default class MainScene extends cc.Component {
         if(!Global.instance.OverFlag){
             Global.instance.OverFlag = true;
             console.log("游戏结束！！！");
-            
             failure.y = -20;
             fuhuo.y = 0;
             LessScore = failure.getChildByName("jl").getChildByName("LessScore");
@@ -573,6 +573,7 @@ export default class MainScene extends cc.Component {
         let self = this;
         let Ls = new Array();
         let reLCount=0;
+        let FHolder = self.node.getChildByName("BgNode").getChildByName("FHolder").children;
         for(let i=self.LifeDing.children.length-1;i>=0;i--){
             if(self.LifeDing.children[i].name=="lifeBG"){
                 if(Global.instance.Injured){
@@ -586,9 +587,19 @@ export default class MainScene extends cc.Component {
             if(self.LifeDing.children[i].name=="lifeBG"){
                 if(Global.instance.CollisionWithDing){
                     self.LifeDing.children[i].destroy();
+                    Global.instance.CollisionFlag = false;
                     Global.instance.CollisionWithDing = false;
                 }
                 Ls.push(self.LifeDing.children[i]);
+            }
+        }
+        for(let i=0;i<FHolder.length;i++){
+            if(FHolder[i].isHold){
+                if(!Global.instance.CollisionFlag){
+                    FHolder[i].isHold = false;
+                    let box = FHolder[i].getComponent(cc.BoxCollider);
+                    box.enabled = false;
+                }
             }
         }
         Global.instance.reLife = [];

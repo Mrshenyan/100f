@@ -23,6 +23,9 @@ export default class NewClass extends cc.Component {
         let scheduler = cc.director.getScheduler();
         scheduler.schedule(aniplayer,this,1,false);
 
+        /**
+         * 结束页面的动画播放
+         */
         function aniplayer(){
             let self = this;
             if(time>0){
