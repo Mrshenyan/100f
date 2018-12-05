@@ -101,12 +101,20 @@ export default class tanhuang extends cc.Component {
                     rootself.AniState.speed = 0.8;
                 }),cc.callFunc(function(){
                     other.node.runAction(cc.moveBy(0.25,0,80));
-                    self.node.isHold = false;
+                    try {
+                        self.node.isHold = false;
+                    } catch (error) {
+                        return
+                    }
                     rootself.isHold = false;
                     Global.instance.CollisionFlag = false;
                 }));
                 rootself.scheduleOnce(function(){
-                    self.node.isHold = false;
+                    try {
+                        self.node.isHold = false;
+                    } catch (error) {
+                        return
+                    }
                     Global.instance.CollisionFlag = false;
                     rootself.isHold = false;
                     rootself.Ani.stop();

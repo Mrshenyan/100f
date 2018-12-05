@@ -273,12 +273,11 @@ export default class MainScene extends cc.Component {
         let Ani;//the animation of player
         let Anistate;//the Ani's state
         let Anistring;//the name of Ani
-        let moveByTime = 1;
-        let moveByDes;
+        let moveByTime = 10;
         let scheduleState:boolean = false;//the schedule's state
         let schedulePause:boolean = true;
         let target:cc.Button = null;//the target which is binged to schedule
-        moveByDes = Global.instance.moveSpeed*160;
+        let moveByDes = Global.instance.moveSpeed*60+40;
         if(self.LkeyDown){
             target = self.LEFT;
             moveByTime = 1;
@@ -291,21 +290,21 @@ export default class MainScene extends cc.Component {
             runRight.active = false;
             run.active = true;
             if(!Global.instance.CollisionFlag){
-                moveByTime = 0.5;
+                moveByTime = 10;
             }
             else{
-                moveByTime = 0.5;
+                switch(Global.instance.KIND_FootHold){
+                    case 2:{
+                        moveByTime = 4.1;
+                        break;
+                    }
+                    case 5:{
+                        moveByTime = 3.9;
+                        break;
+                    }
+                };
             }
-            switch(Global.instance.KIND_FootHold){
-                case 2:{
-                    moveByTime-=0.1;
-                    break;
-                }
-                case 5:{
-                    moveByTime+=0.1;
-                    break;
-                }
-            };
+            console.log("这里是左按钮输出，打印的是moveByTime: "+moveByTime+" 还有moveByDes: "+moveByDes);
         }
         if(self.RkeyDown){
             target = self.RIGHT;
@@ -322,23 +321,28 @@ export default class MainScene extends cc.Component {
                 moveByTime = 10;
             }
             else{
-                moveByTime = 10;
+                switch(Global.instance.KIND_FootHold){
+                    case 2:{
+                        moveByTime = 4.1;
+                        break;
+                    }
+                    case 5:{
+                        moveByTime = 3.9;
+                        break;
+                    }
+                };
             }
-            switch(Global.instance.KIND_FootHold){
-                case 2:{
-                    moveByTime+=0.1;
-                    break;
-                }
-                case 5:{
-                    moveByTime-=0.1;
-                    break;
-                }
-            };
+            console.log("这里是右按钮输出，打印的是moveByTime: "+moveByTime+" 还有moveByDes: "+moveByDes);
         }
+        
+        let funcFlag = false;
         switch(event.type){
             case "touchstart":{
                 if(!scheduleState){
+                    
                     schedule.schedule(func,target,0);
+                    
+                    console.log("func");
                 };
                 if(schedulePause){
                     schedule.resumeTarget(target);
@@ -350,7 +354,7 @@ export default class MainScene extends cc.Component {
                 self.Player.stopAllActions();
                 Ani.stop(Anistring);
                 moveByTime = 1;
-                moveByDes = Global.instance.moveSpeed*160;
+                moveByDes = Global.instance.moveSpeed*160+40;
                 switch(Anistring){
                     case "run":{
                         run.active = false;
@@ -371,16 +375,21 @@ export default class MainScene extends cc.Component {
                         break;
                     }
                 }
+                funcFlag = false;
                 break;
             }
         }
         function func(){
+            if(funcFlag){
+                return;
+            }
             if(Global.instance.CollisionFlag){
-                moveByTime = 1.5;
-                moveByTime = 10;
+                moveByTime = 1;
+                // moveByTime = 10;
             }
             let spawn = cc.spawn(cc.callFunc(function(){
                 self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0)); 
+                // console.log(self.Player.y);
             }),cc.callFunc(function(){
                 Anistate = Ani.play(Anistring);
                 Anistate.speed = 2;
@@ -388,6 +397,8 @@ export default class MainScene extends cc.Component {
                 Anistate = Ani.playAdditive(Anistring);
             }))
             self.Player.runAction(spawn);
+            console.log("这里是内部函数输出，打印的是moveByTime: "+moveByTime+" 还有moveByDes: "+moveByDes);
+            funcFlag = true;
         }
     }
 
@@ -401,8 +412,8 @@ export default class MainScene extends cc.Component {
         let stand = this.Player.getChildByName("stand");
         let runRight = this.Player.getChildByName("runRight");
         let run = this.Player.getChildByName("run");
-        let moveByTime = 1.5;
-        let moveByDes = 160;// Global.instance.moveSpeed*120;
+        let moveByTime = 1;
+        let moveByDes = 200;// Global.instance.moveSpeed*120;
         let Ani;
         let Anistate;
         let AniName;
@@ -413,22 +424,22 @@ export default class MainScene extends cc.Component {
                 runRight.active = false;
                 run.active = true;
                 AniName = "run";
-                moveByDes = -moveByDes;
+                moveByDes = -(moveByDes+100);
                 switch(Global.instance.KIND_FootHold){
                     case 2:{
-                        moveByTime-=0.1;
+                        moveByTime = 3.9;
                         break;
                     }
                     case 5:{
-                        moveByTime+=0.1;
+                        moveByTime = 4.1;
                         break;
                     }
                 };
                 if(Global.instance.CollisionFlag){
-                    moveByTime = 1
+                    moveByTime = 1;
                 }
                 else{
-                    moveByTime = 1
+                    moveByTime = 1;
                 }
                 AniPlayer(run,AniName);
                 break;
@@ -440,22 +451,22 @@ export default class MainScene extends cc.Component {
                 run.active = false;
                 let moveByTime = 1;
                 AniName = "runR";
-                moveByDes = moveByDes;
+                moveByDes = moveByDes+100;
                 switch(Global.instance.KIND_FootHold){
                     case 2:{
-                        moveByTime+=0.1;
+                        moveByTime = 4.1;
                         break;
                     }
                     case 5:{
-                        moveByTime-=0.1;
+                        moveByTime = 3.9;
                         break;
                     }
                 }
                 if(Global.instance.CollisionFlag){
-                    moveByTime = 1
+                    moveByTime = 1;
                 }
                 else{
-                    moveByTime = 1
+                    moveByTime = 1;
                 }
                 AniPlayer(runRight,AniName);
                 break;
@@ -640,8 +651,10 @@ export default class MainScene extends cc.Component {
             if(CurrentScore>localS.SecondScore){
                 if(CurrentScore>localS.BestScore){
                     localS.BestScore = CurrentScore;
+                    return;
                 }
                 localS.SecondScore = CurrentScore;
+                
             }
             localS.ThirdScore = CurrentScore;
         }
@@ -650,4 +663,6 @@ export default class MainScene extends cc.Component {
 /**
  * 这边，玩家死亡之后销魂游戏主场景，打开游戏结算场景
  * 进行后续的排行榜绘制。
+ * 
+ * player速度忽然变快通过打印是因为同一个移动放法调用了两次，效果叠加。
  */
