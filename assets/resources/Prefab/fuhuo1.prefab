@@ -356,7 +356,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Rank",
+    "_name": "rePlay",
     "_objFlags": 0,
     "_parent": {
       "__id__": 9

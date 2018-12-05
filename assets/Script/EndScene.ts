@@ -26,6 +26,9 @@ export default class NewClass extends cc.Component {
      */
     PlayAni(){
         this.Ani = this.rInfo.getComponent(cc.Animation);
-        this.Anistate = this.Ani.play();
+        this.scheduleOnce(function(){
+            this.Anistate = this.Ani.play();
+            
+        })
     }
 }

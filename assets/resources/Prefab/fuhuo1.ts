@@ -7,7 +7,8 @@ export default class NewClass extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        
+        this.node.getChildByName("cd").getChildByName("RankScene").active = false;
+        this.node.getChildByName("zl").getChildByName("rePlay").active = false;
     }
 
     start () {
@@ -33,9 +34,12 @@ export default class NewClass extends cc.Component {
             }
             if(time==0){
                 this.isScheduled = false;
+
                 Ani = self.getComponent(cc.Animation);
                 Anistate = Ani.play();
                 Countdown.string = time.toString();
+                self.node.getChildByName("cd").getChildByName("RankScene").active = true;
+                self.node.getChildByName("zl").getChildByName("rePlay").active = true;
                 scheduler.pauseTarget(this); 
                 return;
             }

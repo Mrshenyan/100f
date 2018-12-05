@@ -74,6 +74,7 @@ export default class MainScene extends cc.Component {
     update (dt) {
         // console.log(Global.instance.CollisionFlag);
         this.MoveBg();
+        Global.instance.moveSpeed = 1;
         let FHolder;
         if((this.ETime-this.STime)>1800){//控制落脚点之间的间距,间距200px
             this.STime = Date.now();
@@ -264,6 +265,7 @@ export default class MainScene extends cc.Component {
      */
     BtnLorR(event){
         let self = this;
+        Global.instance.moveSpeed = 1;
         let schedule = cc.director.getScheduler();
         let stand = self.Player.getChildByName("stand");
         let runRight = self.Player.getChildByName("runRight");
@@ -374,15 +376,16 @@ export default class MainScene extends cc.Component {
         }
         function func(){
             if(Global.instance.CollisionFlag){
-                moveByTime = 10;
-            }
-            else{
+                moveByTime = 1.5;
                 moveByTime = 10;
             }
             let spawn = cc.spawn(cc.callFunc(function(){
-                Anistate = Ani.playAdditive(Anistring);
+                self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0)); 
             }),cc.callFunc(function(){
-                self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
+                Anistate = Ani.play(Anistring);
+                Anistate.speed = 2;
+                Anistate.repeatCount = 100;
+                Anistate = Ani.playAdditive(Anistring);
             }))
             self.Player.runAction(spawn);
         }
@@ -550,7 +553,6 @@ export default class MainScene extends cc.Component {
     FBtnCB(self){
         this.destroy();
         cc.director.loadScene("EndScene");
-
     }
 
     /**

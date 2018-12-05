@@ -22,4 +22,13 @@ export default class Rank extends cc.Component {
 
     update (dt) {
     }
+
+    /**
+     * close the rank Scene and load the start scene.
+     */
+    CloseRank(){
+        console.log("this button is used to close this rank Scene");
+        this.destroy();
+        cc.director.loadScene("StartScene");
+    }
 }
