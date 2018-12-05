@@ -64,7 +64,7 @@ export default class MainScene extends cc.Component {
         this.Player.y = 250;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        // cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
     }
 
@@ -432,11 +432,11 @@ export default class MainScene extends cc.Component {
                 moveByDes = -(moveByDes+100);
                 switch(Global.instance.KIND_FootHold){
                     case 2:{
-                        moveByTime = 3.9;
+                        moveByTime = 0.9;
                         break;
                     }
                     case 5:{
-                        moveByTime = 4.1;
+                        moveByTime = 1.1;
                         break;
                     }
                 };
@@ -459,11 +459,11 @@ export default class MainScene extends cc.Component {
                 moveByDes = moveByDes+100;
                 switch(Global.instance.KIND_FootHold){
                     case 2:{
-                        moveByTime = 4.1;
+                        moveByTime = 1.1;
                         break;
                     }
                     case 5:{
-                        moveByTime = 3.9;
+                        moveByTime = 0.9;
                         break;
                     }
                 }
