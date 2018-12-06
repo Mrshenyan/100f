@@ -531,13 +531,14 @@ export default class MainScene extends cc.Component {
      * gameover
      */
     gameOver(){
-        
         let self = this;
         self.StopAni(self);
         let failure;
         let Ani;
         let Anistate;
-        let LessScore;
+        let BestScore
+        let thisScore;
+        let lessScore;
         let Score;
         let fuhuo;
         let FAni;
@@ -572,10 +573,14 @@ export default class MainScene extends cc.Component {
         fhuoBtnFhuo.clickEvents.push(FhuoEventHandler);
         if(!Global.instance.OverFlag){
             Global.instance.OverFlag = true;
+            self.StoregeScore();
             console.log("游戏结束！！！");
             failure.y = -20;
             fuhuo.y = 0;
-            LessScore = failure.getChildByName("jl").getChildByName("LessScore");
+            thisScore = parseInt(self.LifeDing.getChildByName("Floor").getComponent(cc.Label).string);
+            lessScore = failure.getChildByName("jl").getChildByName("LessScore");
+            BestScore = Global.instance.getLocalScore().BestScore;
+            lessScore.getComponent(cc.Label).string = (BestScore - thisScore).toString();
             Score = failure.getChildByName("cj").getChildByName("Score");
             self.node.addChild(failure);
             self.node.addChild(fuhuo);
@@ -585,7 +590,7 @@ export default class MainScene extends cc.Component {
             Anistate = Ani.play("shibai");//the state of Ani;
             Anistate.speed = 1;
             Anistate.repeatCount = 1;
-            self.StoregeScore();
+            
         }
         else{
             return;
