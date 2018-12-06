@@ -527,12 +527,29 @@ export default class MainScene extends cc.Component {
         failure = cc.instantiate(self.failure);
         fuhuo = cc.instantiate(self.fuhuo);
         let fhuoBtnRank = fuhuo.getChildByName("cd").getChildByName("RankScene").getComponent(cc.Button);
-        let clickEventHandler = new cc.Component.EventHandler();
-        clickEventHandler.target = self.node;
-        clickEventHandler.component = "MainScene";
-        clickEventHandler.handler = "FBtnCB";
-        clickEventHandler.customEventData = null;
-        fhuoBtnRank.clickEvents.push(clickEventHandler);
+        let fhuoBtnreGame = fuhuo.getChildByName("zl").getChildByName("rePlay").getComponent(cc.Button);
+        let fhuoBtnFhuo = fuhuo.getChildByName("fh").getChildByName("rePlay").getComponent(cc.Button);
+        let RankEventHandler = new cc.Component.EventHandler();
+        let reGameEventHandler = new cc.Component.EventHandler();
+        let FhuoEventHandler = new cc.Component.EventHandler();
+        //open the ranking
+        RankEventHandler.target = self.node;
+        RankEventHandler.component = "MainScene";
+        RankEventHandler.handler = "FBtnCB_Rank";
+        RankEventHandler.customEventData = null;
+        fhuoBtnRank.clickEvents.push(RankEventHandler);
+        //replay
+        reGameEventHandler.target = self.node;
+        reGameEventHandler.component = "MainScene";
+        reGameEventHandler.handler = "FBtnCB_reGame";
+        reGameEventHandler.customEventData = null;
+        fhuoBtnreGame.clickEvents.push(reGameEventHandler);
+        //fh
+        FhuoEventHandler.target = self.node;
+        FhuoEventHandler.component = "MainScene";
+        FhuoEventHandler.handler = "FBtnCB_reGame";
+        FhuoEventHandler.customEventData = null;
+        fhuoBtnFhuo.clickEvents.push(FhuoEventHandler);
         if(!Global.instance.OverFlag){
             Global.instance.OverFlag = true;
             console.log("游戏结束！！！");
@@ -564,13 +581,19 @@ export default class MainScene extends cc.Component {
 
 
     /**
-     * 复活按钮的回调函数
+     * 复活按钮的回调函数：打开排行榜
      */
-    FBtnCB(self){
+    FBtnCB_Rank(self){
         this.destroy();
         cc.director.loadScene("EndScene");
     }
-
+    /**
+     * 
+     */
+    FBtnCB_reGame(){
+        this.destroy();
+        cc.director.loadScene("MainScene");
+    }
     /**
      * restart
      */
