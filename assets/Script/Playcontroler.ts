@@ -66,7 +66,7 @@ export default class Playcontroler extends cc.Component {
                 break;
             }
             default:{
-                this.MainScene.getComponent("MainScene").Score();//得分
+                // this.MainScene.getComponent("MainScene").Score();//得分
                 break;
             }
         }

@@ -64,7 +64,7 @@ export default class MainScene extends cc.Component {
         this.Player.y = 250;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
-        // cc.director.getCollisionManager().enabledDebugDraw = true;
+        cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
     }
 
@@ -146,12 +146,12 @@ export default class MainScene extends cc.Component {
         for(let i=FHArray.length-1;i>=0;i--){
             if(FHArray[i].isHold){
                 // let nameNode:string = FHArray[i].name;
-                if(self.Player.x>(FHArray[i].x+80)){
+                if(self.Player.x>(FHArray[i].x+85)){
                     Global.instance.CollisionFlag = false;
                     FHArray[i].isHold = false;
                     // this.Score();
                 }
-                else if(self.Player.x<(FHArray[i].x-80)){
+                else if(self.Player.x<(FHArray[i].x-85)){
                     Global.instance.CollisionFlag = false;
                     FHArray[i].isHold = false;
                     // this.Score();

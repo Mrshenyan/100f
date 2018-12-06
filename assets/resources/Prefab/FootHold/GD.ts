@@ -74,14 +74,14 @@ export default class GD extends cc.Component {
     onCollisionEnter(other,self){
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
-        // this.main.Score();
-        if(!Global.instance.CollisionFlag){
-            // console.log(other);
-            // console.log("1检测到碰撞！！！");
-            // console.log(self);
+        
+        if(Global.instance.CollisionFlag){
+            return;
+        }
+        else{
+            this.main.Score();
             self.node.isHold = true;
             Global.instance.CollisionFlag = true;
-            // other.node.position = self.node.position;
         }
     }
 }
