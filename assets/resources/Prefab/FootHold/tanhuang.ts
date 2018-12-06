@@ -40,7 +40,10 @@ export default class tanhuang extends cc.Component {
 
     update (dt) {
         // console.log(Global.instance.CollisionFlag);
-        if(Global.instance.OverFlag){}
+        let self = this;
+        if(Global.instance.OverFlag){
+            self.enabled = false;
+        }
         else{
             this.node.active = true;
             this.node.y += Global.instance.FHFallSpeed;

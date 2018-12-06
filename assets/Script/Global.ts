@@ -75,6 +75,11 @@ export default class Global {
      * 网络连接标志位
      */
     public NetStatus = false;
+    /**
+     * stop Animations falg;
+     */
+    public AniFalg = false;
+    
     public static readonly instance = new Global();//全局下不可少
     private constructor() { }
 

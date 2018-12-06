@@ -19,16 +19,21 @@ export default class Playcontroler extends cc.Component {
     }
 
     update (dt) {
-        if(!Global.instance.CollisionFlag){
-            this.node.y -= Global.instance.InitSpeed;
+        if(Global.instance.OverFlag){
+            this.enabled = false;
         }
         else{
-            let name = Global.instance.TheHolder.name;
-            if(name == ""){
-                return;
+            if(!Global.instance.CollisionFlag){
+                this.node.y -= Global.instance.InitSpeed;
             }
-            this.node.y = Global.instance.TheHolder.y 
-                + Global.instance.TheHolder.getComponent(name).NodeH-10;//here ,this way isnot a good Processing method,should be optimizated
+            else{
+                let name = Global.instance.TheHolder.name;
+                if(name == ""){
+                    return;
+                }
+                this.node.y = Global.instance.TheHolder.y 
+                    + Global.instance.TheHolder.getComponent(name).NodeH-10;//here ,this way isnot a good Processing method,should be optimizated
+            }
         }
     }
 

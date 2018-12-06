@@ -78,7 +78,9 @@ export default class MainScene extends cc.Component {
         let FHolder;
         if((this.ETime-this.STime)>1800){//控制落脚点之间的间距,间距200px
             this.STime = Date.now();
-            FHolder = this.FootHoldGenerator();
+            if(!Global.instance.OverFlag){
+                FHolder = this.FootHoldGenerator();
+            }
         }
         this.FHolder();
         this.reduceLife();
@@ -116,6 +118,22 @@ export default class MainScene extends cc.Component {
         this.LEFT.node.on(cc.Node.EventType.TOUCH_END,this.BtnTurnLeft,this);
         this.RIGHT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
         this.RIGHT.node.on(cc.Node.EventType.TOUCH_END,this.BtnTurnRight,this);
+    }
+
+    StopAni(self){
+
+        if(!Global.instance.AniFalg){
+            let FHolder = self.node.getChildByName("BgNode").getChildByName("FHolder").children;
+            let Fname;
+            for(let i=0;FHolder.length;i++){
+                if(i == FHolder.length-1){
+                    Global.instance.AniFalg = true;
+                    return;
+                }
+                Fname = FHolder[i].name;
+                FHolder[i].getComponent(Fname).enabled = false;
+            }
+        }
     }
     /**
      * player 移出落脚点
@@ -513,7 +531,9 @@ export default class MainScene extends cc.Component {
      * gameover
      */
     gameOver(){
+        
         let self = this;
+        self.StopAni(self);
         let failure;
         let Ani;
         let Anistate;
@@ -541,13 +561,13 @@ export default class MainScene extends cc.Component {
         //replay
         reGameEventHandler.target = self.node;
         reGameEventHandler.component = "MainScene";
-        reGameEventHandler.handler = "FBtnCB_reGame";
+        reGameEventHandler.handler = "restart";
         reGameEventHandler.customEventData = null;
         fhuoBtnreGame.clickEvents.push(reGameEventHandler);
-        //fh
+        //fh立即复活会有其他功能暂时用重新开始代替
         FhuoEventHandler.target = self.node;
         FhuoEventHandler.component = "MainScene";
-        FhuoEventHandler.handler = "FBtnCB_reGame";
+        FhuoEventHandler.handler = "restart";
         FhuoEventHandler.customEventData = null;
         fhuoBtnFhuo.clickEvents.push(FhuoEventHandler);
         if(!Global.instance.OverFlag){
@@ -559,19 +579,13 @@ export default class MainScene extends cc.Component {
             Score = failure.getChildByName("cj").getChildByName("Score");
             self.node.addChild(failure);
             self.node.addChild(fuhuo);
-            Score.getComponent(cc.Label).string = 
-                self.LifeDing.getChildByName("Floor").getComponent(cc.Label).string;
+            Score.getComponent(cc.Label).string = self.LifeDing.getChildByName("Floor").getComponent(cc.Label).string;
             Ani = failure.getComponent(cc.Animation);//the animation of failure;
             FAni = fuhuo.getComponent(cc.Animation);
             Anistate = Ani.play("shibai");//the state of Ani;
             Anistate.speed = 1;
             Anistate.repeatCount = 1;
             self.StoregeScore();
-            // self.scheduleOnce(function(){
-            //     FAnistate = FAni.play();
-            // },4);
-            // self.scheduleOnce(()=>cc.director.pause(),0.48);//如果直接暂停这个就会导致后面的动画不能播放。
-            
         }
         else{
             return;
@@ -587,19 +601,13 @@ export default class MainScene extends cc.Component {
         cc.director.loadScene("EndScene");
     }
     /**
-     * 
-     */
-    FBtnCB_reGame(){
-        this.destroy();
-        cc.director.loadScene("MainScene");
-    }
-    /**
      * restart
      */
     restart(){
         cc.director.loadScene("MainScene");
         cc.director.resume();
         Global.instance.OverFlag = false;
+        Global.instance.AniFalg = false;
         this.LEFT.node.active = true;
         this.RIGHT.node.active = true;
         this.destroy();
@@ -657,7 +665,8 @@ export default class MainScene extends cc.Component {
         let self = this.node;
         let scLabel = this.LifeDing.getChildByName("Floor").getComponent(cc.Label);
         let sc = parseInt(scLabel.string);
-        sc++;
+        sc = sc+1;
+        console.log("打印一下");
         scLabel.string = sc.toString();
         let lv = sc%50;
         if(lv>Global.instance.LevelAddFlag){
