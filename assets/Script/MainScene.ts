@@ -55,7 +55,7 @@ export default class MainScene extends cc.Component {
     onLoad () {
         this.LifeDing.zIndex = 10;
         this.FHolderNode.zIndex = 9;
-        Global.instance.setMN(this);
+        Global.instance.setMN(this.node);
         this.STime = Date.now();
         let FHolder = cc.instantiate(this.GD);
         this.FHolderNode.addChild(FHolder,10,"GD");

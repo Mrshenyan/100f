@@ -80,7 +80,7 @@ export default class NewClass extends cc.Component {
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         this.node.isHold = true;
         Global.instance.Injured = true;
-        this.main.Score();
+        // this.main.Score();
         if(!Global.instance.CollisionFlag){
             Global.instance.CollisionFlag = true;
             rootself.AniState = rootself.Ani.play("dici");

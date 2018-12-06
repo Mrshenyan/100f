@@ -81,7 +81,7 @@ export default class Opplvdai extends cc.Component {
         let rootself = this;//当前根节点
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
-        this.main.Score();
+        // this.main.Score();
         if(!Global.instance.CollisionFlag){
             // console.log(other);
             // console.log("2检测到碰撞！！！");

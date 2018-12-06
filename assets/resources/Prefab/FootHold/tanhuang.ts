@@ -86,7 +86,7 @@ export default class tanhuang extends cc.Component {
         Global.instance.KIND_FootHold = this.KIND_FootHold;
 
         if(!this.gainSc){
-            this.main.Score();
+            // this.main.Score();
             this.gainSc = true;
         }
         if(!Global.instance.CollisionFlag){
