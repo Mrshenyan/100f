@@ -27,7 +27,7 @@ export default class Opplvdai extends cc.Component {
     AniState = null;
 
     onLoad () {
-        this.node.y = -512;
+        this.node.y = -500;
         this.node.x = cc.randomMinus1To1()*140;
         this.Ani = this.node.getComponent(cc.Animation);
         this.AniState = this.Ani.play("Opplvdai");

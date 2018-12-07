@@ -79,10 +79,22 @@ export default class Global {
      * stop Animations falg;
      */
     public AniFalg = false;
-    
-    public static readonly instance = new Global();//全局下不可少
-    private constructor() { }
 
+    /**
+     * info
+     */
+    private USERINFO = {
+        uNam:"",
+        uTim:Number,
+    }
+    /**
+     * 玩家排行
+     */
+    private MyRank = null;
+
+    public LorR = 0;//0 for L; 1 for R;
+    public static readonly instance = new Global();//全局下不可少
+    private constructor() { };
     /**
      * return the local score
      */
@@ -97,6 +109,9 @@ export default class Global {
         return this.remoteScore;
     }
 
+    public setRemoteScore(score){
+        this.remoteScore = score;
+    }
     /**
      * 开始场景节点获取
      */
@@ -123,8 +138,48 @@ export default class Global {
     public setMN(mn){
         this.MainNode = mn
     }
+/**
+     * 获取玩家信息
+     */
+    public GetUSer(){
+        return this.USERINFO;
+    }
 
+    /**
+     * 设置玩家信息
+     * @param user 玩家
+     */
+    public SetUser(user){
+        this.USERINFO = user;
+    }
 
+     /**
+     * 获取个人排行
+     */
+    public GetR(){
+        return this.MyRank;
+    }
+    /**
+     * 设置个人排行
+     * @param r 排行
+     */
+    public SetR(r){
+        this.MyRank = r;
+    }
+     /**
+     * 获取排行分数
+     */
+    public GetS(){
+        return this.remoteScore;
+    }
+
+    /**
+     * 设置排行分数
+     * @param s 分数
+     */
+    public SetS(s){
+        this.remoteScore = s;
+    }
 }
 
 /**

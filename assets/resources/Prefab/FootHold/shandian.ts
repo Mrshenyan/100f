@@ -6,9 +6,9 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class shandian extends cc.Component {
     /**
-     * 落脚点类型 1：向左传送带
+     * 落脚点类型 8：闪电
      */
-    private KIND_FootHold = 6;
+    private KIND_FootHold = 8;
     /**
      * player是否落在落脚点上，默认false，没有
      */
@@ -25,7 +25,7 @@ export default class shandian extends cc.Component {
     Ani:cc.Animation = null;
     AniState = null;
     onLoad () {
-        this.node.y = -512;
+        this.node.y = -500;
         this.node.x = cc.randomMinus1To1()*140;
         this.Ani = this.node.getComponent(cc.Animation);
         this.AniState = this.Ani.play("shandian");
@@ -80,9 +80,6 @@ export default class shandian extends cc.Component {
         Global.instance.Injured = true;
         this.main.Score();
         if(!Global.instance.CollisionFlag){
-            // console.log(other);
-            // console.log("6检测到碰撞！！！");
-            // console.log(self);
             self.node.isHold = false;
             Global.instance.CollisionFlag = false;
         }

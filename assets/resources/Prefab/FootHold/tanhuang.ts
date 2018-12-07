@@ -6,9 +6,9 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class tanhuang extends cc.Component {
     /**
-     * 落脚点类型 1：向左传送带
+     * 落脚点类型 2：tanhuang
      */
-    private KIND_FootHold = 7;
+    private KIND_FootHold = 2;
     /**
      * player是否落在落脚点上，默认false，没有
      */
@@ -28,7 +28,7 @@ export default class tanhuang extends cc.Component {
 
 
     onLoad () {
-        this.node.y = -512;
+        this.node.y = -500;
         this.node.x = cc.randomMinus1To1()*140;
         this.Ani = this.node.getChildByName("tanhuang").getComponent(cc.Animation);
 

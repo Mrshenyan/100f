@@ -1,8 +1,8 @@
 import Global from "./Global";
 
-let URL = "http://39.98.43.215:9000";
+let URL = "http://39.98.43.215:9001";
 // 39.98.43.215:9000;
-// let URL = "http://192.168.3.137:9000"
+// let URL = "http://192.168.3.137:9001"
 
 export default class Http {
     // let origin:number = 0;

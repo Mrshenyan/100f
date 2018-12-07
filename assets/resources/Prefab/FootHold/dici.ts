@@ -6,9 +6,9 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class NewClass extends cc.Component {
     /**
-     * 落脚点类型 1：向左传送带
+     * 落脚点类型 6：地刺
      */
-    private KIND_FootHold = 4;
+    private KIND_FootHold = 6;
     /**
      * player是否落在落脚点上，默认false，没有
      */
@@ -28,7 +28,7 @@ export default class NewClass extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.node.y = -512;
+        this.node.y = -500;
         this.node.x = cc.randomMinus1To1()*140;
         this.Ani = this.node.getComponent(cc.Animation);
     }

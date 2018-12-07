@@ -1695,12 +1695,12 @@
     "_offset": {
       "__type__": "cc.Vec2",
       "x": 9,
-      "y": 3.5
+      "y": 30
     },
     "_size": {
       "__type__": "cc.Size",
       "width": 211.7,
-      "height": 52.9
+      "height": 0
     }
   },
   {

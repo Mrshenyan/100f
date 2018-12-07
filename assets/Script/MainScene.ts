@@ -59,9 +59,10 @@ export default class MainScene extends cc.Component {
         this.STime = Date.now();
         let FHolder = cc.instantiate(this.GD);
         this.FHolderNode.addChild(FHolder,10,"GD");
-        FHolder.getComponent("GD").init(this);
+        FHolder.getComponent("GD").init(this,7);
+        FHolder.y = -150;
         this.Player.x = FHolder.x;
-        this.Player.y = 250;
+        this.Player.y = FHolder.y+50;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;
@@ -76,7 +77,7 @@ export default class MainScene extends cc.Component {
         this.MoveBg();
         Global.instance.moveSpeed = 1;
         let FHolder;
-        if((this.ETime-this.STime)>1800){//控制落脚点之间的间距,间距200px
+        if((this.ETime-this.STime)>1200){//控制落脚点之间的间距,间距144px
             this.STime = Date.now();
             if(!Global.instance.OverFlag){
                 FHolder = this.FootHoldGenerator();
@@ -86,12 +87,21 @@ export default class MainScene extends cc.Component {
         this.reduceLife();
         if(Global.instance.CollisionFlag){//左右传送带减速
             switch(Global.instance.KIND_FootHold){
-                case 2:{
+                case 3:{
                     this.Player.x += 1;
                     break;
                 }
-                case 5:{
+                case 4:{
                     this.Player.x -= 1;
+                    break;
+                }
+                case 7:{
+                    if(Global.instance.LorR==0){
+                        this.Player.x -=Global.instance.moveSpeed;
+                    }
+                    else{
+                        this.Player.x +=Global.instance.moveSpeed;
+                    }
                     break;
                 }
                 default:{
@@ -190,8 +200,22 @@ export default class MainScene extends cc.Component {
      */
     FootHoldGenerator(){
         let self = this;
-        let KindHolder = Math.ceil(Math.random()*7);
-        // KindHolder = 1;
+        let Magnification = 0;
+        let f = parseInt(self.LifeDing.getChildByName("Floor").getComponent(cc.Label).string);
+        if(f<20){
+            Magnification = 2
+        }
+        else if(f<40){
+            Magnification = 4;
+        }
+        else if(f<60){
+            Magnification = 6;
+        }
+        else if(f<80){
+            Magnification = 8;
+        }
+        let KindHolder = Math.ceil(Math.random()*Magnification);
+        KindHolder = 7;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -199,52 +223,12 @@ export default class MainScene extends cc.Component {
             case 1:{
                 FHolder = cc.instantiate(self.GD);
                 self.FHolderNode.addChild(FHolder,5,"GD");
-                FHolder.getComponent("GD").init(self);
+                FHolder.getComponent("GD").init(self,KindHolder);
                 FHolder.isHold = false;
                 // console.log("产生第一种落脚点");
                 break;
             }
             case 2:{
-                FHolder = cc.instantiate(self.lvdai);
-                self.FHolderNode.addChild(FHolder,5,"lvdai");
-                FHolder.getComponent("lvdai").init(self);
-                FHolder.isHold = false;
-                // console.log("产生第二种落脚点");
-                break;
-            }
-            case 3:{
-                FHolder = cc.instantiate(self.boli);
-                self.FHolderNode.addChild(FHolder,5,"boli");
-                FHolder.getComponent("boli").init(self);
-                FHolder.isHold = false;
-                // console.log("产生第三种落脚点");
-                break;
-            }
-            case 4:{
-                FHolder = cc.instantiate(self.dici);
-                self.FHolderNode.addChild(FHolder,5,"dici");
-                FHolder.getComponent("dici").init(self);
-                FHolder.isHold = false;
-                // console.log("产生第四种落脚点");
-                break;
-            }
-            case 5:{
-                FHolder = cc.instantiate(self.lvdai);
-                self.FHolderNode.addChild(FHolder,5,"lvdai");
-                FHolder.getComponent("lvdai").init(self);
-                FHolder.isHold = false;
-                // console.log("产生第五种落脚点");
-                break;
-            }
-            case 6:{
-                FHolder = cc.instantiate(self.shandian);
-                self.FHolderNode.addChild(FHolder,5,"shandian");
-                FHolder.getComponent("shandian").init(self);
-                FHolder.isHold = false;
-                // console.log("产生第五种落脚点");
-                break;
-            }
-            case 7:{
                 FHolder = cc.instantiate(self.tanhuang);
                 self.FHolderNode.addChild(FHolder,5,"tanhuang");
                 FHolder.getComponent("tanhuang").init(self);
@@ -252,14 +236,63 @@ export default class MainScene extends cc.Component {
                 // console.log("产生第五种落脚点");
                 break;
             }
-            default:{
+            case 3:{
+                FHolder = cc.instantiate(self.lvdai);
+                self.FHolderNode.addChild(FHolder,5,"lvdai");
+                FHolder.getComponent("lvdai").init(self);
+                FHolder.isHold = false;
+                // console.log("产生第二种落脚点");
+                break;
+            }
+            case 4:{
+                FHolder = cc.instantiate(self.lvdai);
+                self.FHolderNode.addChild(FHolder,5,"lvdai");
+                FHolder.getComponent("lvdai").init(self);
+                FHolder.isHold = false;
+                // console.log("产生第五种落脚点");
+                break;
+            }
+            case 5:{
+                FHolder = cc.instantiate(self.boli);
+                self.FHolderNode.addChild(FHolder,5,"boli");
+                FHolder.getComponent("boli").init(self);
+                FHolder.isHold = false;
+                // console.log("产生第三种落脚点");
+                break;
+            }
+            case 6:{
+                FHolder = cc.instantiate(self.dici);
+                self.FHolderNode.addChild(FHolder,5,"dici");
+                FHolder.getComponent("dici").init(self);
+                FHolder.isHold = false;
+                // console.log("产生第四种落脚点");
+                break;
+            }
+            case 7:{
                 FHolder = cc.instantiate(self.GD);
                 self.FHolderNode.addChild(FHolder,5,"GD");
-                FHolder.getComponent("GD").init(self);
+                FHolder.getComponent("GD").init(self,KindHolder);
                 FHolder.isHold = false;
-                // console.log("默认产生第一种落脚点");
-            }
                 break;
+            }
+            case 8:{
+                FHolder = cc.instantiate(self.shandian);
+                self.FHolderNode.addChild(FHolder,5,"shandian");
+                FHolder.getComponent("shandian").init(self);
+                FHolder.isHold = false;
+                break;
+            }
+            // default:{
+            //     FHolder = cc.instantiate(self.GD);
+            //     self.FHolderNode.addChild(FHolder,5,"GD");
+            //     FHolder.getComponent("GD").init(self);
+            //     FHolder.getComponent("GD").enabled = true;
+            //     FHolder.getComponent("MoveGD").init(self);
+            //     FHolder.getComponent("MoveGD").enabled = false;
+            //     FHolder.isHold = false;
+            //     // console.log("默认产生第一种落脚点");
+            // }
+                // break;
         }
         return FHolder;
     }
@@ -327,7 +360,6 @@ export default class MainScene extends cc.Component {
                     }
                 };
             }
-            console.log("这里是左按钮输出，打印的是moveByTime: "+moveByTime+" 还有moveByDes: "+moveByDes);
         }
         if(self.RkeyDown){
             target = self.RIGHT;
@@ -355,7 +387,6 @@ export default class MainScene extends cc.Component {
                     }
                 };
             }
-            console.log("这里是右按钮输出，打印的是moveByTime: "+moveByTime+" 还有moveByDes: "+moveByDes);
         }
         
         let funcFlag = false;
@@ -364,8 +395,6 @@ export default class MainScene extends cc.Component {
                 if(!scheduleState){
                     
                     schedule.schedule(func,target,0);
-                    
-                    console.log("func");
                 };
                 if(schedulePause){
                     schedule.resumeTarget(target);
@@ -699,6 +728,13 @@ export default class MainScene extends cc.Component {
             }
             localS.ThirdScore = CurrentScore;
         }
+    }
+
+    /**
+     * upload the best score
+     */
+    UpLoadScore(){
+        
     }
 }
 /**

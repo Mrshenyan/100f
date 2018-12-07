@@ -6,9 +6,9 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class lvdai extends cc.Component {
     /**
-     * 落脚点类型 5：向左传送带
+     * 落脚点类型 3/4：传送带
      */
-    private KIND_FootHold = 5;
+    private KIND_FootHold = 0;
     /**
      * player是否落在落脚点上，默认false，没有
      */
@@ -27,15 +27,15 @@ export default class lvdai extends cc.Component {
 
     onLoad () {
         let kind = Math.random();
-        this.node.y = -512;
+        this.node.y = -500;
         this.node.x = cc.randomMinus1To1()*140;
         this.Ani = this.node.getComponent(cc.Animation);
         this.AniState = this.Ani.play("lvdai");
         if(kind<=0.5){
-            this.KIND_FootHold = 2;   
+            this.KIND_FootHold = 3;   
         }
         else{
-            this.KIND_FootHold = 5;
+            this.KIND_FootHold = 4;
             this.AniState.wrapMode = cc.WrapMode.Reverse;//设置动画的播放方式为倒放
         }
         this.AniState.repeatCount = 100;

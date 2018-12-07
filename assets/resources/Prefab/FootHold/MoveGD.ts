@@ -3,21 +3,19 @@ import Global from "../../../Script/Global";
 
 const {ccclass, property} = cc._decorator;
 
-
 @ccclass
-export default class boli extends cc.Component {
+export default class MoveGD extends cc.Component {
     /**
-     * 落脚点类型 5：玻璃
+     * 落脚点类型 7：移动
      */
-    private KIND_FootHold = 5;
+    private KIND_FootHold = 7;
     /**
      * player是否落在落脚点上，默认false，没有
      */
     @property(Boolean)
     public isHold = false;
-
     @property(Number)
-    public NodeH:number = 40;
+    public NodeH:Number = 70;
 
     private main:MainScene = null;
     /**
@@ -25,40 +23,48 @@ export default class boli extends cc.Component {
      */
     Ani:cc.Animation = null;
     AniState = null;
+    LifeDing = null;
 
     onLoad () {
         this.node.y = -500;
-        this.node.x = cc.randomMinus1To1()*140;
-        this.Ani = this.node.getComponent(cc.Animation);
+        this.node.x = cc.randomMinus1To1()*60;
     }
 
     start () {
-
+        this.LifeDing = this.main.LifeDing.children;
     }
 
     update (dt) {
+        // console.log(Global.instance.CollisionFlag);
         let self = this;
+        let moveBDes = cc.moveBy(0.5,5,0);
+        let munisDes = cc.moveBy(0.5,-5,0);
+        self.scheduleOnce(()=>{
+            self.node.runAction(moveBDes);
+        },0);
+        self.scheduleOnce(()=>{
+            self.node.runAction(munisDes);
+        },0.5);
         if(Global.instance.OverFlag){
             self.enabled = false;
         }
         else{
-            this.node.active = true;
-            this.node.y += Global.instance.FHFallSpeed;
-            if(this.node.isHold){
+            self.node.active = true;
+            self.node.y += Global.instance.FHFallSpeed;
+            if(self.node.isHold){
                 Global.instance.CollisionFlag = true;
                 Global.instance.TheHolder = this.node;
+                
             }
-            if(this.node.y>360){
-                if(this.node.isHold){
-                    this.node.isHold = false;
+            if(self.node.y>360){
+                if(self.node.isHold){
+                    self.node.isHold = false;
                     Global.instance.CollisionFlag = false;
                 }
-                this.node.destroy();
+                self.node.destroy();
             }
         }
     }
-
-
 
     /**
      * 初始化函数
@@ -73,20 +79,17 @@ export default class boli extends cc.Component {
     public getKind(){
         return this.KIND_FootHold;
     }
-
     onCollisionEnter(other,self){
-        // let spawn;
-        let rootself = this;
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
-        self.node.isHold = true;
-        Global.instance.CollisionFlag = true;
-        this.main.Score();
-        this.scheduleOnce(function(){
-            this.AniState = this.Ani.play("boli");
-            rootself.node.isHold = false;
-            Global.instance.CollisionFlag = false;
-            self.destroy();
-        },0.5);
+        
+        if(Global.instance.CollisionFlag){
+            return;
+        }
+        else{
+            this.main.Score();
+            self.node.isHold = true;
+            Global.instance.CollisionFlag = true;
+        }
     }
 }
