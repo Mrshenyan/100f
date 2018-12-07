@@ -62,7 +62,7 @@ export default class MainScene extends cc.Component {
         FHolder.getComponent("GD").init(this,7);
         FHolder.y = -150;
         this.Player.x = FHolder.x;
-        this.Player.y = FHolder.y+100;
+        this.Player.y = FHolder.y+40;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;
@@ -95,15 +95,15 @@ export default class MainScene extends cc.Component {
                     this.Player.x -= 1;
                     break;
                 }
-                // case 7:{
-                //     if(Global.instance.LorR==0){
-                //         this.Player.x -=Global.instance.moveSpeed;
-                //     }
-                //     else{
-                //         this.Player.x +=Global.instance.moveSpeed;
-                //     }
-                //     break;
-                // }
+                case 7:{
+                    if(Global.instance.LorR==0){
+                        this.Player.x -= 2;
+                    }
+                    else{
+                        this.Player.x += 2;
+                    }
+                    break;
+                }
                 default:{
                     break;
                 }
