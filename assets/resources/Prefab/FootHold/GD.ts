@@ -108,13 +108,9 @@ export default class GD extends cc.Component {
         let scheduler = cc.director.getScheduler();
         
         function Lmove(){
-            // des = Math.abs(self.node.y) + self.node.parent.parent.width/2;
-            // rootSelf.node.runAction(cc.moveBy(2,-des,0));
             self.node.x -=1;
         }
         function Rmove(){
-            // des = Math.abs(self.node.y) + self.node.parent.parent.width/2;
-            // rootSelf.node.runAction(cc.moveBy(2,des,0));
             self.node.x +=1;
         }
         switch(tag){
@@ -139,6 +135,3 @@ export default class GD extends cc.Component {
         }
     }
 }
-/**
- * 移动落脚点的处理。。。
- */
