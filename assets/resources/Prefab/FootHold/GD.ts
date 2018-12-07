@@ -24,11 +24,15 @@ export default class GD extends cc.Component {
     Ani:cc.Animation = null;
     AniState = null;
     LifeDing = null;
-    LorR;
 
     onLoad () {
         this.node.y = -500;
-        this.LorR = Math.random();
+        if(Math.random()<0.5){
+            Global.instance.LorR = 0;
+        }
+        else{
+            Global.instance.LorR = 1;
+        }
     }
 
     start () {
@@ -52,18 +56,17 @@ export default class GD extends cc.Component {
     update (dt) {
         // console.log(Global.instance.CollisionFlag);
         let self = this;
+        console.log("状态："+ self.node.active+"，位置："+self.node.x);
         if(Global.instance.OverFlag){
             self.enabled = false;
         }
         else{
             this.node.active = true;
-            if(this.LorR<0.5){
+            if(Global.instance.LorR>0.5){
                 this.node.x += Global.instance.FHFallSpeed;
-                Global.instance.LorR = 1;
             }
             else{
                 this.node.x -= Global.instance.FHFallSpeed;
-                Global.instance.LorR = 0;
             }
             if(this.node.isHold){
                 Global.instance.CollisionFlag = true;
@@ -105,30 +108,24 @@ export default class GD extends cc.Component {
         let scheduler = cc.director.getScheduler();
         
         function Lmove(){
-            des = Math.abs(self.node.y) + self.node.parent.parent.width/2;
-            rootSelf.node.runAction(cc.moveBy(2,-des,0));
+            // des = Math.abs(self.node.y) + self.node.parent.parent.width/2;
+            // rootSelf.node.runAction(cc.moveBy(2,-des,0));
+            self.node.x -=1;
         }
         function Rmove(){
-            des = Math.abs(self.node.y) + self.node.parent.parent.width/2;
-            rootSelf.node.runAction(cc.moveBy(2,des,0));
+            // des = Math.abs(self.node.y) + self.node.parent.parent.width/2;
+            // rootSelf.node.runAction(cc.moveBy(2,des,0));
+            self.node.x +=1;
         }
         switch(tag){
-            case 12:{
-                Global.instance.FHFallSpeed = des/2
-                if(tag==12){
-                    rootSelf.scheduleOnce(Lmove,0);
-                    Global.instance.LorR = 0;
-                    console.log("向左");
-                }
+            case 11:{
+                Global.instance.LorR = 1;
+                Rmove();
                 break;
             }
-            case 11:{
-                Global.instance.FHFallSpeed = des/2
-                if(tag==11){
-                    rootSelf.scheduleOnce(Rmove,0);
-                    Global.instance.LorR = 1;
-                    console.log("向右");
-                }
+            case 12:{
+                Global.instance.LorR =0;
+                Lmove();
                 break;
             }
         }

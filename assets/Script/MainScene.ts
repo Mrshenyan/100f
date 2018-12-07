@@ -62,7 +62,7 @@ export default class MainScene extends cc.Component {
         FHolder.getComponent("GD").init(this,7);
         FHolder.y = -150;
         this.Player.x = FHolder.x;
-        this.Player.y = FHolder.y+50;
+        this.Player.y = FHolder.y+100;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;
@@ -80,7 +80,7 @@ export default class MainScene extends cc.Component {
         if((this.ETime-this.STime)>1200){//控制落脚点之间的间距,间距144px
             this.STime = Date.now();
             if(!Global.instance.OverFlag){
-                FHolder = this.FootHoldGenerator();
+                // FHolder = this.FootHoldGenerator();
             }
         }
         this.FHolder();
@@ -95,15 +95,15 @@ export default class MainScene extends cc.Component {
                     this.Player.x -= 1;
                     break;
                 }
-                case 7:{
-                    if(Global.instance.LorR==0){
-                        this.Player.x -=Global.instance.moveSpeed;
-                    }
-                    else{
-                        this.Player.x +=Global.instance.moveSpeed;
-                    }
-                    break;
-                }
+                // case 7:{
+                //     if(Global.instance.LorR==0){
+                //         this.Player.x -=Global.instance.moveSpeed;
+                //     }
+                //     else{
+                //         this.Player.x +=Global.instance.moveSpeed;
+                //     }
+                //     break;
+                // }
                 default:{
                     break;
                 }
@@ -734,7 +734,7 @@ export default class MainScene extends cc.Component {
      * upload the best score
      */
     UpLoadScore(){
-        
+
     }
 }
 /**

@@ -24,7 +24,7 @@ export default class Playcontroler extends cc.Component {
         }
         else{
             if(!Global.instance.CollisionFlag){
-                this.node.y -= Global.instance.InitSpeed;
+                // this.node.y -= Global.instance.InitSpeed;
             }
             else{
                 let name = Global.instance.TheHolder.name;
