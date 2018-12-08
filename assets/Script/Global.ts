@@ -86,6 +86,7 @@ export default class Global {
     private USERINFO = {
         uNam:"",
         uTim:Number,
+        uScore:0,
     }
     /**
      * 玩家排行
