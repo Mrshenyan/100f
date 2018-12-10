@@ -83,8 +83,11 @@ export default class Global {
     /**
      * info
      */
-    private USERINFO =new Array();
-    public Channel = ""
+    private USERINFO = {
+        uNam:"",
+        uTim:Number,
+        uScore:0,
+    }
     /**
      * player排行
      */
