@@ -1,4 +1,5 @@
 import Global from "./Global"
+import Http from "./Http";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -52,6 +53,11 @@ export default class MainScene extends cc.Component {
     /** Right*/
     private RkeyDown = false;
 
+    USERINFO = {
+        userId:"",
+        score:0,
+    }
+
     onLoad () {
         this.LifeDing.zIndex = 10;
         this.FHolderNode.zIndex = 9;
@@ -61,8 +67,9 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.addChild(FHolder,10,"GD");
         FHolder.getComponent("GD").init(this,7);
         FHolder.y = -150;
-        this.Player.x = FHolder.x;
-        this.Player.y = FHolder.y+40;
+        this.Player.active = false;
+        // this.Player.x = FHolder.x;
+        // this.Player.y = FHolder.y+40;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;
@@ -80,7 +87,7 @@ export default class MainScene extends cc.Component {
         if((this.ETime-this.STime)>1200){//控制落脚点之间的间距,间距144px
             this.STime = Date.now();
             if(!Global.instance.OverFlag){
-                // FHolder = this.FootHoldGenerator();
+                FHolder = this.FootHoldGenerator();
             }
         }
         this.FHolder();
@@ -122,6 +129,14 @@ export default class MainScene extends cc.Component {
             this.gameOver();
         }
         this.ETime = Date.now();
+        let AllChildren = new Array();
+        let GDChildren = new Array();
+        AllChildren = this.node.getChildByName("BgNode").getChildByName("FHolder").children;
+        for(let i=0;i<AllChildren.length;i++){
+            if(AllChildren[i].name=="GD"){
+                GDChildren.push(AllChildren[i]);
+            }
+        }
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP,this.onKeyUp,this);
         this.LEFT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
@@ -214,8 +229,11 @@ export default class MainScene extends cc.Component {
         else if(f<80){
             Magnification = 8;
         }
+        else{
+            Magnification = 8;
+        }
         let KindHolder = Math.ceil(Math.random()*Magnification);
-        KindHolder = 7;
+        // KindHolder = 7;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -603,13 +621,20 @@ export default class MainScene extends cc.Component {
         if(!Global.instance.OverFlag){
             Global.instance.OverFlag = true;
             self.StoregeScore();
-            console.log("游戏结束！！！");
+            self.UpLoadScore();
+            // self.UpdateScore();
             failure.y = -20;
             fuhuo.y = 0;
             thisScore = parseInt(self.LifeDing.getChildByName("Floor").getComponent(cc.Label).string);
             lessScore = failure.getChildByName("jl").getChildByName("LessScore");
             BestScore = Global.instance.getLocalScore().BestScore;
-            lessScore.getComponent(cc.Label).string = (BestScore - thisScore).toString();
+            Global.instance.GetUSer().score = BestScore;
+            if(BestScore - thisScore<=0){
+                failure.getChildByName("jl").active = false;
+            }
+            else{
+                lessScore.getComponent(cc.Label).string = (BestScore - thisScore).toString();
+            }
             Score = failure.getChildByName("cj").getChildByName("Score");
             self.node.addChild(failure);
             self.node.addChild(fuhuo);
@@ -619,11 +644,12 @@ export default class MainScene extends cc.Component {
             Anistate = Ani.play("shibai");//the state of Ani;
             Anistate.speed = 1;
             Anistate.repeatCount = 1;
-            
         }
         else{
             return;
         }
+        console.log("游戏结束！！！");
+        // self.UpdateScore();
     }
 
 
@@ -734,12 +760,39 @@ export default class MainScene extends cc.Component {
      * upload the best score
      */
     UpLoadScore(){
-
+        let self = this;
+        let tmp = Global.instance.GetUSer();
+        Http.sendRequest("/updateScore",tmp,function(msg){
+            let x = msg;
+            if(msg.code!=0){
+                Global.instance.NetStatus = false;
+            }
+            let ux = {
+                userId:'',
+            }
+            console.log(x);
+            ux.userId = Global.instance.GetUSer().userId;
+            Http.sendRequest("/rank",ux,function(mmsg){
+                let MM = JSON.parse(mmsg.msg);
+                console.log(MM);
+                if(Global.instance.GetR()==null||Global.instance.GetR().rank==undefined||Global.instance.GetR().rank<MM.my.rank){
+                    Global.instance.SetR(MM.my.rank);
+                    Global.instance.setRemoteScore(MM.other);
+                }
+            });
+        });
     }
+    /**
+     * Update the best score rank
+     */
+    // UpdateScore(){
+    //     let self = this;
+    // }
 }
 /**
  * 这边，玩家死亡之后销魂游戏主场景，打开游戏结算场景
  * 进行后续的排行榜绘制。
  * 
  * player速度忽然变快通过打印是因为同一个移动放法调用了两次，效果叠加。
+ * 分数上传问题
  */

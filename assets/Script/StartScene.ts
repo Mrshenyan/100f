@@ -30,6 +30,7 @@ export default class StartScene extends cc.Component {
         userId:"",
         score:0,
     }
+    private channel = "test";
 
     onLoad () {
         // this.LifeDing.zIndex = 5;
@@ -42,11 +43,16 @@ export default class StartScene extends cc.Component {
         this.UpAni = startNode.getChildByName("Up").getComponent(cc.Animation);
         this.DownAni = startNode.getChildByName("Down").getComponent(cc.Animation);
         let uInf = Math.random();
-        this.Login();
+        
     }
 
     start () {
-
+        let self = this;
+        self.USERINFO.userId = "playerB6";
+        self.USERINFO.score = 0;
+        Global.instance.SetUser(self.USERINFO);
+        Global.instance.Channel = self.channel;
+        this.Login();
     }
 
     update (dt) {
@@ -92,32 +98,33 @@ export default class StartScene extends cc.Component {
      */
     protected Login(){
         let self = this;
-        Http.sendRequest("/login",{channel:"test",userId:"playerB1"},function(msg){//channel:渠道,userId:渠道Id
+        let channelStr = Global.instance.Channel;
+        let uNam = Global.instance.GetUSer().userId;
+        Http.sendRequest("/login",{channel:channelStr,userId:uNam},function(msg){
             let code = JSON.parse(msg.code);
-            console.log(msg);
+            console.log(code);
             if(code!=0){
                 Global.instance.NetStatus = false;
             }
             let mmsg = JSON.parse(msg.msg);
             self.USERINFO.userId = mmsg.userId;
             self.USERINFO.score = mmsg.score;
-            Global.instance.SetUser(self.USERINFO);//联网获取分数
+            Global.instance.SetUser(self.USERINFO);
         });
-        let ux = {
+        let ux={
             userId:'',
         }
-        ux.userId = self.USERINFO.userId;
-        Http.sendRequest("/rank",ux,function(mmsg) {
-            let MM = JSON.parse(mmsg.msg)//不能实时更新名次，只请求一次排名的话，名次是上一次的排名。逻辑错了？
-            //console.log(mmsg);
+        ux.userId = channelStr+Global.instance.GetUSer().userId;
+        Http.sendRequest("/rank",ux,function(mmsg){
+            let MM = JSON.parse(mmsg.msg);
+            console.log(MM);
             if(Global.instance.GetR()==null||Global.instance.GetR().rank==undefined||Global.instance.GetR().rank<MM.my.rank){
                 Global.instance.SetR(MM.my.rank);
-                Global.instance.setRemoteScore(MM.other);
+                Global.instance.SetS(MM.other);
             }
-            self.scheduleOnce(function(){
-                return;
-            },0.3);
         });
     }
-    
 }
+/**
+ * 联网登录放在开始游戏的时候，期间获取一次排行数据
+ */

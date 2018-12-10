@@ -9,9 +9,27 @@ export default class Rank extends cc.Component {
     Ani = null;
     Anistate = null;
     onLoad () {
-        let localS = Global.instance.getLocalScore();
-        for(let i=0;i<localS.length;i++){
-
+        let RemoteS = Global.instance.GetS();
+        let phb = this.node.getChildByName("phb").children;
+        let phbRank;
+        let phbName;
+        let phbFloor;
+        let j=0;
+        let i=RemoteS.length-1
+        for(;j<phb.length;){//length = 8
+            for(;i>=0;i--){
+                phbName = phb[j].getChildByName("id").getComponent(cc.Label)
+                phbRank = phb[j].getChildByName("rank").getComponent(cc.Label)
+                phbFloor = phb[j].getChildByName("floor").getComponent(cc.Label)
+                if(phbName.string==RemoteS[i].userId){
+                    i++;
+                }
+                phbName.string = RemoteS[i].userId;
+                phbRank.string = RemoteS[i].rank;
+                phbFloor.string = RemoteS[i].score; 
+                j++ 
+            }
+            j++;
         }
     }
 

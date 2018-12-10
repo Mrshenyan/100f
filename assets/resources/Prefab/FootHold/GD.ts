@@ -16,6 +16,8 @@ export default class GD extends cc.Component {
     public isHold = false;
     @property(Number)
     public NodeH:Number = 70;
+    @property(Boolean)
+    public Clis = false;
 
     private main:MainScene = null;
     /**
@@ -27,6 +29,7 @@ export default class GD extends cc.Component {
 
     onLoad () {
         this.node.y = -500;
+        this.Clis = false;
         if(Math.random()<0.5){
             Global.instance.LorR = 0;
         }
@@ -56,7 +59,7 @@ export default class GD extends cc.Component {
     update (dt) {
         // console.log(Global.instance.CollisionFlag);
         let self = this;
-        console.log("状态："+ self.node.active+"，位置："+self.node.x);
+        // console.log("状态："+ self.node.active+"，位置："+self.node.x);
         if(Global.instance.OverFlag){
             self.enabled = false;
         }
@@ -64,9 +67,11 @@ export default class GD extends cc.Component {
             this.node.active = true;
             if(Global.instance.LorR>0.5){
                 this.node.x += Global.instance.FHFallSpeed;
+                this.node.y += Global.instance.FHFallSpeed;
             }
             else{
                 this.node.x -= Global.instance.FHFallSpeed;
+                this.node.y += Global.instance.FHFallSpeed;
             }
             if(this.node.isHold){
                 Global.instance.CollisionFlag = true;
@@ -106,7 +111,8 @@ export default class GD extends cc.Component {
         let des;
         let tag = self.tag;
         let scheduler = cc.director.getScheduler();
-        
+        let LR = other.node.name;
+        this.Clis = true;
         function Lmove(){
             self.node.x -=1;
         }
@@ -115,22 +121,27 @@ export default class GD extends cc.Component {
         }
         switch(tag){
             case 11:{
+                rootSelf.Clis = true;
                 Global.instance.LorR = 1;
-                Rmove();
+                if(self.node.isHold){
+                    Rmove();
+                }
                 break;
             }
             case 12:{
+                rootSelf.Clis = true;
                 Global.instance.LorR =0;
-                Lmove();
+                if(self.node.isHold){
+                    Lmove();
+                }
                 break;
             }
         }
         if(Global.instance.CollisionFlag){
             return;
         }
-        else{
+        else if(self.node.isHold){
             this.main.Score();
-            self.node.isHold = true;
             Global.instance.CollisionFlag = true;
         }
     }
