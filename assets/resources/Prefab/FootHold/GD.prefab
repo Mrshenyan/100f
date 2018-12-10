@@ -195,7 +195,8 @@
     "_enabled": true,
     "isHold": false,
     "NodeH": 65,
-    "Clis": false
+    "RClis": false,
+    "LClis": false
   },
   {
     "__type__": "cc.BoxCollider",

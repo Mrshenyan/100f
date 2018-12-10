@@ -17,7 +17,9 @@ export default class GD extends cc.Component {
     @property(Number)
     public NodeH:Number = 70;
     @property(Boolean)
-    public Clis = false;
+    public RClis = false;
+    @property(Boolean)
+    public LClis = false;
 
     private main:MainScene = null;
     /**
@@ -29,12 +31,15 @@ export default class GD extends cc.Component {
 
     onLoad () {
         this.node.y = -500;
-        this.Clis = false;
+        this.RClis = false;
+        this.LClis = false;
         if(Math.random()<0.5){
-            Global.instance.LorR = 0;
+            this.RClis = false;
+            this.LClis = true;
         }
         else{
-            Global.instance.LorR = 1;
+            this.RClis = true;
+            this.LClis = false;
         }
     }
 
@@ -65,12 +70,12 @@ export default class GD extends cc.Component {
         }
         else{
             this.node.active = true;
-            if(Global.instance.LorR>0.5){
-                this.node.x += Global.instance.FHFallSpeed;
+            if(this.RClis&&this.LClis==false){
+                this.node.x -= Global.instance.FHFallSpeed;
                 this.node.y += Global.instance.FHFallSpeed;
             }
-            else{
-                this.node.x -= Global.instance.FHFallSpeed;
+            else if(this.LClis&&this.RClis==false){
+                this.node.x += Global.instance.FHFallSpeed;
                 this.node.y += Global.instance.FHFallSpeed;
             }
             if(this.node.isHold){
@@ -112,28 +117,25 @@ export default class GD extends cc.Component {
         let tag = self.tag;
         let scheduler = cc.director.getScheduler();
         let LR = other.node.name;
-        this.Clis = true;
+        rootSelf.RClis = false;
+        rootSelf.LClis = false;
         function Lmove(){
             self.node.x -=1;
+            // rootSelf.Clis = false;
         }
         function Rmove(){
             self.node.x +=1;
+            // rootSelf.Clis = false;
         }
         switch(tag){
             case 11:{
-                rootSelf.Clis = true;
+                rootSelf.LClis = true;
                 Global.instance.LorR = 1;
-                if(self.node.isHold){
-                    Rmove();
-                }
                 break;
             }
             case 12:{
-                rootSelf.Clis = true;
+                rootSelf.RClis = true;
                 Global.instance.LorR =0;
-                if(self.node.isHold){
-                    Lmove();
-                }
                 break;
             }
         }
