@@ -67,9 +67,9 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.addChild(FHolder,10,"GD");
         FHolder.getComponent("GD").init(this,7);
         FHolder.y = -150;
-        this.Player.active = false;
-        // this.Player.x = FHolder.x;
-        // this.Player.y = FHolder.y+40;
+        // this.Player.active = false;
+        this.Player.x = FHolder.x;
+        // this.Player.y = FHolder.y+60;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;

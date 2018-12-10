@@ -28,6 +28,7 @@ export default class GD extends cc.Component {
     Ani:cc.Animation = null;
     AniState = null;
     LifeDing = null;
+    RorL = "";
 
     onLoad () {
         this.node.y = -500;
@@ -36,10 +37,12 @@ export default class GD extends cc.Component {
         if(Math.random()<0.5){
             this.RClis = false;
             this.LClis = true;
+            this.RorL = "L";
         }
         else{
             this.RClis = true;
             this.LClis = false;
+            this.RorL = "R";
         }
     }
 
@@ -70,17 +73,20 @@ export default class GD extends cc.Component {
         }
         else{
             this.node.active = true;
+            if(this.node.isHold){
+                Global.instance.CollisionFlag = true;
+                Global.instance.TheHolder = this.node;
+                this.node.y += Global.instance.FHFallSpeed;
+            }
             if(this.RClis&&this.LClis==false){
                 this.node.x -= Global.instance.FHFallSpeed;
                 this.node.y += Global.instance.FHFallSpeed;
+                this.RorL = "R";
             }
             else if(this.LClis&&this.RClis==false){
                 this.node.x += Global.instance.FHFallSpeed;
                 this.node.y += Global.instance.FHFallSpeed;
-            }
-            if(this.node.isHold){
-                Global.instance.CollisionFlag = true;
-                Global.instance.TheHolder = this.node;
+                this.RorL = "L";
             }
             if(this.node.y>360){
                 if(this.node.isHold){
@@ -113,6 +119,8 @@ export default class GD extends cc.Component {
         let rootSelf = this;
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
+        // Global.instance.CollisionFlag = true;
+        // rootSelf.isHold = true;
         let des;
         let tag = self.tag;
         let scheduler = cc.director.getScheduler();
@@ -131,11 +139,32 @@ export default class GD extends cc.Component {
             case 11:{
                 rootSelf.LClis = true;
                 Global.instance.LorR = 1;
+                rootSelf.RorL = "R";
                 break;
             }
             case 12:{
                 rootSelf.RClis = true;
                 Global.instance.LorR =0;
+                rootSelf.RorL = "R";
+                break;
+            }
+            default:{
+               
+
+                if(rootSelf.RorL=="R"){
+                    rootSelf.RClis = true;
+                    rootSelf.LClis = false;
+                }
+                else{
+                    rootSelf.LClis = true;
+                    rootSelf.RClis = false;
+                }
+                if(Global.instance.CollisionFlag){
+
+                }
+                else{
+                   Global.instance.CollisionFlag = true;
+                }
                 break;
             }
         }
