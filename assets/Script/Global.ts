@@ -21,9 +21,9 @@ export default class Global {
      */
     public KIND_FootHold = 0;
     /**
-     * player初始下落速度,5px/帧
+     * player初始下落速度,8.5px/帧
      */
-    public InitSpeed = 10;
+    public InitSpeed = 8.5;
     /**
      * player移动速度,1px/帧
      */
@@ -80,6 +80,7 @@ export default class Global {
      */
     public AniFalg = false;
 
+    Channel;
     /**
      * info
      */

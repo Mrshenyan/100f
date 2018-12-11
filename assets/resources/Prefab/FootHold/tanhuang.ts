@@ -30,7 +30,7 @@ export default class tanhuang extends cc.Component {
     onLoad () {
         this.node.y = -500;
         this.node.x = cc.randomMinus1To1()*140;
-        this.Ani = this.node.getChildByName("tanhuang").getComponent(cc.Animation);
+        this.Ani = this.node.getComponent(cc.Animation);
 
     }
 
@@ -83,14 +83,17 @@ export default class tanhuang extends cc.Component {
      */
     onCollisionEnter(other,self){
         let rootself = this;//当前根节点
-        Global.instance.KIND_FootHold = this.KIND_FootHold;
-
-        if(!this.gainSc){
-            this.main.Score();
-            this.gainSc = true;
+        Global.instance.KIND_FootHold = rootself.KIND_FootHold;
+    
+        if(rootself.main ==null){
+            rootself.main = Global.instance.getMN();
+        }
+        if(!rootself.gainSc){
+            rootself.main.Score();
+            rootself.gainSc = true;
         }
         if(!Global.instance.CollisionFlag){
-            Global.instance.TheHolder = this.node;
+            Global.instance.TheHolder = rootself.node;
             Global.instance.CollisionFlag = true;
             rootself.isHold = true;
             other.y = self.y+60;
@@ -98,37 +101,29 @@ export default class tanhuang extends cc.Component {
             // console.log("7检测到碰撞！！！");
             // console.log(self);
             let spawn
-            try {
-                spawn = cc.spawn(cc.callFunc(function(){
-                    if(rootself.Ani==null){
-                        return;
-                    }
-                    rootself.AniState = rootself.Ani.play("tanhuang");
-                    rootself.AniState.speed = 0.8;
-                }),cc.callFunc(function(){
-                    other.node.runAction(cc.moveBy(0.25,0,76));
-                    try {
-                        self.node.isHold = false;
-                    } catch (error) {
-                        return
-                    }
-                    rootself.isHold = false;
-                    Global.instance.CollisionFlag = false;
-                }));
-                rootself.scheduleOnce(function(){
-                    try {
-                        self.node.isHold = false;
-                    } catch (error) {
-                        return
-                    }
-                    Global.instance.CollisionFlag = false;
-                    rootself.isHold = false;
-                    rootself.Ani.stop();
-                },0.512);
-            } catch (error) {
-                return;
-            }
+            spawn = cc.spawn(cc.callFunc(function(){
+                if(rootself.Ani==null){
+                    return;
+                }
+                rootself.AniState = rootself.Ani.play("tanhuang");
+                rootself.AniState.speed = 0.8;
+            }),cc.callFunc(function(){
+                other.node.runAction(cc.moveBy(0.15,0,50));
+                Global.instance.CollisionFlag = false;
+                rootself.isHold = false;
+                other.node.getComponent("Playcontroler").enabled = false;
+            }));
+            rootself.scheduleOnce(()=>{
+                other.node.getComponent("Playcontroler").enabled = true;
+            },0.3);
+            rootself.scheduleOnce(function(){
+                Global.instance.CollisionFlag = false;
+                rootself.isHold = false;
+                rootself.Ani.stop();
+                
+            },0.41);
             other.node.runAction(spawn);
+
         }
     }
 }

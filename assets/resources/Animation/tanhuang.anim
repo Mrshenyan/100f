@@ -17,70 +17,33 @@
       "scaleX": [
         {
           "frame": 0,
-          "value": 1
+          "value": 0.55
         },
         {
           "frame": 0.31666666666666665,
-          "value": 1
+          "value": 0.55
         }
       ],
       "scaleY": [
         {
           "frame": 0,
-          "value": 1
+          "value": 0.4
         },
         {
           "frame": 0.05,
-          "value": 0.7
+          "value": 0.5
         },
         {
           "frame": 0.15,
-          "value": 1.15
+          "value": 0.55
         },
         {
           "frame": 0.25,
-          "value": 1
+          "value": 0.5
         },
         {
           "frame": 0.31666666666666665,
-          "value": 1
-        }
-      ],
-      "position": [
-        {
-          "frame": 0,
-          "value": [
-            0,
-            -7
-          ]
-        },
-        {
-          "frame": 0.05,
-          "value": [
-            0,
-            -7
-          ]
-        },
-        {
-          "frame": 0.15,
-          "value": [
-            0,
-            -3
-          ]
-        },
-        {
-          "frame": 0.25,
-          "value": [
-            0,
-            -6
-          ]
-        },
-        {
-          "frame": 0.31666666666666665,
-          "value": [
-            0,
-            -7
-          ]
+          "value": 0.4
         }
       ]
     }

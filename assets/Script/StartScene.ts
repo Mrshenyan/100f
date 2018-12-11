@@ -10,8 +10,8 @@ export default class StartScene extends cc.Component {
     StartAniNode:cc.Node = null;
     @property(cc.Node)
     LifeDing:cc.Node = null;
-    @property(cc.Button)
-    testBtn:cc.Button = null;
+    @property(cc.Prefab)
+    paihangbang:cc.Prefab = null;
 
 
     // LIFE-CYCLE CALLBACKS:
@@ -23,6 +23,7 @@ export default class StartScene extends cc.Component {
     UpAnistate;
     DownAnistate;
 
+    CheckBtn:cc.Button;
     /**
      * 玩家信息
      */
@@ -42,13 +43,11 @@ export default class StartScene extends cc.Component {
         Anistate.wrapMode = cc.WrapMode.Loop;
         this.UpAni = startNode.getChildByName("Up").getComponent(cc.Animation);
         this.DownAni = startNode.getChildByName("Down").getComponent(cc.Animation);
-        let uInf = Math.random();
-        
     }
 
     start () {
         let self = this;
-        self.USERINFO.userId = "playerB6";
+        self.USERINFO.userId = "playerB10";
         self.USERINFO.score = 0;
         Global.instance.SetUser(self.USERINFO);
         Global.instance.Channel = self.channel;
@@ -109,6 +108,7 @@ export default class StartScene extends cc.Component {
             let mmsg = JSON.parse(msg.msg);
             self.USERINFO.userId = mmsg.userId;
             self.USERINFO.score = mmsg.score;
+            Global.instance.getLocalScore().BestScore = mmsg.score;
             Global.instance.SetUser(self.USERINFO);
         });
         let ux={
@@ -124,7 +124,13 @@ export default class StartScene extends cc.Component {
             }
         });
     }
+
+    CheckRank(){
+        this.destroy();
+        cc.director.loadScene("EndScene");
+    }
 }
 /**
  * 联网登录放在开始游戏的时候，期间获取一次排行数据
+ * 这里有一个逻辑上的问题：如果第一次玩的分数是0，就
  */
