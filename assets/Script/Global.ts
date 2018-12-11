@@ -86,7 +86,7 @@ export default class Global {
     private USERINFO = {
         userId:"",
         uTim:Number,
-        uScore:0,
+        score:0,
     }
     /**
      * player排行

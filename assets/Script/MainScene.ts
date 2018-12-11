@@ -72,7 +72,7 @@ export default class MainScene extends cc.Component {
         // this.Player.y = FHolder.y+60;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        // cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
     }
 
@@ -636,7 +636,7 @@ export default class MainScene extends cc.Component {
             lessScore = failure.getChildByName("jl").getChildByName("LessScore");
             BestScore = Global.instance.getLocalScore().BestScore;
             
-            Global.instance.GetUSer().uScore = BestScore;
+            Global.instance.GetUSer().score = BestScore;
             self.UpLoadScore();
             if(BestScore - thisScore<=0){
                 failure.getChildByName("jl").active = false;

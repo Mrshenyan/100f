@@ -24,6 +24,7 @@ export default class Http {
             extraUrl = Http.url;
         }
         var requestURL = extraUrl + path + encodeURI(str);
+        console.log("RequestURL:" + requestURL);
         xhr.open("GET",requestURL, true);
         if (cc.sys.isNative){
             xhr.setRequestHeader("Accept-Encoding","gzip,deflate");
