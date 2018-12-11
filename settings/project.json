@@ -33,51 +33,78 @@
       null,
       null,
       null,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      null,
       true
     ],
     [
       false,
       true,
       false,
-      false
-    ],
-    [
       false,
-      true,
-      false,
-      false,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      false,
-      false,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      false,
-      false,
-      false,
-      false
-    ],
-    [
-      false,
-      true,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    ],
-    [
-      false,
-      true,
       false,
       false,
       false,
@@ -88,19 +115,7 @@
     ],
     [
       false,
-      true,
-      true,
       false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    ],
-    [
-      false,
-      true,
       false,
       false,
       false,
@@ -108,6 +123,7 @@
       false,
       false,
       false,
+      true,
       false,
       false
     ]
@@ -128,7 +144,8 @@
     "shandian",
     "tanhuang",
     "BgCollision",
-    "ding"
+    "ding",
+    "CliGD"
   ],
   "simulator-orientation": false,
   "simulator-resolution": {
@@ -136,6 +153,5 @@
     "width": 960
   },
   "use-customize-simulator": false,
-  "use-project-simulator-setting": false,
-  "start-scene": "current"
+  "use-project-simulator-setting": false
 }

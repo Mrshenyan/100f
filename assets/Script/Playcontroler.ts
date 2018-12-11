@@ -62,7 +62,7 @@ export default class Playcontroler extends cc.Component {
             }
             case "ding":{
                 Global.instance.CollisionWithDing = true;
-                Global.instance.CollisionFlag = false;
+                // Global.instance.CollisionFlag = false;
                 break;
             }
             default:{

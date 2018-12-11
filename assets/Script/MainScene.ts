@@ -65,7 +65,7 @@ export default class MainScene extends cc.Component {
         this.STime = Date.now();
         let FHolder = cc.instantiate(this.GD);
         this.FHolderNode.addChild(FHolder,10,"GD");
-        FHolder.getComponent("GD").init(this,7);
+        FHolder.getComponent("GD").init(this,1);
         FHolder.y = -150;
         // this.Player.active = false;
         this.Player.x = FHolder.x;
@@ -103,11 +103,11 @@ export default class MainScene extends cc.Component {
                     break;
                 }
                 case 7:{
-                    if(Global.instance.LorR==0){
-                        this.Player.x -= 2;
+                    if(Global.instance.LorR==1){
+                        this.Player.x --;
                     }
                     else{
-                        this.Player.x += 2;
+                        this.Player.x ++;
                     }
                     break;
                 }
@@ -233,7 +233,7 @@ export default class MainScene extends cc.Component {
             Magnification = 8;
         }
         let KindHolder = Math.ceil(Math.random()*Magnification);
-        // KindHolder = 7;
+        // KindHolder = 1;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -241,7 +241,7 @@ export default class MainScene extends cc.Component {
             case 1:{
                 FHolder = cc.instantiate(self.GD);
                 self.FHolderNode.addChild(FHolder,5,"GD");
-                FHolder.getComponent("GD").init(self,KindHolder);
+                FHolder.getComponent("GD").init(self,1);
                 FHolder.isHold = false;
                 // console.log("产生第一种落脚点");
                 break;
@@ -289,7 +289,7 @@ export default class MainScene extends cc.Component {
             case 7:{
                 FHolder = cc.instantiate(self.GD);
                 self.FHolderNode.addChild(FHolder,5,"GD");
-                FHolder.getComponent("GD").init(self,KindHolder);
+                FHolder.getComponent("GD").init(self,7);
                 FHolder.isHold = false;
                 break;
             }
@@ -467,7 +467,6 @@ export default class MainScene extends cc.Component {
                 Anistate = Ani.playAdditive(Anistring);
             }))
             self.Player.runAction(spawn);
-            console.log("这里是内部函数输出，打印的是moveByTime: "+moveByTime+" 还有moveByDes: "+moveByDes);
             funcFlag = true;
         }
     }
@@ -579,6 +578,14 @@ export default class MainScene extends cc.Component {
      */
     gameOver(){
         let self = this;
+        let AllFH = self.node.getChildByName("BgNode").getChildByName("FHolder").children;
+        for(let i=0;i<AllFH.length;i++){
+            let FHNA = AllFH[i].name;
+            AllFH[i].getComponent(FHNA).enabled = false;
+            if(FHNA =="GD"){
+                AllFH[i].getChildByName("gd").getComponent("CliGD").enabled = false;
+            }
+        }
         self.StopAni(self);
         let failure;
         let Ani;
@@ -621,14 +628,16 @@ export default class MainScene extends cc.Component {
         if(!Global.instance.OverFlag){
             Global.instance.OverFlag = true;
             self.StoregeScore();
-            self.UpLoadScore();
+            
             // self.UpdateScore();
             failure.y = -20;
             fuhuo.y = 0;
             thisScore = parseInt(self.LifeDing.getChildByName("Floor").getComponent(cc.Label).string);
             lessScore = failure.getChildByName("jl").getChildByName("LessScore");
             BestScore = Global.instance.getLocalScore().BestScore;
-            Global.instance.GetUSer().score = BestScore;
+            
+            Global.instance.GetUSer().uScore = BestScore;
+            self.UpLoadScore();
             if(BestScore - thisScore<=0){
                 failure.getChildByName("jl").active = false;
             }
@@ -668,6 +677,7 @@ export default class MainScene extends cc.Component {
         cc.director.resume();
         Global.instance.OverFlag = false;
         Global.instance.AniFalg = false;
+        Global.instance.LorR = 0;
         this.LEFT.node.active = true;
         this.RIGHT.node.active = true;
         this.destroy();

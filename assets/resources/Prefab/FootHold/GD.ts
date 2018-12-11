@@ -16,10 +16,6 @@ export default class GD extends cc.Component {
     public isHold = false;
     @property(Number)
     public NodeH:Number = 70;
-    @property(Boolean)
-    public RClis = false;
-    @property(Boolean)
-    public LClis = false;
 
     private main:MainScene = null;
     /**
@@ -28,38 +24,32 @@ export default class GD extends cc.Component {
     Ani:cc.Animation = null;
     AniState = null;
     LifeDing = null;
-    RorL = "";
 
     onLoad () {
         this.node.y = -500;
-        this.RClis = false;
-        this.LClis = false;
-        if(Math.random()<0.5){
-            this.RClis = false;
-            this.LClis = true;
-            this.RorL = "L";
-        }
-        else{
-            this.RClis = true;
-            this.LClis = false;
-            this.RorL = "R";
-        }
+        // this.KIND_FootHold==7
+        
     }
 
     start () {
         let moveStartT=0;
         let moveEndT = 0;
+        
         if(this.KIND_FootHold==1){
             // this.KIND_FootHold = 1;   
             this.node.x = cc.randomMinus1To1()*140;
         }
         if(this.KIND_FootHold==7){
             // this.KIND_FootHold = 7;
-            this.node.x = cc.randomMinus1To1()*50;
-            console.log("我是移动的");
+            this.node.x = cc.randomMinus1To1()*140;
+
         }
-        let self = this;
-        
+        if(this.KIND_FootHold==1){
+            this.node.getChildByName("gd").getComponent("CliGD").enabled = false;
+        }
+        else{
+            this.node.getChildByName("gd").getComponent("CliGD").enabled = true;
+        }
         
         this.LifeDing = this.main.LifeDing.children;
     }
@@ -78,15 +68,8 @@ export default class GD extends cc.Component {
                 Global.instance.TheHolder = this.node;
                 this.node.y += Global.instance.FHFallSpeed;
             }
-            if(this.RClis&&this.LClis==false){
-                this.node.x -= Global.instance.FHFallSpeed;
+            else{
                 this.node.y += Global.instance.FHFallSpeed;
-                this.RorL = "R";
-            }
-            else if(this.LClis&&this.RClis==false){
-                this.node.x += Global.instance.FHFallSpeed;
-                this.node.y += Global.instance.FHFallSpeed;
-                this.RorL = "L";
             }
             if(this.node.y>360){
                 if(this.node.isHold){
@@ -116,64 +99,12 @@ export default class GD extends cc.Component {
         return this.KIND_FootHold;
     }
     onCollisionEnter(other,self){
-        let rootSelf = this;
-        Global.instance.KIND_FootHold = this.KIND_FootHold;
+        let rootself = this;
+        // console.log("我被撞到了");
         Global.instance.TheHolder = this.node;
-        // Global.instance.CollisionFlag = true;
-        // rootSelf.isHold = true;
-        let des;
-        let tag = self.tag;
-        let scheduler = cc.director.getScheduler();
-        let LR = other.node.name;
-        rootSelf.RClis = false;
-        rootSelf.LClis = false;
-        function Lmove(){
-            self.node.x -=1;
-            // rootSelf.Clis = false;
-        }
-        function Rmove(){
-            self.node.x +=1;
-            // rootSelf.Clis = false;
-        }
-        switch(tag){
-            case 11:{
-                rootSelf.LClis = true;
-                Global.instance.LorR = 1;
-                rootSelf.RorL = "R";
-                break;
-            }
-            case 12:{
-                rootSelf.RClis = true;
-                Global.instance.LorR =0;
-                rootSelf.RorL = "R";
-                break;
-            }
-            default:{
-               
-
-                if(rootSelf.RorL=="R"){
-                    rootSelf.RClis = true;
-                    rootSelf.LClis = false;
-                }
-                else{
-                    rootSelf.LClis = true;
-                    rootSelf.RClis = false;
-                }
-                if(Global.instance.CollisionFlag){
-
-                }
-                else{
-                   Global.instance.CollisionFlag = true;
-                }
-                break;
-            }
-        }
-        if(Global.instance.CollisionFlag){
-            return;
-        }
-        else if(self.node.isHold){
-            this.main.Score();
-            Global.instance.CollisionFlag = true;
-        }
+        Global.instance.KIND_FootHold = this.KIND_FootHold;
+        Global.instance.CollisionFlag = true;
+        this.node.isHold = true;
+        this.main.Score();
     }
 }

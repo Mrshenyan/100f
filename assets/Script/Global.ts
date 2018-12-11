@@ -84,7 +84,7 @@ export default class Global {
      * info
      */
     private USERINFO = {
-        uNam:"",
+        userId:"",
         uTim:Number,
         uScore:0,
     }
@@ -93,7 +93,7 @@ export default class Global {
      */
     private MyRank = null;
 
-    public LorR = 0;//0 for L; 1 for R;
+    public LorR = 0;//0 for right
     public static readonly instance = new Global();//全局下不可少
     private constructor() { };
     /**
