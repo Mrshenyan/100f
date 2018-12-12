@@ -27,14 +27,25 @@ export default class StartScene extends cc.Component {
     /**
      * 玩家信息
      */
-    USERINFO = {
-        userId:"",
+    USERINFO={
+        userId:'12312313',
         score:0,
     }
     private channel = "test";
 
     onLoad () {
-        // this.LifeDing.zIndex = 5;
+        // // this.LifeDing.zIndex = 5;
+        // cc.sys.localStorage.removeItem("info");
+        this.USERINFO = JSON.parse(cc.sys.localStorage.getItem("info"));
+        if(this.USERINFO==null||this.USERINFO==undefined){
+
+            this.USERINFO={
+                userId:'',
+                score:0,
+            }
+            this.LoadData();
+            this.USERINFO = JSON.parse(cc.sys.localStorage.getItem("info"));
+        }
         Global.instance.setSN(this);
         Global.instance.OverFlag = false;
         let startNode = this.node.getChildByName("BgNode").getChildByName("kaiji");
@@ -47,11 +58,14 @@ export default class StartScene extends cc.Component {
 
     start () {
         let self = this;
-        self.USERINFO.userId = "playerB10";
-        self.USERINFO.score = 0;
-        Global.instance.SetUser(self.USERINFO);
-        Global.instance.Channel = self.channel;
-        this.Login();
+        // self.USERINFO.userId = "playerB10";
+        // self.USERINFO.score = 0;
+        self.scheduleOnce(function(){
+            Global.instance.SetUser(self.USERINFO);
+            Global.instance.Channel = self.channel;
+            this.Login();
+        },0.5);
+        
     }
 
     update (dt) {
@@ -128,6 +142,41 @@ export default class StartScene extends cc.Component {
     CheckRank(){
         this.destroy();
         cc.director.loadScene("EndScene");
+    }
+
+    IdGenerater(){
+        let str=""
+        let suffix=""
+        let Id;
+        let Word;
+        for(let i=0;i<2;i++){
+            let ranNum = Math.ceil(Math.random()*25);
+            Word =String.fromCharCode(65+ranNum);
+            str += Word;
+        }
+        for(let i=0;i<7;i++){
+            let suffixNum = Math.ceil(Math.random()*9);
+            suffix += suffixNum.toString();
+        }
+        Id = str+suffix;
+        return Id
+    }
+
+    private LoadData(){
+        let self = this;
+        let id = self.IdGenerater();
+        self.USERINFO.userId = id;
+        self.USERINFO.score = 0;
+        cc.sys.localStorage.setItem("info",JSON.stringify(self.USERINFO));
+        // cc.sys.localStorage.removeItem("info");
+        // let url = cc.url.raw("resources/INFO/data.json");
+        // let infotem;
+        // cc.loader.load(url,function(err,res){
+        //     if(err){
+        //     console.log("load"+url,err+"err result:"+JSON.stringify(res));
+        //     }
+        //     infotem = res;
+        // });
     }
 }
 /**

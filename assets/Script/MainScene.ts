@@ -84,6 +84,7 @@ export default class MainScene extends cc.Component {
         this.MoveBg();
         Global.instance.moveSpeed = 1;
         let FHolder;
+        
         if((this.ETime-this.STime)>1200){//控制落脚点之间的间距,间距144px
             this.STime = Date.now();
             if(!Global.instance.OverFlag){
@@ -793,6 +794,10 @@ export default class MainScene extends cc.Component {
             });
         });
     }
+
+
+
+    
     /**
      * Update the best score rank
      */

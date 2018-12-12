@@ -29,10 +29,10 @@ export default class Rank extends cc.Component {
                 if(phbName.string==RemoteS[i].userId){
                     i++;
                 }
-                phbName.string = RemoteS[i].userId;
+                phbName.string = RemoteS[i].userId.slice(4);
                 phbRank.string = RemoteS[i].rank;
                 phbFloor.string = RemoteS[i].score; 
-                if(phbName.string == Global.instance.GetUSer().userId){
+                if(phbName.string == Global.instance.GetUSer().userId.slice(4)){
                     this.node.getChildByName("phbd1").getChildByName("myrank").getComponent(cc.Label).string
                          = phb[j].getChildByName("rank").getComponent(cc.Label).string; 
                     this.node.getChildByName("phbd1").getChildByName("myfloor").getComponent(cc.Label).string
