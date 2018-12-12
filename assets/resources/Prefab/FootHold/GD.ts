@@ -105,6 +105,6 @@ export default class GD extends cc.Component {
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.CollisionFlag = true;
         this.node.isHold = true;
-        this.main.Score();
+        // this.main.Score();
     }
 }

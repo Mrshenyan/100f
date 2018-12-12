@@ -81,7 +81,7 @@ export default class boli extends cc.Component {
         Global.instance.TheHolder = this.node;
         self.node.isHold = true;
         Global.instance.CollisionFlag = true;
-        this.main.Score();
+        // this.main.Score();
         this.scheduleOnce(function(){
             this.AniState = this.Ani.play("boli");
             rootself.node.isHold = false;

@@ -89,7 +89,7 @@ export default class tanhuang extends cc.Component {
             rootself.main = Global.instance.getMN();
         }
         if(!rootself.gainSc){
-            rootself.main.Score();
+            // rootself.main.Score();
             rootself.gainSc = true;
         }
         if(!Global.instance.CollisionFlag){

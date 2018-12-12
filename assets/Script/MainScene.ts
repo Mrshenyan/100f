@@ -67,6 +67,14 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.addChild(FHolder,10,"GD");
         FHolder.getComponent("GD").init(this,1);
         FHolder.y = -150;
+        let FHolder2 = cc.instantiate(this.tanhuang);
+        this.FHolderNode.addChild(FHolder2,10,"tanhuang");
+        FHolder2.getComponent("tanhuang").init(this);
+        FHolder2.y = -300;
+        let FHolder3 = cc.instantiate(this.tanhuang);
+        this.FHolderNode.addChild(FHolder3,10,"tanhuang");
+        FHolder3.getComponent("tanhuang").init(this);
+        FHolder3.y = -450;
         // this.Player.active = false;
         this.Player.x = FHolder.x;
         // this.Player.y = FHolder.y+60;
@@ -84,11 +92,12 @@ export default class MainScene extends cc.Component {
         this.MoveBg();
         Global.instance.moveSpeed = 1;
         let FHolder;
-        
+
         if((this.ETime-this.STime)>1200){//控制落脚点之间的间距,间距144px
             this.STime = Date.now();
             if(!Global.instance.OverFlag){
                 FHolder = this.FootHoldGenerator();
+                this.Score();
             }
         }
         this.FHolder();
