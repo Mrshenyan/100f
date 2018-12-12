@@ -59,6 +59,7 @@ export default class MainScene extends cc.Component {
     }
 
     onLoad () {
+        
         this.LifeDing.zIndex = 10;
         this.FHolderNode.zIndex = 9;
         Global.instance.setMN(this.node);
@@ -71,22 +72,22 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.addChild(FHolder2,10,"tanhuang");
         FHolder2.getComponent("tanhuang").init(this);
         FHolder2.y = -300;
-        let FHolder3 = cc.instantiate(this.tanhuang);
-        this.FHolderNode.addChild(FHolder3,10,"tanhuang");
-        FHolder3.getComponent("tanhuang").init(this);
+        let FHolder3 = cc.instantiate(this.GD);
+        this.FHolderNode.addChild(FHolder3,10,"GD");
+        FHolder3.getComponent("GD").init(this,1);
         FHolder3.y = -450;
         // this.Player.active = false;
         this.Player.x = FHolder.x;
         // this.Player.y = FHolder.y+60;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
-        // cc.director.getCollisionManager().enabledDebugDraw = true;
+        cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
     }
 
     start () {
     }
-
+    x=3 ;
     update (dt) {
         // console.log(Global.instance.CollisionFlag);
         this.MoveBg();
@@ -97,7 +98,10 @@ export default class MainScene extends cc.Component {
             this.STime = Date.now();
             if(!Global.instance.OverFlag){
                 FHolder = this.FootHoldGenerator();
-                this.Score();
+                
+                this.x++;
+                console.log(this.x);
+                // this.Score();
             }
         }
         this.FHolder();
@@ -752,7 +756,7 @@ export default class MainScene extends cc.Component {
         let lv = sc%50;
         if(lv>Global.instance.LevelAddFlag){
             Global.instance.LevelAddFlag = lv;
-            Global.instance.InitSpeed++;//每下落50曾，player下落速度加1
+            Global.instance.InitSpeed+-0.25;//每下落50曾，player下落速度加0.25
         }
     }
 
@@ -803,9 +807,6 @@ export default class MainScene extends cc.Component {
             });
         });
     }
-
-
-
     
     /**
      * Update the best score rank

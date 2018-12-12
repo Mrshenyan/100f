@@ -25,6 +25,7 @@ export default class Opplvdai extends cc.Component {
      */
     Ani:cc.Animation = null;
     AniState = null;
+    gainSc = false;
 
     onLoad () {
         this.node.y = -500;
@@ -60,6 +61,12 @@ export default class Opplvdai extends cc.Component {
                 this.node.destroy();
             }
         }
+        if(!this.gainSc){
+            if(this.node.y>(-138)){
+                this.main.Score();
+                this.gainSc = true;
+            }
+        }
     }
 
 
@@ -81,6 +88,10 @@ export default class Opplvdai extends cc.Component {
         let rootself = this;//当前根节点
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
+        if(other.tag == 111){
+            console.log("我被撞到了");
+            rootself.main.Score();
+        }
         // this.main.Score();
         if(!Global.instance.CollisionFlag){
             // console.log(other);

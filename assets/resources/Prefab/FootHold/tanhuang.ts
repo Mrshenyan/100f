@@ -59,6 +59,12 @@ export default class tanhuang extends cc.Component {
                 this.node.destroy();
             }
         }
+        if(!this.gainSc){
+            if(this.node.y>(-138)){
+                this.main.Score();
+                this.gainSc = true;
+            }
+        }
     }
 
 
@@ -83,6 +89,11 @@ export default class tanhuang extends cc.Component {
      */
     onCollisionEnter(other,self){
         let rootself = this;//当前根节点
+        if(other.tag == 111){
+            console.log("我被撞到了");
+            rootself.main.Score();
+            return;
+        }
         Global.instance.KIND_FootHold = rootself.KIND_FootHold;
     
         if(rootself.main ==null){

@@ -24,6 +24,7 @@ export default class NewClass extends cc.Component {
      */
     Ani:cc.Animation = null;
     AniState = null;
+    gainSc = false;
 
     // LIFE-CYCLE CALLBACKS:
 
@@ -58,6 +59,12 @@ export default class NewClass extends cc.Component {
                 this.node.destroy();
             }
         }
+        if(!this.gainSc){
+            if(this.node.y>(-138)){
+                this.main.Score();
+                this.gainSc = true;
+            }
+        }
     }
     /**
      * 初始化函数
@@ -80,6 +87,10 @@ export default class NewClass extends cc.Component {
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         this.node.isHold = true;
         Global.instance.Injured = true;
+        if(other.tag == 111){
+            console.log("我被撞到了");
+            rootself.main.Score();
+        }
         // this.main.Score();
         if(!Global.instance.CollisionFlag){
             Global.instance.CollisionFlag = true;

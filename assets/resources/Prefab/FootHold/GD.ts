@@ -24,7 +24,7 @@ export default class GD extends cc.Component {
     Ani:cc.Animation = null;
     AniState = null;
     LifeDing = null;
-
+    gainSc = false;
     onLoad () {
         this.node.y = -500;
         // this.KIND_FootHold==7
@@ -78,6 +78,12 @@ export default class GD extends cc.Component {
                 }
                 this.node.destroy();
             }
+            if(!this.gainSc){
+                if(this.node.y>(-138)){
+                    this.main.Score();
+                    this.gainSc = true;
+                }
+            }
         }
     }
 
@@ -100,7 +106,10 @@ export default class GD extends cc.Component {
     }
     onCollisionEnter(other,self){
         let rootself = this;
-        // console.log("我被撞到了");
+        if(other.tag == 111){
+            console.log("我被撞到了");
+            rootself.main.Score();
+        }
         Global.instance.TheHolder = this.node;
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.CollisionFlag = true;

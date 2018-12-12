@@ -18,12 +18,15 @@ export default class shandian extends cc.Component {
     @property(Number)
     public NodeH:number = 50;
 
+    private 
+
     private main:MainScene = null;
     /**
      * 落脚点对应动画
      */
     Ani:cc.Animation = null;
     AniState = null;
+    gainSc = false;
     onLoad () {
         this.node.y = -500;
         this.node.x = cc.randomMinus1To1()*140;
@@ -57,6 +60,12 @@ export default class shandian extends cc.Component {
                 this.node.destroy();
             }
         }
+        if(!this.gainSc){
+            if(this.node.y>(-138)){
+                this.main.Score();
+                this.gainSc = true;
+            }
+        }
     }
 
 
@@ -75,9 +84,14 @@ export default class shandian extends cc.Component {
     }
 
     onCollisionEnter(other,self){
+        let rootself = this;
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
         Global.instance.Injured = true;
+        if(other.tag == 111){
+            console.log("我被撞到了");
+            rootself.main.Score();
+        }
         // this.main.Score();
         if(!Global.instance.CollisionFlag){
             self.node.isHold = false;

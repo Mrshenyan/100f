@@ -25,6 +25,7 @@ export default class boli extends cc.Component {
      */
     Ani:cc.Animation = null;
     AniState = null;
+    gainSc = false;
 
     onLoad () {
         this.node.y = -500;
@@ -56,6 +57,12 @@ export default class boli extends cc.Component {
                 this.node.destroy();
             }
         }
+        if(!this.gainSc){
+            if(this.node.y>(-138)){
+                this.main.Score();
+                this.gainSc = true;
+            }
+        }
     }
 
 
@@ -81,6 +88,10 @@ export default class boli extends cc.Component {
         Global.instance.TheHolder = this.node;
         self.node.isHold = true;
         Global.instance.CollisionFlag = true;
+        if(other.tag == 111){
+            console.log("我被撞到了");
+            rootself.main.Score();
+        }
         // this.main.Score();
         this.scheduleOnce(function(){
             this.AniState = this.Ani.play("boli");
