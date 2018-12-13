@@ -81,7 +81,7 @@ export default class MainScene extends cc.Component {
         // this.Player.y = FHolder.y+60;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        // cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
     }
 
