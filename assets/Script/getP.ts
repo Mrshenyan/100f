@@ -13,9 +13,9 @@ export default class NewClass extends cc.Component {
 
     }
 
-    // update (dt) {}
+    update (dt) {}
 
-    // onCollisionEnter(){
-    //     console.log("碰撞到了");
-    // }
+    onCollisionEnter(){
+        console.log("碰撞到了");
+    }
 }

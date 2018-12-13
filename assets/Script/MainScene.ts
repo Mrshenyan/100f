@@ -136,7 +136,7 @@ export default class MainScene extends cc.Component {
         if(this.Player.x>180){
             this.Player.x = 180;
         }
-        if(this.Player.y<(-500)){
+        if(this.Player.y<(-510)){
             this.gameOver();
         }
         if(Global.instance.reLife.length==0){

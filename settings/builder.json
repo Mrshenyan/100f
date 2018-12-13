@@ -14,12 +14,12 @@
   "oauthLoginServer": "",
   "optimizeHotUpdate": false,
   "orientation": {
-    "landscapeLeft": true,
-    "landscapeRight": true,
-    "portrait": false,
-    "upsideDown": false
+    "landscapeLeft": false,
+    "landscapeRight": false,
+    "portrait": true,
+    "upsideDown": true
   },
-  "packageName": "org.cocos2d.100F",
+  "packageName": "cocos2d.Creator.Man100F",
   "privateKey": "",
   "qqplay": {
     "REMOTE_SERVER_ROOT": "",
@@ -27,7 +27,7 @@
   },
   "renderMode": "0",
   "startScene": "ebc13ba9-25b3-4404-82e3-04ed8482b95f",
-  "title": "100F",
+  "title": "Man100F",
   "webOrientation": "auto",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
