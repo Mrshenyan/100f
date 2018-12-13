@@ -752,7 +752,8 @@ export default class MainScene extends cc.Component {
         let lv = sc%50;
         if(lv>Global.instance.LevelAddFlag){
             Global.instance.LevelAddFlag = lv;
-            Global.instance.InitSpeed+-0.25;//每下落50曾，player下落速度加0.25
+            Global.instance.InitSpeed+=0.25;//每下落50层，player下落速度加0.25
+            Global.instance.FHFallSpeed+=0.5;//没下落50层，落脚点下落速度加快0.5.
         }
     }
 
