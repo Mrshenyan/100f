@@ -524,7 +524,7 @@ export default class MainScene extends cc.Component {
                 else{
                     moveByTime = 1;
                 }
-                AniPlayer(run,AniName);
+                self.AniPlayer(Ani,Anistate,moveByTime,moveByDes,run,AniName,self);
                 break;
             }
             case cc.KEY.right:{
@@ -551,24 +551,24 @@ export default class MainScene extends cc.Component {
                 else{
                     moveByTime = 1;
                 }
-                AniPlayer(runRight,AniName);
+                self.AniPlayer(Ani,Anistate,moveByTime,moveByDes,runRight,AniName,self);
                 break;
             }
             default:{
                 return;
             }
-            function AniPlayer(Key,AniName){
-                Ani = Key.getComponent(cc.Animation);
-                let spawn = cc.spawn(cc.callFunc(function(){
-                    self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
-                }),cc.callFunc(function(){
-                    Anistate = Ani.play(AniName);
-                    Anistate.speed = 2;
-                    Anistate.repeatCount = 100;
-                }))
-                self.Player.runAction(spawn);
-            }
         }
+    }
+    AniPlayer(Ani,Anistate,moveByTime,moveByDes,Key,AniName,self?){
+        Ani = Key.getComponent(cc.Animation);
+        let spawn = cc.spawn(cc.callFunc(function(){
+            self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
+        }),cc.callFunc(function(){
+            Anistate = Ani.play(AniName);
+            Anistate.speed = 2;
+            Anistate.repeatCount = 100;
+        }))
+        self.Player.runAction(spawn);
     }
     /**
      * 抬起动画停止
