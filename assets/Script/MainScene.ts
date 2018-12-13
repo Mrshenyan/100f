@@ -668,8 +668,6 @@ export default class MainScene extends cc.Component {
             return;
         }
         console.log("游戏结束！！！");
-        // cc.director.pause();
-        // self.UpdateScore();
     }
 
 
