@@ -86,6 +86,7 @@ export default class boli extends cc.Component {
             console.log("我被撞到了");
             rootself.main.Score();
             rootself.gainSc = true;
+            return;
         }
         // this.main.Score();
         this.scheduleOnce(function(){

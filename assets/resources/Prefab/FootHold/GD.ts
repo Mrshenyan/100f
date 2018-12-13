@@ -104,6 +104,7 @@ export default class GD extends cc.Component {
             console.log("我被撞到了");
             rootself.main.Score();
             rootself.gainSc = true;
+            return;
         }
         Global.instance.TheHolder = this.node;
         Global.instance.KIND_FootHold = this.KIND_FootHold;

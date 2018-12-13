@@ -81,13 +81,12 @@ export default class MainScene extends cc.Component {
         // this.Player.y = FHolder.y+60;
         this.Player.zIndex = 11;
         cc.director.getCollisionManager().enabled = true;
-        // cc.director.getCollisionManager().enabledDebugDraw = true;
+        cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
     }
 
     start () {
     }
-    x=3 ;
     update (dt) {
         // console.log(Global.instance.CollisionFlag);
         this.MoveBg();
@@ -98,9 +97,6 @@ export default class MainScene extends cc.Component {
             this.STime = Date.now();
             if(!Global.instance.OverFlag){
                 FHolder = this.FootHoldGenerator();
-                
-                this.x++;
-                console.log(this.x);
                 // this.Score();
             }
         }

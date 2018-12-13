@@ -76,7 +76,6 @@ export default class NewClass extends cc.Component {
 
     onCollisionEnter(other,self){
         let rootself = this;
-        console.log("我被撞到了");
         Global.instance.TheHolder = this.node;
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         this.node.isHold = true;
@@ -85,6 +84,7 @@ export default class NewClass extends cc.Component {
             console.log("我被撞到了");
             rootself.main.Score();
             rootself.gainSc = true;
+            return;
         }
         // this.main.Score();
         if(!Global.instance.CollisionFlag){

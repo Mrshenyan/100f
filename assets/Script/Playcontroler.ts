@@ -35,6 +35,9 @@ export default class Playcontroler extends cc.Component {
                     + Global.instance.TheHolder.getComponent(name).NodeH-10;//here ,this way isnot a good Processing method,should be optimizated
             }
         }
+        if(this.node.y>320){
+            //这里使用自定义事件传出
+        }
     }
 
     /**

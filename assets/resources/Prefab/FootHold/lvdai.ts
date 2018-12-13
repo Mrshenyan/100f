@@ -96,6 +96,7 @@ export default class lvdai extends cc.Component {
             console.log("我被撞到了");
             rootself.main.Score();
             rootself.gainSc = true;
+            return;
         }
         // this.main.Score();
         if(!Global.instance.CollisionFlag){
