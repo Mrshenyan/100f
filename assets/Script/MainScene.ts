@@ -588,6 +588,7 @@ export default class MainScene extends cc.Component {
      */
     gameOver(){
         let self = this;
+        self.Player.stopAllActions();
         let AllFH = self.node.getChildByName("BgNode").getChildByName("FHolder").children;
         for(let i=0;i<AllFH.length;i++){
             let FHNA = AllFH[i].name;
@@ -687,6 +688,9 @@ export default class MainScene extends cc.Component {
         Global.instance.OverFlag = false;
         Global.instance.AniFalg = false;
         Global.instance.LorR = 0;
+        Global.instance.InitSpeed = 8.5;
+        Global.instance.moveSpeed = 1;
+        Global.instance.FHFallSpeed = 2;
         this.LEFT.node.active = true;
         this.RIGHT.node.active = true;
         this.destroy();

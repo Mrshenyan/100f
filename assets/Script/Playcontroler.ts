@@ -35,8 +35,9 @@ export default class Playcontroler extends cc.Component {
                     + Global.instance.TheHolder.getComponent(name).NodeH-10;//here ,this way isnot a good Processing method,should be optimizated
             }
         }
-        if(this.node.y>320){
-            //这里使用自定义事件传出
+        if(Global.instance.CollisionWithDing){
+            this.node.stopAllActions();
+            Global.instance.CollisionWithDing = false;
         }
     }
 
@@ -46,6 +47,8 @@ export default class Playcontroler extends cc.Component {
      * @param self 碰撞体
      */
     onCollisionEnter(other,self){
+        let rootSelf = this;
+
         switch(other.node.name){
             case "Bg_0CollisionR":{
                 self.node.x = 180;
@@ -65,13 +68,42 @@ export default class Playcontroler extends cc.Component {
             }
             case "ding":{
                 Global.instance.CollisionWithDing = true;
+                self.node.stopAllActions();
+                rootSelf.LifeZero();
                 // Global.instance.CollisionFlag = false;
+                console.log("player 的 y 坐标："+rootSelf.node.y)
+                console.log("tuanhuang 的 y 坐标："+other.node.y);
+                console.log(other);
+                self.node.getComponent(cc.BoxCollider).enabled = false;
+                rootSelf.scheduleOnce(function(err){
+                    self.node.getComponent(cc.BoxCollider).enabled = true;
+                },0.35);
                 break;
             }
             default:{
                 // this.MainScene.getComponent("MainScene").Score();//得分
                 break;
             }
+        }
+    }
+
+    LifeZero(){
+        let main = Global.instance.getMN();
+        let lifeChil = main.getChildByName("BgNode").getChildByName("LifeDing").children;
+        let life = new Array();
+        let lifeNum=0;
+        for(let i=0;i<lifeChil.length;i++){
+            if(lifeChil[i].name == "lifeBG"){
+                life.push(lifeChil[i]);
+            }
+        }
+        for(let i=0;i<life.length;i++){
+            if(life[i].active){
+                lifeNum++;
+            }
+        }
+        if(lifeNum==0){
+            return;
         }
     }
 }

@@ -25,22 +25,25 @@ export default class tanhuang extends cc.Component {
      */
     Ani:cc.Animation = null;
     AniState = null;
-
+    Ding;
 
     onLoad () {
         this.node.y = -500;
         this.node.x = cc.randomMinus1To1()*140;
         this.Ani = this.node.getComponent(cc.Animation);
-
     }
 
     start () {
-
+        this.Ding = this.main.node.getChildByName("BgNode").getChildByName("LifeDing").getChildByName("ding");
     }
 
     update (dt) {
         // console.log(Global.instance.CollisionFlag);
         let self = this;
+        if((this.Ding.y-80)-(this.node.y-15)<100){
+            // this.node.getComponent(cc.BoxCollider).enabled = false;
+            console.log("tanhuang 的 y 坐标："+this.node.y);
+        }
         if(Global.instance.OverFlag){
             self.enabled = false;
         }
@@ -59,6 +62,7 @@ export default class tanhuang extends cc.Component {
                 this.node.destroy();
             }
         }
+        
     }
 
 
