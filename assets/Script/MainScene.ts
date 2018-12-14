@@ -52,6 +52,8 @@ export default class MainScene extends cc.Component {
     private LkeyDown = false;
     /** Right*/
     private RkeyDown = false;
+    /**the loght FootHolder F */
+    private lightF = false;
 
     USERINFO = {
         userId:"",
@@ -76,7 +78,7 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.addChild(FHolder3,10,"GD");
         FHolder3.getComponent("GD").init(this,1);
         FHolder3.y = -450;
-        // this.Player.active = false;
+        this.Player.active = false;
         this.Player.x = FHolder.x;
         // this.Player.y = FHolder.y+60;
         this.Player.zIndex = 11;
@@ -97,7 +99,7 @@ export default class MainScene extends cc.Component {
             this.STime = Date.now();
             if(!Global.instance.OverFlag){
                 FHolder = this.FootHoldGenerator();
-                // this.Score();
+                this.Score();
             }
         }
         this.FHolder();
@@ -204,13 +206,13 @@ export default class MainScene extends cc.Component {
         if(Global.instance.OverFlag){
         }
         else{
-            Bg0.y+=(200/60);
-            Bg1.y+=(200/60);
-            if(Bg0.y>957){
-                Bg0.y = -957;
+            Bg0.y+=Global.instance.FHFallSpeed;
+            Bg1.y+=Global.instance.FHFallSpeed;
+            if(Bg0.y>946){
+                Bg0.y = -946;
             }
-            if(Bg1.y>957){
-                Bg1.y = -957;
+            if(Bg1.y>946){
+                Bg1.y = -946;
             }
         }
         
@@ -304,10 +306,16 @@ export default class MainScene extends cc.Component {
                 break;
             }
             case 8:{
+                if(self.lightF){
+                    self.lightF = false;
+                    self.FootHoldGenerator();
+                    break;
+                }
                 FHolder = cc.instantiate(self.shandian);
                 self.FHolderNode.addChild(FHolder,5,"shandian");
                 FHolder.getComponent("shandian").init(self);
                 FHolder.isHold = false;
+                self.lightF = true;
                 break;
             }
             // default:{
@@ -561,6 +569,7 @@ export default class MainScene extends cc.Component {
             self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
         }),cc.callFunc(function(){
             Anistate = Ani.play(AniName);
+            
             Anistate.speed = 2;
             Anistate.repeatCount = 100;
         }))
@@ -589,6 +598,19 @@ export default class MainScene extends cc.Component {
     gameOver(){
         let self = this;
         self.Player.stopAllActions();
+        try {
+            self.Player.getComponent(cc.Animation).stop();
+            self.Player.getChildByName("stand").active = true;
+            self.Player.getChildByName("runRight").active = false;
+            self.Player.getChildByName("run").active = false;
+            self.Player.y-=Global.instance.InitSpeed;
+        } catch (error) {
+            // console.log(error);
+            self.Player.getChildByName("stand").active = true;
+            self.Player.getChildByName("runRight").active = false;
+            self.Player.getChildByName("run").active = false;
+            self.Player.y-=Global.instance.InitSpeed;
+        }
         let AllFH = self.node.getChildByName("BgNode").getChildByName("FHolder").children;
         for(let i=0;i<AllFH.length;i++){
             let FHNA = AllFH[i].name;
@@ -751,7 +773,7 @@ export default class MainScene extends cc.Component {
         sc = sc+1;
         console.log("打印一下");
         scLabel.string = sc.toString();
-        let lv = sc%50;
+        let lv = Math.ceil(sc/50);
         if(lv>Global.instance.LevelAddFlag){
             Global.instance.LevelAddFlag = lv;
             Global.instance.InitSpeed+=0.25;//每下落50层，player下落速度加0.25

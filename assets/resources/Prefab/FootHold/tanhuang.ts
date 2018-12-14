@@ -40,10 +40,6 @@ export default class tanhuang extends cc.Component {
     update (dt) {
         // console.log(Global.instance.CollisionFlag);
         let self = this;
-        if((this.Ding.y-80)-(this.node.y-15)<100){
-            // this.node.getComponent(cc.BoxCollider).enabled = false;
-            console.log("tanhuang 的 y 坐标："+this.node.y);
-        }
         if(Global.instance.OverFlag){
             self.enabled = false;
         }
