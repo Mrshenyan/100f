@@ -93,7 +93,7 @@ export default class lvdai extends cc.Component {
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
         if(other.tag == 111){
-            console.log("我被撞到了");
+            // console.log("我被撞到了");
             rootself.main.Score();
             rootself.gainSc = true;
             return;

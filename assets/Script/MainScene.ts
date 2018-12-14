@@ -91,7 +91,7 @@ export default class MainScene extends cc.Component {
             }
         }
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        // cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
     }
 
@@ -164,10 +164,32 @@ export default class MainScene extends cc.Component {
         }
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP,this.onKeyUp,this);
-        this.LEFT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
-        this.LEFT.node.on(cc.Node.EventType.TOUCH_END,this.BtnTurnLeft,this);
-        this.RIGHT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
-        this.RIGHT.node.on(cc.Node.EventType.TOUCH_END,this.BtnTurnRight,this);
+        if(!this.LkeyDown){
+            this.scheduleOnce(()=>{
+                this.RIGHT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
+                this.RIGHT.node.on(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
+                this.RIGHT.node.on(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
+            },1);
+        }
+        else{
+            this.RIGHT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
+            this.RIGHT.node.off(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
+            this.RIGHT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
+        }
+        if(!this.RkeyDown){
+            this.scheduleOnce(()=>{
+                this.LEFT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
+                this.LEFT.node.on(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
+                this.LEFT.node.on(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnLeft,this);
+            },1);
+        }
+        else{
+            this.LEFT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
+            this.LEFT.node.off(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
+            this.LEFT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnLeft,this);
+        }
+        
+        
     }
 
     StopAni(self){
@@ -350,8 +372,13 @@ export default class MainScene extends cc.Component {
      */
     BtnTurnLeft(event){
         let self = this;
-        self.LkeyDown = true;
-        this.BtnLorR(event);
+        if(self.RkeyDown){
+            return;
+        }
+        else{
+            self.LkeyDown = true;
+            this.BtnLorR(event);
+        }
     }
 
     /**
@@ -359,9 +386,13 @@ export default class MainScene extends cc.Component {
      */
     BtnTurnRight(event){
         let self = this;
-        self.RkeyDown = true;
-        console.log("点击了右按钮");
-        this.BtnLorR(event);
+        if(self.LkeyDown){
+            return;
+        }
+        else{
+            self.RkeyDown = true;
+            this.BtnLorR(event);
+        }
     }
 
     /**
@@ -584,15 +615,18 @@ export default class MainScene extends cc.Component {
     }
     AniPlayer(Ani,Anistate,moveByTime,moveByDes,Key,AniName,self?){
         Ani = Key.getComponent(cc.Animation);
+
         let spawn = cc.spawn(cc.callFunc(function(){
             self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
         }),cc.callFunc(function(){
             Anistate = Ani.play(AniName);
-            
             Anistate.speed = 2;
             Anistate.repeatCount = 100;
         }))
         self.Player.runAction(spawn);
+        if(!Ani.state){
+            self.Player.runAction(spawn);
+        }
     }
     /**
      * 抬起动画停止
@@ -735,6 +769,8 @@ export default class MainScene extends cc.Component {
         Global.instance.CollisionWithDing = false;
         this.LEFT.node.active = true;
         this.RIGHT.node.active = true;
+        this.LkeyDown = false;
+        this.RkeyDown = false;
 
         this.Player.y = 300;
         this.Player.getComponent("Playcontroler").enabled = true;

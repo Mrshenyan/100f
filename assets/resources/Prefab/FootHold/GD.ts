@@ -101,7 +101,7 @@ export default class GD extends cc.Component {
     onCollisionEnter(other,self){
         let rootself = this;
         if(other.tag == 111){
-            console.log("我被撞到了");
+            // console.log("我被撞到了");
             rootself.main.Score();
             rootself.gainSc = true;
             return;

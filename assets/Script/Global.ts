@@ -27,7 +27,7 @@ export default class Global {
     /**
      * player移动速度,1px/帧
      */
-    public moveSpeed = 2;
+    public moveSpeed = 10;
 
     /**
      * 落脚点移动速度
