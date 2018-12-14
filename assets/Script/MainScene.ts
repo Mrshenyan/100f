@@ -164,12 +164,18 @@ export default class MainScene extends cc.Component {
         }
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP,this.onKeyUp,this);
+        this.Listener();
+        
+        
+    }
+
+    Listener(){
         if(!this.LkeyDown){
             this.scheduleOnce(()=>{
                 this.RIGHT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
                 this.RIGHT.node.on(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
                 this.RIGHT.node.on(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
-            },1);
+            },0.5);
         }
         else{
             this.RIGHT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
@@ -181,17 +187,14 @@ export default class MainScene extends cc.Component {
                 this.LEFT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
                 this.LEFT.node.on(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
                 this.LEFT.node.on(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnLeft,this);
-            },1);
+            },0.5);
         }
         else{
             this.LEFT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
             this.LEFT.node.off(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
             this.LEFT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnLeft,this);
         }
-        
-        
     }
-
     StopAni(self){
 
         if(!Global.instance.AniFalg){
@@ -550,6 +553,7 @@ export default class MainScene extends cc.Component {
         let AniName;
         switch(event.keyCode){
             case cc.KEY.left:{
+                // self.Listener();
                 self.LkeyDown = true;
                 stand.active = false;
                 runRight.active = false;
@@ -576,6 +580,7 @@ export default class MainScene extends cc.Component {
                 break;
             }
             case cc.KEY.right:{
+                // self.Listener();
                 self.RkeyDown = true;
                 stand.active = false;
                 runRight.active = true;
@@ -625,7 +630,14 @@ export default class MainScene extends cc.Component {
         }))
         self.Player.runAction(spawn);
         if(!Ani.state){
-            self.Player.runAction(spawn);
+            let spawn2 = cc.spawn(cc.callFunc(function(){
+            self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0));
+        }),cc.callFunc(function(){
+            Anistate = Ani.play(AniName);
+            Anistate.speed = 2;
+            Anistate.repeatCount = 100;
+        }))
+        self.Player.runAction(spawn2);
         }
     }
     /**
@@ -810,6 +822,8 @@ export default class MainScene extends cc.Component {
         Global.instance.FHFallSpeed = 2;
         this.LEFT.node.active = true;
         this.RIGHT.node.active = true;
+        this.LkeyDown = false;
+        this.RkeyDown = false;
         this.destroy();
         // this.Score();
     }
