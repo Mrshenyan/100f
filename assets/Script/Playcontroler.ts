@@ -70,10 +70,10 @@ export default class Playcontroler extends cc.Component {
                 Global.instance.CollisionWithDing = true;
                 self.node.stopAllActions();
                 rootSelf.LifeZero();
-                // Global.instance.CollisionFlag = false;
-                console.log("player 的 y 坐标："+rootSelf.node.y)
-                console.log("tuanhuang 的 y 坐标："+other.node.y);
-                console.log(other);
+                Global.instance.CollisionFlag = false;
+                // console.log("player 的 y 坐标："+rootSelf.node.y)
+                // console.log("tuanhuang 的 y 坐标："+other.node.y);
+                // console.log(other);
                 self.node.getComponent(cc.BoxCollider).enabled = false;
                 rootSelf.scheduleOnce(function(err){
                     self.node.getComponent(cc.BoxCollider).enabled = true;

@@ -82,6 +82,14 @@ export default class MainScene extends cc.Component {
         this.Player.x = FHolder.x;
         // this.Player.y = FHolder.y+60;
         this.Player.zIndex = 11;
+        for(let i=0;i<this.LifeDing.children.length;i++){
+            if(this.LifeDing.children[i].name == "lifeBG"){
+                if(!this.LifeDing.children[i].active){
+                    this.LifeDing.children[i].active = true;
+                }
+                Global.instance.reLife.push(this.LifeDing.children[i]);
+            }
+        }
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
@@ -135,6 +143,11 @@ export default class MainScene extends cc.Component {
             this.Player.x = 180;
         }
         if(this.Player.y<(-510)){
+            for(let i=0;i<this.LifeDing.children.length;i++){
+                if(this.LifeDing.children[i].name == "lifeBG"){
+                    this.LifeDing.children[i].active = false;
+                }
+            }
             this.gameOver();
         }
         if(Global.instance.reLife.length==0){
@@ -245,7 +258,7 @@ export default class MainScene extends cc.Component {
             Magnification = 8;
         }
         let KindHolder = Math.ceil(Math.random()*Magnification);
-        KindHolder = 6;
+        // KindHolder = 2;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -598,6 +611,7 @@ export default class MainScene extends cc.Component {
     gameOver(){
         let self = this;
         self.Player.stopAllActions();
+        self.Player.getComponent(cc.BoxCollider).enabled = false;
         try {
             self.Player.getComponent(cc.Animation).stop();
             self.Player.getChildByName("stand").active = true;
@@ -718,27 +732,24 @@ export default class MainScene extends cc.Component {
 
         this.Player.y = 300;
         this.Player.getComponent("Playcontroler").enabled = true;
+        this.Player.getComponent(cc.BoxCollider).enabled = true;
         let AllFH = this.node.getChildByName("BgNode").getChildByName("FHolder").children;
         this.node.getChildByName("SB").destroy();
         this.node.getChildByName("fuhuo1").destroy();
         for(let i=0;i<this.LifeDing.children.length;i++){
             if(this.LifeDing.children[i].name == "lifeBG"){
-                this.LifeDing.children[i].active = true;
+                if(!this.LifeDing.children[i].active){
+                    this.LifeDing.children[i].active = true;
+                }
                 Global.instance.reLife.push(this.LifeDing.children[i]);
             }
         }
         this.Player.getComponent(cc.BoxCollider).enabled = false;
         for(let i=0;i<AllFH.length;i++){
-            let FHNA = AllFH[i].name;
-            
-            AllFH[i].getComponent(FHNA).enabled = true;
-            AllFH[i].getComponent(FHNA).isHold = false;
-            if(FHNA =="GD"){
-                if(AllFH[i].getComponent("GD").KIND_FootHold == 7){
-                    AllFH[i].getChildByName("gd").getComponent("CliGD").enabled = true;
-                }
-            }
+            AllFH[i].destroy();
         }
+        let F = this.FootHoldGenerator();
+        F.y = -380;
         this.scheduleOnce(()=>{
             self.Player.getComponent(cc.BoxCollider).enabled = true;
         },0.5);
