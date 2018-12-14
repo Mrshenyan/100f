@@ -78,7 +78,7 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.addChild(FHolder3,10,"GD");
         FHolder3.getComponent("GD").init(this,1);
         FHolder3.y = -450;
-        this.Player.active = false;
+        // this.Player.active = false;
         this.Player.x = FHolder.x;
         // this.Player.y = FHolder.y+60;
         this.Player.zIndex = 11;
@@ -99,7 +99,7 @@ export default class MainScene extends cc.Component {
             this.STime = Date.now();
             if(!Global.instance.OverFlag){
                 FHolder = this.FootHoldGenerator();
-                this.Score();
+                // this.Score();
             }
         }
         this.FHolder();
