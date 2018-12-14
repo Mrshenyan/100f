@@ -66,6 +66,7 @@ export default class StartScene extends cc.Component {
 
     update (dt) {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyBackSpace,this);
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
     }
 
 
@@ -96,6 +97,16 @@ export default class StartScene extends cc.Component {
             })));
         },0.33);
         
+    }
+
+    onKeyDown(event){
+        switch(event.keyCode){
+            case cc.KEY.back:{
+                if(cc.sys.os == cc.sys.OS_ANDROID){
+                    cc.game.end();
+                }
+            }
+        }
     }
 
     /**

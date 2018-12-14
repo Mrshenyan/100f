@@ -571,6 +571,12 @@ export default class MainScene extends cc.Component {
                 self.AniPlayer(Ani,Anistate,moveByTime,moveByDes,runRight,AniName,self);
                 break;
             }
+
+            case cc.KEY.back:{
+                if(cc.sys.os == cc.sys.OS_ANDROID){
+                    cc.game.end();
+                }
+            }
             default:{
                 return;
             }

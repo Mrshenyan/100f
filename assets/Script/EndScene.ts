@@ -19,6 +19,8 @@ export default class NewClass extends cc.Component {
     }
 
     update (dt) {
+        
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN,this.onKeyDown,this);
     }
 
     /**
@@ -30,5 +32,15 @@ export default class NewClass extends cc.Component {
             this.Anistate = this.Ani.play();
             
         })
+    }
+
+    onKeyDown(event){
+        switch(event.keyCode){
+            case cc.KEY.back:{
+                if(cc.sys.os == cc.sys.OS_ANDROID){
+                    cc.game.end();
+                }
+            }
+        }
     }
 }
