@@ -2628,7 +2628,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "restart",
+    "_name": "restarttestBtn",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2

@@ -25,7 +25,8 @@ export default class NewClass extends cc.Component {
     Ani:cc.Animation = null;
     AniState = null;
     gainSc = false;
-
+    
+    InjuredF = false;
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
@@ -76,21 +77,26 @@ export default class NewClass extends cc.Component {
 
     onCollisionEnter(other,self){
         let rootself = this;
-        Global.instance.TheHolder = this.node;
-        Global.instance.KIND_FootHold = this.KIND_FootHold;
-        this.node.isHold = true;
-        Global.instance.Injured = true;
         if(other.tag == 111){
             console.log("我被撞到了");
             rootself.main.Score();
             rootself.gainSc = true;
             return;
         }
-        // this.main.Score();
-        if(!Global.instance.CollisionFlag){
-            Global.instance.CollisionFlag = true;
-            rootself.AniState = rootself.Ani.play("dici");
-            rootself.AniState.repeatCount = 100;
+        else{
+            Global.instance.TheHolder = this.node;
+            Global.instance.KIND_FootHold = this.KIND_FootHold;
+            this.node.isHold = true;
+            if(!rootself.InjuredF){
+                Global.instance.Injured = true;
+                rootself.InjuredF = true;
+            }
+            // this.main.Score();
+            if(!Global.instance.CollisionFlag){
+                Global.instance.CollisionFlag = true;
+                rootself.AniState = rootself.Ani.play("dici");
+                rootself.AniState.repeatCount = 100;
+            }
         }
     }
 }

@@ -81,6 +81,12 @@ export default class StartScene extends cc.Component {
         let self = this;
         let startTime = Date.now();
         let endTime;
+        Global.instance.OverFlag = false;
+        Global.instance.AniFalg = false;
+        Global.instance.LorR = 0;
+        Global.instance.InitSpeed = 8.5;
+        Global.instance.moveSpeed = 1;
+        Global.instance.FHFallSpeed = 2;
         self.UpAnistate = self.UpAni.play();
         self.DownAnistate = self.DownAni.play();
         self.scheduleOnce(function(){

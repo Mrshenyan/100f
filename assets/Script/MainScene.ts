@@ -245,7 +245,7 @@ export default class MainScene extends cc.Component {
             Magnification = 8;
         }
         let KindHolder = Math.ceil(Math.random()*Magnification);
-        // KindHolder = 1;
+        KindHolder = 6;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -655,13 +655,12 @@ export default class MainScene extends cc.Component {
         //fh立即复活会有其他功能暂时用重新开始代替
         FhuoEventHandler.target = self.node;
         FhuoEventHandler.component = "MainScene";
-        FhuoEventHandler.handler = "restart";
+        FhuoEventHandler.handler = "FBtnCB_rePlay";
         FhuoEventHandler.customEventData = null;
         fhuoBtnFhuo.clickEvents.push(FhuoEventHandler);
         if(!Global.instance.OverFlag){
             Global.instance.OverFlag = true;
             self.StoregeScore();
-            
             // self.UpdateScore();
             failure.y = -20;
             fuhuo.y = 0;
@@ -697,9 +696,52 @@ export default class MainScene extends cc.Component {
     /**
      * 复活按钮的回调函数：打开排行榜
      */
-    FBtnCB_Rank(self){
+    FBtnCB_Rank(self?){
         this.destroy();
         cc.director.loadScene("EndScene");
+    }
+    /**
+     * 复活按钮的回调函数：立即复活
+     */
+    FBtnCB_rePlay(){
+        let self = this;
+        Global.instance.OverFlag = false;
+        Global.instance.AniFalg = false;
+        Global.instance.LorR = 0;
+        Global.instance.InitSpeed = 8.5;
+        Global.instance.moveSpeed = 1;
+        Global.instance.FHFallSpeed = 2;
+        Global.instance.CollisionFlag = false;
+        Global.instance.CollisionWithDing = false;
+        this.LEFT.node.active = true;
+        this.RIGHT.node.active = true;
+
+        this.Player.y = 300;
+        this.Player.getComponent("Playcontroler").enabled = true;
+        let AllFH = this.node.getChildByName("BgNode").getChildByName("FHolder").children;
+        this.node.getChildByName("SB").destroy();
+        this.node.getChildByName("fuhuo1").destroy();
+        for(let i=0;i<this.LifeDing.children.length;i++){
+            if(this.LifeDing.children[i].name == "lifeBG"){
+                this.LifeDing.children[i].active = true;
+                Global.instance.reLife.push(this.LifeDing.children[i]);
+            }
+        }
+        this.Player.getComponent(cc.BoxCollider).enabled = false;
+        for(let i=0;i<AllFH.length;i++){
+            let FHNA = AllFH[i].name;
+            
+            AllFH[i].getComponent(FHNA).enabled = true;
+            AllFH[i].getComponent(FHNA).isHold = false;
+            if(FHNA =="GD"){
+                if(AllFH[i].getComponent("GD").KIND_FootHold == 7){
+                    AllFH[i].getChildByName("gd").getComponent("CliGD").enabled = true;
+                }
+            }
+        }
+        this.scheduleOnce(()=>{
+            self.Player.getComponent(cc.BoxCollider).enabled = true;
+        },0.5);
     }
     /**
      * restart
@@ -729,19 +771,12 @@ export default class MainScene extends cc.Component {
         let FHolder = self.node.getChildByName("BgNode").getChildByName("FHolder").children;
         for(let i=self.LifeDing.children.length-1;i>=0;i--){
             if(self.LifeDing.children[i].name=="lifeBG"){
-                if(Global.instance.Injured){
-                    self.LifeDing.children[i].destroy();
-                    Global.instance.Injured = false;
-                }
-                Ls.push(self.LifeDing.children[i]);
-            }
-        }
-        for(let i=self.LifeDing.children.length-1;i>=0;i--){
-            if(self.LifeDing.children[i].name=="lifeBG"){
-                if(Global.instance.CollisionWithDing){
-                    self.LifeDing.children[i].destroy();
-                    Global.instance.CollisionFlag = false;
-                    Global.instance.CollisionWithDing = false;
+                if(Global.instance.Injured||Global.instance.CollisionWithDing){
+                    if(self.LifeDing.children[i].active){
+                        self.LifeDing.children[i].active = false;
+                        Global.instance.Injured = false;
+                        Global.instance.CollisionWithDing = false;
+                    }
                 }
                 Ls.push(self.LifeDing.children[i]);
             }
@@ -796,7 +831,6 @@ export default class MainScene extends cc.Component {
                     return;
                 }
                 localS.SecondScore = CurrentScore;
-                
             }
             localS.ThirdScore = CurrentScore;
         }
