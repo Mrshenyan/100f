@@ -16,7 +16,7 @@ export default class tanhuang extends cc.Component {
     public isHold = false;
     @property(Number)
     public NodeH:number = 60;
-
+    GoUp = false;
 
     private gainSc = false;//弹簧加分标志
     private main:MainScene = null;
@@ -83,59 +83,73 @@ export default class tanhuang extends cc.Component {
      */
     onCollisionEnter(other,self){
         let rootself = this;//当前根节点
-        if(other.tag == 111){
-            console.log("我被撞到了");
-            rootself.main.Score();
-            rootself.gainSc = true;
-            rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"1";
+        if(!rootself.GoUp){
+            
+            if(other.tag == 111){
+                console.log("我被撞到了");
+                rootself.main.Score();
+                rootself.gainSc = true;
+                // rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"1";
+                if(other.node.parent.x<self.node.x+75&&other.node.parent.x>self.node.x-75){
+                    rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"6";
+                    console.log(Global.instance.CollisionFlag+"6")
+                    rootself.GoUp = true;
+                    Global.instance.CollisionFlag = true;
+                    rootself.isHold = true;
+                }
+                return;
+            }
+            Global.instance.KIND_FootHold = rootself.KIND_FootHold;
             if(other.node.parent.x>self.node.x-75&&other.node.parent.x<self.node.x+75){
                 if(Global.instance.CollisionWithDing){
                     return;
                 }
                 rootself.isHold = true;
                 Global.instance.CollisionFlag = true;
+                // rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"3";
             }
-            return;
-        }
-        Global.instance.KIND_FootHold = rootself.KIND_FootHold;
+            if(rootself.main ==null){
+                rootself.main = Global.instance.getMN();
+            }
+            if(!rootself.gainSc){
+                // rootself.main.Score();
+                rootself.gainSc = true;
+            }
+            if(!Global.instance.CollisionFlag){
+                Global.instance.TheHolder = rootself.node;
+                Global.instance.CollisionFlag = true;
+                // rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"2";
+                rootself.isHold = true;
+                other.y = self.y+60;
+                let spawn
+                spawn = cc.spawn(cc.callFunc(function(){
+                    if(rootself.Ani==null){
+                        return;
+                    }
+                    rootself.AniState = rootself.Ani.play("tanhuang");
+                    rootself.AniState.speed = 0.8;
+                }),cc.callFunc(function(){
+                    other.node.runAction(cc.moveBy(0.15,0,50));
+                    // rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"4";
+                    Global.instance.CollisionFlag = false;
+                    rootself.isHold = false;
+                    other.node.getComponent("Playcontroler").enabled = false;
+                }));
+                rootself.scheduleOnce(()=>{
+                    other.node.getComponent("Playcontroler").enabled = true;
+                },0.3);
+                rootself.scheduleOnce(function(){
+                    rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"5";
+                    // console.log(Global.instance.CollisionFlag+"5")
+                    Global.instance.CollisionFlag = false;
+                    rootself.isHold = false;
+                    rootself.Ani.stop();
+                    rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"77777";
+                },0.41);
+                other.node.runAction(spawn);
     
-        if(rootself.main ==null){
-            rootself.main = Global.instance.getMN();
+            }
         }
-        if(!rootself.gainSc){
-            // rootself.main.Score();
-            rootself.gainSc = true;
-        }
-        if(!Global.instance.CollisionFlag){
-            Global.instance.TheHolder = rootself.node;
-            Global.instance.CollisionFlag = true;
-            rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"2";
-            rootself.isHold = true;
-            other.y = self.y+60;
-            let spawn
-            spawn = cc.spawn(cc.callFunc(function(){
-                if(rootself.Ani==null){
-                    return;
-                }
-                rootself.AniState = rootself.Ani.play("tanhuang");
-                rootself.AniState.speed = 0.8;
-            }),cc.callFunc(function(){
-                other.node.runAction(cc.moveBy(0.15,0,50));
-                Global.instance.CollisionFlag = false;
-                rootself.isHold = false;
-                other.node.getComponent("Playcontroler").enabled = false;
-            }));
-            rootself.scheduleOnce(()=>{
-                other.node.getComponent("Playcontroler").enabled = true;
-            },0.3);
-            rootself.scheduleOnce(function(){
-                Global.instance.CollisionFlag = false;
-                rootself.isHold = false;
-                rootself.Ani.stop();
-                
-            },0.41);
-            other.node.runAction(spawn);
-
-        }
+        
     }
 }

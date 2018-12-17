@@ -594,6 +594,7 @@ export default class MainScene extends cc.Component {
      * @param event 按下返回键退出游戏
      */
     onKeyDown(event){
+        let self = this;
         switch(event.keyCode){
             case cc.KEY.back:{
                 if(cc.sys.os == cc.sys.OS_ANDROID){
@@ -601,13 +602,13 @@ export default class MainScene extends cc.Component {
                 }
             }
             case cc.KEY.right:{
-                cc.callFunc(this.BtnTurnRight,this.RIGHT);
-                
+                cc.callFunc(self.BtnTurnRight);
+                console.log("右");
                 break;
             }
             case cc.KEY.left:{
-                cc.callFunc(this.BtnTurnLeft,this.LEFT);
-                
+                cc.callFunc(self.BtnTurnLeft);
+                console.log("左");
                 break;
             }
             default:{
