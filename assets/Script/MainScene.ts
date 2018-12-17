@@ -600,6 +600,16 @@ export default class MainScene extends cc.Component {
                     cc.game.end();
                 }
             }
+            case cc.KEY.right:{
+                cc.callFunc(this.BtnTurnRight,this.RIGHT);
+                
+                break;
+            }
+            case cc.KEY.left:{
+                cc.callFunc(this.BtnTurnLeft,this.LEFT);
+                
+                break;
+            }
             default:{
                 return;
             }

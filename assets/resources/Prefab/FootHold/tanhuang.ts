@@ -87,6 +87,14 @@ export default class tanhuang extends cc.Component {
             console.log("我被撞到了");
             rootself.main.Score();
             rootself.gainSc = true;
+            rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"1";
+            if(other.node.parent.x>self.node.x-75&&other.node.parent.x<self.node.x+75){
+                if(Global.instance.CollisionWithDing){
+                    return;
+                }
+                rootself.isHold = true;
+                Global.instance.CollisionFlag = true;
+            }
             return;
         }
         Global.instance.KIND_FootHold = rootself.KIND_FootHold;
@@ -101,11 +109,9 @@ export default class tanhuang extends cc.Component {
         if(!Global.instance.CollisionFlag){
             Global.instance.TheHolder = rootself.node;
             Global.instance.CollisionFlag = true;
+            rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"2";
             rootself.isHold = true;
             other.y = self.y+60;
-            // console.log(other);
-            // console.log("7检测到碰撞！！！");
-            // console.log(self);
             let spawn
             spawn = cc.spawn(cc.callFunc(function(){
                 if(rootself.Ani==null){
@@ -114,9 +120,9 @@ export default class tanhuang extends cc.Component {
                 rootself.AniState = rootself.Ani.play("tanhuang");
                 rootself.AniState.speed = 0.8;
             }),cc.callFunc(function(){
-                other.node.runAction(cc.moveBy(0.15,0,48));
-                    Global.instance.CollisionFlag = false;
-                    rootself.isHold = false;
+                other.node.runAction(cc.moveBy(0.15,0,50));
+                Global.instance.CollisionFlag = false;
+                rootself.isHold = false;
                 other.node.getComponent("Playcontroler").enabled = false;
             }));
             rootself.scheduleOnce(()=>{
@@ -126,8 +132,10 @@ export default class tanhuang extends cc.Component {
                 Global.instance.CollisionFlag = false;
                 rootself.isHold = false;
                 rootself.Ani.stop();
+                
             },0.41);
             other.node.runAction(spawn);
+
         }
     }
 }

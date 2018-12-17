@@ -66,13 +66,13 @@ export default class Playcontroler extends cc.Component {
                 self.node.x = -180;
                 break;
             }
-            case "tanhuang":{
-                if(other.node.x+75>self.node.x&&other.node.x-75<self.node.x){
-                    let main = Global.instance.getMN();
-                    main.getChildByName("output").getComponent(cc.Label).string = "tanhuang";
+            // case "tanhuang":{
+            //     if(other.node.x+75>self.node.x&&other.node.x-75<self.node.x){
+            //         let main = Global.instance.getMN();
+            //         main.getChildByName("output").getComponent(cc.Label).string = "tanhuang";
 
-                }
-            }
+            //     }
+            // }
             case "ding":{
                 Global.instance.CollisionWithDing = true;
                 self.node.stopAllActions();
