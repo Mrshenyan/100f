@@ -79,14 +79,20 @@ export default class shandian extends cc.Component {
 
     onCollisionEnter(other,self){
         let rootself = this;
-        Global.instance.KIND_FootHold = this.KIND_FootHold;
-        Global.instance.TheHolder = this.node;
-        Global.instance.Injured = true;
-        if(other.tag == 111){
-            console.log("我被撞到了");
-            rootself.main.Score();
-            rootself.gainSc = true;
-            return;
+        
+        switch(other.tag){
+            case 0:{
+                Global.instance.KIND_FootHold = this.KIND_FootHold;
+                Global.instance.TheHolder = this.node;
+                Global.instance.Injured = true;
+                break;
+            }
+            case 111:{
+                console.log("我被撞到了");
+                rootself.main.Score();
+                rootself.gainSc = true;
+                return;
+            }
         }
         // this.main.Score();
         if(!Global.instance.CollisionFlag){

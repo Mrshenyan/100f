@@ -114,9 +114,9 @@ export default class tanhuang extends cc.Component {
                 rootself.AniState = rootself.Ani.play("tanhuang");
                 rootself.AniState.speed = 0.8;
             }),cc.callFunc(function(){
-                other.node.runAction(cc.moveBy(0.15,0,50));
-                Global.instance.CollisionFlag = false;
-                rootself.isHold = false;
+                other.node.runAction(cc.moveBy(0.15,0,48));
+                    Global.instance.CollisionFlag = false;
+                    rootself.isHold = false;
                 other.node.getComponent("Playcontroler").enabled = false;
             }));
             rootself.scheduleOnce(()=>{
@@ -126,10 +126,8 @@ export default class tanhuang extends cc.Component {
                 Global.instance.CollisionFlag = false;
                 rootself.isHold = false;
                 rootself.Ani.stop();
-                
             },0.41);
             other.node.runAction(spawn);
-
         }
     }
 }

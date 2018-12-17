@@ -38,6 +38,9 @@ export default class MainScene extends cc.Component {
     @property(cc.Button)
     RIGHT:cc.Button = null;
 
+    @property(cc.Label)
+    output:cc.Label = null;
+
     // LIFE-CYCLE CALLBACKS:
     /**
      * 上一个落脚点生成时间
@@ -54,6 +57,8 @@ export default class MainScene extends cc.Component {
     private RkeyDown = false;
     /**the loght FootHolder F */
     private lightF = false;
+
+    moveFalg = "";
 
     USERINFO = {
         userId:"",
@@ -91,7 +96,7 @@ export default class MainScene extends cc.Component {
             }
         }
         cc.director.getCollisionManager().enabled = true;
-        // cc.director.getCollisionManager().enabledDebugDraw = true;
+        cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
     }
 
@@ -170,29 +175,40 @@ export default class MainScene extends cc.Component {
     }
 
     Listener(){
+        let btnClickArr = new Array(2);
         if(!this.LkeyDown){
-            this.scheduleOnce(()=>{
-                this.RIGHT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
-                this.RIGHT.node.on(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
-                this.RIGHT.node.on(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
-            },0.5);
+            this.RIGHT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
+            this.RIGHT.node.on(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
+            this.RIGHT.node.on(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
+            btnClickArr.push(this.RIGHT);
+            this.RIGHT.node.on(cc.Node.EventType.TOUCH_END,()=>{
+                this.onKeyUp;
+            },this);
         }
         else{
             this.RIGHT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
-            this.RIGHT.node.off(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
             this.RIGHT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
+            this.RIGHT.node.off(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
+            this.RIGHT.node.off(cc.Node.EventType.TOUCH_END,()=>{
+                this.onKeyUp;
+            },this);
         }
         if(!this.RkeyDown){
-            this.scheduleOnce(()=>{
-                this.LEFT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
-                this.LEFT.node.on(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
-                this.LEFT.node.on(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnLeft,this);
-            },0.5);
+            this.LEFT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
+            this.LEFT.node.on(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnLeft,this);
+            this.LEFT.node.on(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
+            btnClickArr.push(this.LEFT);
+            this.LEFT.node.on(cc.Node.EventType.TOUCH_END,()=>{
+                this.onKeyUp;
+            },this);
         }
         else{
             this.LEFT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
-            this.LEFT.node.off(cc.Node.EventType.TOUCH_END,this.onKeyUp,this);
             this.LEFT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnLeft,this);
+            this.LEFT.node.off(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
+            this.LEFT.node.off(cc.Node.EventType.TOUCH_END,()=>{
+                this.onKeyUp;
+            },this);
         }
     }
     StopAni(self){
@@ -221,15 +237,19 @@ export default class MainScene extends cc.Component {
         for(let i=FHArray.length-1;i>=0;i--){
             if(FHArray[i].isHold){
                 // let nameNode:string = FHArray[i].name;
-                if(self.Player.x>(FHArray[i].x+85)){
+                if(self.Player.x>(FHArray[i].x+75)){
                     Global.instance.CollisionFlag = false;
                     FHArray[i].isHold = false;
                     // this.Score();
                 }
-                else if(self.Player.x<(FHArray[i].x-85)){
+                else if(self.Player.x<(FHArray[i].x-75)){
                     Global.instance.CollisionFlag = false;
                     FHArray[i].isHold = false;
                     // this.Score();
+                }
+                else{
+                    Global.instance.CollisionFlag = true;
+                    FHArray[i].isHold = true;
                 }
             }
         }
@@ -283,7 +303,7 @@ export default class MainScene extends cc.Component {
             Magnification = 8;
         }
         let KindHolder = Math.ceil(Math.random()*Magnification);
-        // KindHolder = 2;
+        KindHolder = 2;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -380,6 +400,7 @@ export default class MainScene extends cc.Component {
         }
         else{
             self.LkeyDown = true;
+            self.RkeyDown = false;
             this.BtnLorR(event);
         }
     }
@@ -393,6 +414,7 @@ export default class MainScene extends cc.Component {
             return;
         }
         else{
+            self.LkeyDown = false
             self.RkeyDown = true;
             this.BtnLorR(event);
         }
@@ -416,18 +438,20 @@ export default class MainScene extends cc.Component {
         let scheduleState:boolean = false;//the schedule's state
         let schedulePause:boolean = true;
         let target:cc.Button = null;//the target which is binged to schedule
-        let moveByDes = Global.instance.moveSpeed*60+40;
+        let moveByDes = Global.instance.moveSpeed*120+40;
         if(self.LkeyDown){
             target = self.LEFT;
             moveByTime = 1;
             moveByDes = -moveByDes;
             scheduleState = schedule.isScheduled(func,target);
+            // self.output.getComponent(cc.Label).string = Anistring;
             schedulePause = schedule.isTargetPaused(target);
             Ani = run.getComponent(cc.Animation);
             Anistring = "run";
             stand.active = false;
             runRight.active = false;
             run.active = true;
+            // self.output.getComponent(cc.Label).string = Anistring;
             if(!Global.instance.CollisionFlag){
                 moveByTime = 1;
             }
@@ -449,12 +473,14 @@ export default class MainScene extends cc.Component {
             moveByTime = 1;
             moveByDes = moveByDes;
             scheduleState = schedule.isScheduled(func,target);
+            // self.output.getComponent(cc.Label).string = Anistring;
             schedulePause = schedule.isTargetPaused(target);
             Ani = runRight.getComponent(cc.Animation);
             Anistring = "runR";
             stand.active = false;
             runRight.active = true;
             run.active = false;
+            // self.output.getComponent(cc.Label).string = Anistring;
             if(!Global.instance.CollisionFlag){
                 moveByTime = 1;
             }
@@ -475,8 +501,12 @@ export default class MainScene extends cc.Component {
         let funcFlag = false;
         switch(event.type){
             case "touchstart":{
+                if(!(self.moveFalg.length==0)){
+                    break;
+                }
+                self.moveFalg = "touchstart";
                 if(!scheduleState){
-                    
+                    // self.output.getComponent(cc.Label).string = movefalg;
                     schedule.schedule(func,target,0);
                 };
                 if(schedulePause){
@@ -484,12 +514,30 @@ export default class MainScene extends cc.Component {
                 };
                 break;
             }
+            case "touchmove":{
+                if(!(self.moveFalg.length==0)){
+                    break;
+                }
+                self.moveFalg = "touchmove";
+                // self.output.getComponent(cc.Label).string = movefalg;
+                if(!scheduleState){
+                    schedule.schedule(func,target,0);
+                };
+                if(schedulePause){
+                    schedule.resumeTarget(target);
+                };
+                break;
+            }
+            case "touchcancel":{
+                break;
+            }
             case "touchend":{
+                // self.output.getComponent(cc.Label).string = "touchend";
                 schedule.pauseTarget(target);
                 self.Player.stopAllActions();
                 Ani.stop(Anistring);
                 moveByTime = 1;
-                moveByDes = Global.instance.moveSpeed*160+40;
+                moveByDes = Global.instance.moveSpeed*120+40;
                 switch(Anistring){
                     case "run":{
                         run.active = false;
@@ -511,25 +559,29 @@ export default class MainScene extends cc.Component {
                     }
                 }
                 funcFlag = false;
+                self.moveFalg = "";
                 break;
             }
         }
         function func(){
+            // self.output.getComponent(cc.Label).string = self.moveFalg;
             if(funcFlag){
+                // self.output.getComponent(cc.Label).string = Anistring;
                 return;
             }
+            // self.output.getComponent(cc.Label).string = Anistring;
             if(Global.instance.CollisionFlag){
                 moveByTime = 1;
-                // moveByTime = 10;
             }
             let spawn = cc.spawn(cc.callFunc(function(){
                 self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0)); 
                 // console.log(self.Player.y);
             }),cc.callFunc(function(){
                 Anistate = Ani.play(Anistring);
-                Anistate.speed = 2;
+                Anistate.speed = 1;
                 Anistate.repeatCount = 100;
                 Anistate = Ani.playAdditive(Anistring);
+                // self.output.getComponent(cc.Label).string = Anistring;
             }))
             self.Player.runAction(spawn);
             funcFlag = true;
@@ -538,76 +590,11 @@ export default class MainScene extends cc.Component {
 
 
     /**
-     * 向左，向右
-     * @param event 按下左右键触发
+     * 返回键监听
+     * @param event 按下返回键退出游戏
      */
     onKeyDown(event){
-        let self = this;
-        let stand = this.Player.getChildByName("stand");
-        let runRight = this.Player.getChildByName("runRight");
-        let run = this.Player.getChildByName("run");
-        let moveByTime = 1;
-        let moveByDes = 200;// Global.instance.moveSpeed*120;
-        let Ani;
-        let Anistate;
-        let AniName;
         switch(event.keyCode){
-            case cc.KEY.left:{
-                // self.Listener();
-                self.LkeyDown = true;
-                stand.active = false;
-                runRight.active = false;
-                run.active = true;
-                AniName = "run";
-                moveByDes = -(moveByDes+100);
-                switch(Global.instance.KIND_FootHold){
-                    case 2:{
-                        moveByTime = 0.9;
-                        break;
-                    }
-                    case 5:{
-                        moveByTime = 1.1;
-                        break;
-                    }
-                };
-                if(Global.instance.CollisionFlag){
-                    moveByTime = 1;
-                }
-                else{
-                    moveByTime = 1;
-                }
-                self.AniPlayer(Ani,Anistate,moveByTime,moveByDes,run,AniName,self);
-                break;
-            }
-            case cc.KEY.right:{
-                // self.Listener();
-                self.RkeyDown = true;
-                stand.active = false;
-                runRight.active = true;
-                run.active = false;
-                let moveByTime = 1;
-                AniName = "runR";
-                moveByDes = moveByDes+100;
-                switch(Global.instance.KIND_FootHold){
-                    case 2:{
-                        moveByTime = 1.1;
-                        break;
-                    }
-                    case 5:{
-                        moveByTime = 0.9;
-                        break;
-                    }
-                }
-                if(Global.instance.CollisionFlag){
-                    moveByTime = 1;
-                }
-                else{
-                    moveByTime = 1;
-                }
-                self.AniPlayer(Ani,Anistate,moveByTime,moveByDes,runRight,AniName,self);
-                break;
-            }
-
             case cc.KEY.back:{
                 if(cc.sys.os == cc.sys.OS_ANDROID){
                     cc.game.end();
@@ -783,7 +770,7 @@ export default class MainScene extends cc.Component {
         this.RIGHT.node.active = true;
         this.LkeyDown = false;
         this.RkeyDown = false;
-
+        this.moveFalg = "";
         this.Player.y = 300;
         this.Player.getComponent("Playcontroler").enabled = true;
         this.Player.getComponent(cc.BoxCollider).enabled = true;
@@ -824,6 +811,7 @@ export default class MainScene extends cc.Component {
         this.RIGHT.node.active = true;
         this.LkeyDown = false;
         this.RkeyDown = false;
+        this.moveFalg = "";
         this.destroy();
         // this.Score();
     }
@@ -879,7 +867,7 @@ export default class MainScene extends cc.Component {
         if(lv>Global.instance.LevelAddFlag){
             Global.instance.LevelAddFlag = lv;
             Global.instance.InitSpeed+=0.25;//每下落50层，player下落速度加0.25
-            Global.instance.FHFallSpeed+=0.5;//没下落50层，落脚点下落速度加快0.5.
+            Global.instance.FHFallSpeed+=1;//没下落50层，落脚点下落速度加快0.5.
         }
     }
 
@@ -930,17 +918,4 @@ export default class MainScene extends cc.Component {
         });
     }
     
-    /**
-     * Update the best score rank
-     */
-    // UpdateScore(){
-    //     let self = this;
-    // }
 }
-/**
- * 这边，玩家死亡之后销魂游戏主场景，打开游戏结算场景
- * 进行后续的排行榜绘制。
- * 
- * player速度忽然变快通过打印是因为同一个移动放法调用了两次，效果叠加。
- * 分数上传问题
- */
