@@ -18,6 +18,7 @@ export default class Rank extends cc.Component {
         let i=RemoteS.length-1
         // let len;
         let x=0;
+        let f=false;
         if(RemoteS.length>=8){
             x = RemoteS.length - 8;
         }
@@ -37,6 +38,7 @@ export default class Rank extends cc.Component {
                          = phb[j].getChildByName("rank").getComponent(cc.Label).string; 
                     this.node.getChildByName("phbd1").getChildByName("myfloor").getComponent(cc.Label).string
                          = phb[j].getChildByName("floor").getComponent(cc.Label).string;
+                    f = true;
                 }
                 switch(RemoteS[i].rank){
                     case 1:{
@@ -59,6 +61,12 @@ export default class Rank extends cc.Component {
             }
             j++;
         }
+        if(!f){
+            this.node.getChildByName("phbd1").getChildByName("myfloor").getComponent(cc.Label).string
+                = Global.instance.getLocalScore().CurrentScore.toString();
+            this.node.getChildByName("phbd1").getChildByName("myrank").getComponent(cc.Label).string
+                = Global.instance.GetR();
+        }
     }
 
     start () {
@@ -78,3 +86,7 @@ export default class Rank extends cc.Component {
         cc.director.loadScene("StartScene");
     }
 }
+/**
+ * 这里也需要修改：player的分数不在8名之内，
+ * 需要读取player的名次。
+ */

@@ -890,6 +890,7 @@ export default class MainScene extends cc.Component {
         let localS = Global.instance.getLocalScore();//the temp of local score;
         let CurrentScore = parseInt(
                 this.LifeDing.getChildByName("Floor").getComponent(cc.Label).string);
+        Global.instance.getLocalScore().CurrentScore = CurrentScore;
         if(CurrentScore>localS.ThirdScore){
             if(CurrentScore>localS.SecondScore){
                 if(CurrentScore>localS.BestScore){

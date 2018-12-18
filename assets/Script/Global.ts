@@ -65,6 +65,7 @@ export default class Global {
         BestScore:0,
         SecondScore:0,
         ThirdScore:0,
+        CurrentScore:0,
         length:3,
     }
     /**
