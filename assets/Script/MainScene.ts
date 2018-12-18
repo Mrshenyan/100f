@@ -818,6 +818,9 @@ export default class MainScene extends cc.Component {
         Global.instance.InitSpeed = 8.5;
         Global.instance.moveSpeed = 1;
         Global.instance.FHFallSpeed = 2;
+        Global.instance.CollisionFlag = false;
+        Global.instance.CollisionWithDing = false;
+        
         this.LEFT.node.active = true;
         this.RIGHT.node.active = true;
         this.LkeyDown = false;
@@ -871,7 +874,9 @@ export default class MainScene extends cc.Component {
         let self = this.node;
         let scLabel = this.LifeDing.getChildByName("Floor").getComponent(cc.Label);
         let sc = parseInt(scLabel.string);
-        sc = sc+1;
+        if(!Global.instance.OverFlag){
+            sc = sc+1;
+        }
         console.log("打印一下");
         scLabel.string = sc.toString();
         let lv = Math.ceil(sc/50);
