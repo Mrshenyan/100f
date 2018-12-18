@@ -100,7 +100,7 @@ export default class MainScene extends cc.Component {
             }
         }
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        // cc.director.getCollisionManager().enabledDebugDraw = true;
         cc.director.getCollisionManager().enabledDrawBoundingBox = true;
     }
 
@@ -216,7 +216,6 @@ export default class MainScene extends cc.Component {
         }
     }
     StopAni(self){
-
         if(!Global.instance.AniFalg){
             let FHolder = self.node.getChildByName("BgNode").getChildByName("FHolder").children;
             let Fname;
@@ -574,8 +573,6 @@ export default class MainScene extends cc.Component {
             if(Global.instance.CollisionFlag){
                 moveByTime = 1;
             }
-            
-
             let spawn = cc.spawn(cc.callFunc(function(){
                 self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0)); 
             }),cc.callFunc(function(){
@@ -662,24 +659,22 @@ export default class MainScene extends cc.Component {
     gameOver(){
         let self = this;
         self.Player.stopAllActions();
-        self.Player.getComponent(cc.BoxCollider).enabled = false;
+        // self.Player.getComponent(cc.BoxCollider).enabled = false;
+        self.Player.getComponent("Playcontroler").enabled = false;
         try {
             self.Player.getComponent(cc.Animation).stop();
-            self.Player.getChildByName("stand").active = true;
-            self.Player.getChildByName("runRight").active = false;
-            self.Player.getChildByName("run").active = false;
-            self.Player.y-=Global.instance.InitSpeed;
         } catch (error) {
-            // console.log(error);
-            self.Player.getChildByName("stand").active = true;
-            self.Player.getChildByName("runRight").active = false;
-            self.Player.getChildByName("run").active = false;
-            self.Player.y-=Global.instance.InitSpeed;
+            self.node.getChildByName("output").getComponent(cc.Label).string = error;
         }
+        self.Player.getChildByName("stand").active = true;
+        self.Player.getChildByName("runRight").active = false;
+        self.Player.getChildByName("run").active = false;
+        self.Player.y-=Global.instance.InitSpeed;
         let AllFH = self.node.getChildByName("BgNode").getChildByName("FHolder").children;
         for(let i=0;i<AllFH.length;i++){
             let FHNA = AllFH[i].name;
             AllFH[i].getComponent(FHNA).enabled = false;
+            AllFH[i].isHold = false;
             if(FHNA =="GD"){
                 AllFH[i].getChildByName("gd").getComponent("CliGD").enabled = false;
             }
@@ -780,9 +775,9 @@ export default class MainScene extends cc.Component {
         Global.instance.CollisionWithDing = false;
         Global.instance.TheHolder = null;
         Global.instance.KIND_FootHold = 0;
-        this.RIGHT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
-        this.RIGHT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
-        this.RIGHT.node.off(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
+        // this.RIGHT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
+        // this.RIGHT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
+        // this.RIGHT.node.off(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
         this.LEFT.node.active = true;
         this.RIGHT.node.active = true;
         this.LkeyDown = false;
@@ -816,8 +811,9 @@ export default class MainScene extends cc.Component {
      * restart
      */
     restart(){
+        this.destroy();
         cc.director.loadScene("MainScene");
-        // cc.director.resume();
+        cc.director.resume();
         Global.instance.OverFlag = false;
         Global.instance.AniFalg = false;
         Global.instance.LorR = 0;
@@ -828,16 +824,15 @@ export default class MainScene extends cc.Component {
         Global.instance.CollisionWithDing = false;
         Global.instance.TheHolder = null;
         Global.instance.KIND_FootHold = 0;
-        this.RIGHT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
-        this.RIGHT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
-        this.RIGHT.node.off(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
+        // this.RIGHT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
+        // this.RIGHT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
+        // this.RIGHT.node.off(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
         this.LEFT.node.active = true;
         this.RIGHT.node.active = true;
         this.LkeyDown = false;
         this.RkeyDown = false;
-        this.moveFalg = "";
+        // this.moveFalg = "";
         this.Player.y = 300;
-        this.destroy();
         // this.Score();
     }
 
