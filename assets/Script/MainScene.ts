@@ -112,7 +112,7 @@ export default class MainScene extends cc.Component {
         Global.instance.moveSpeed = 1;
         let FHolder;
 
-        if((this.ETime-this.STime)>1200){//控制落脚点之间的间距,间距144px
+        if((this.ETime-this.STime)>(1200-(180*(Global.instance.FHFallSpeed-2)))){//控制落脚点之间的间距,间距144px
             this.STime = Date.now();
             if(!Global.instance.OverFlag){
                 FHolder = this.FootHoldGenerator();
@@ -302,7 +302,7 @@ export default class MainScene extends cc.Component {
             Magnification = 8;
         }
         let KindHolder = Math.ceil(Math.random()*Magnification);
-        KindHolder = 2;
+        // KindHolder = 2;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -316,13 +316,13 @@ export default class MainScene extends cc.Component {
                 break;
             }
             case 2:{
-                // self.FootHoldGenerator();
-                FHolder = cc.instantiate(self.tanhuang);
-                self.FHolderNode.addChild(FHolder,5,"tanhuang");
-                FHolder.getComponent("tanhuang").init(self);
-                FHolder.isHold = false;
-                // console.log("产生第五种落脚点");
-                break;
+                // // self.FootHoldGenerator();
+                // FHolder = cc.instantiate(self.tanhuang);
+                // self.FHolderNode.addChild(FHolder,5,"tanhuang");
+                // FHolder.getComponent("tanhuang").init(self);
+                // FHolder.isHold = false;
+                // // console.log("产生第五种落脚点");
+                // break;
             }
             case 3:{
                 FHolder = cc.instantiate(self.lvdai);
