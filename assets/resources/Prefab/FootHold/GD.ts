@@ -17,6 +17,8 @@ export default class GD extends cc.Component {
     @property(Number)
     public NodeH:Number = 70;
 
+    GoUp = false;
+
     private main:MainScene = null;
     /**
      * 落脚点对应动画
@@ -100,10 +102,14 @@ export default class GD extends cc.Component {
     }
     onCollisionEnter(other,self){
         let rootself = this;
+        if(rootself.GoUp){
+            return;
+        }
         if(other.tag == 111){
             // console.log("我被撞到了");
             rootself.main.Score();
             rootself.gainSc = true;
+            rootself.GoUp = true;
             return;
         }
         Global.instance.TheHolder = this.node;

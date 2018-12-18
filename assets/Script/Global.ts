@@ -56,7 +56,7 @@ export default class Global {
     /**
      * 等级增加标志位,0表示未增加，当前为1级
      */
-    LevelAddFlag = 0;
+    LevelAddFlag = 1;
 
     /**
      * 本地分数存储

@@ -18,6 +18,8 @@ export default class lvdai extends cc.Component {
     @property(Number)
     public NodeH:number = 60;
 
+    GoUp = false;
+
     private main:MainScene = null;
     /**
      * 落脚点对应动画
@@ -90,6 +92,9 @@ export default class lvdai extends cc.Component {
 
     onCollisionEnter(other,self){ 
         let rootself = this;//当前根节点
+        if(rootself.GoUp){
+            return;
+        }
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
         if(other.tag == 111){

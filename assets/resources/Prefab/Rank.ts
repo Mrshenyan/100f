@@ -63,7 +63,7 @@ export default class Rank extends cc.Component {
         }
         if(!f){
             this.node.getChildByName("phbd1").getChildByName("myfloor").getComponent(cc.Label).string
-                = Global.instance.getLocalScore().CurrentScore.toString();
+                = Global.instance.getLocalScore().BestScore.toString();
             this.node.getChildByName("phbd1").getChildByName("myrank").getComponent(cc.Label).string
                 = Global.instance.GetR();
         }

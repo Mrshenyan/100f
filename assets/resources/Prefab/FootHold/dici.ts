@@ -18,6 +18,8 @@ export default class NewClass extends cc.Component {
     @property(Number)
     public NodeH:number = 80;
 
+    GoUp = false;
+
     private main:MainScene = null;
     /**
      * 落脚点对应动画
@@ -77,6 +79,9 @@ export default class NewClass extends cc.Component {
 
     onCollisionEnter(other,self){
         let rootself = this;
+        if(rootself.GoUp){
+            return;
+        }
         if(other.tag == 111){
             console.log("我被撞到了");
             rootself.main.Score();

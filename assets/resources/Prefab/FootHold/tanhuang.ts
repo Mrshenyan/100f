@@ -16,6 +16,7 @@ export default class tanhuang extends cc.Component {
     public isHold = false;
     @property(Number)
     public NodeH:number = 60;
+
     GoUp = false;
 
     private gainSc = false;//弹簧加分标志
@@ -31,6 +32,7 @@ export default class tanhuang extends cc.Component {
         this.node.y = -500;
         this.node.x = cc.randomMinus1To1()*140;
         this.Ani = this.node.getComponent(cc.Animation);
+        this.gainSc = false;
     }
 
     start () {
@@ -83,13 +85,20 @@ export default class tanhuang extends cc.Component {
      */
 
     onCollisionEnter(other,self){
+        
         let rootself = this;
+        if(rootself.GoUp){
+            return;
+        }
         if(rootself.main ==null){
             rootself.main = Global.instance.getMN();
         }
-        if(other.tag==111){
-            rootself.main.Score();
-            rootself.gainSc = true;
+        if(other.tag===111){
+            if(rootself.gainSc==false){
+                rootself.main.Score();
+                rootself.gainSc = true;
+                rootself.GoUp = true;
+            }
             return;
         }
         else{
@@ -98,7 +107,7 @@ export default class tanhuang extends cc.Component {
                 Global.instance.CollisionFlag = true;
                 Global.instance.TheHolder = rootself.node;
                 rootself.isHold = true;
-                // other.node.y = self.node.y+60;
+                other.node.y = self.node.y+60;
                 let spawn;
                 spawn = cc.spawn(cc.callFunc(function(){
                     if(rootself.Ani==null){
@@ -108,7 +117,6 @@ export default class tanhuang extends cc.Component {
                     rootself.AniState.speed = 0.8;
                 }),cc.callFunc(function(){
                     other.node.runAction(cc.moveBy(0.15,0,50));
-                    // rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"4";
                     Global.instance.CollisionFlag = false;
                     rootself.isHold = false;
                     other.node.getComponent("Playcontroler").enabled = false;
@@ -121,7 +129,6 @@ export default class tanhuang extends cc.Component {
                     Global.instance.CollisionFlag = false;
                     rootself.isHold = false;
                     rootself.Ani.stop();
-                    rootself.main.output.getComponent(cc.Label).string = Global.instance.CollisionFlag.toString()+"77777";
                 },0.41);
                 other.node.runAction(spawn);
             }

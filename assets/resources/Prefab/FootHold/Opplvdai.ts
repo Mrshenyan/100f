@@ -19,6 +19,8 @@ export default class Opplvdai extends cc.Component {
     @property(Number)
     public NodeH:number = 69;
 
+    GoUp = false;
+
     private main:MainScene = null;
     /**
      * 落脚点对应动画
@@ -80,12 +82,16 @@ export default class Opplvdai extends cc.Component {
 
     onCollisionEnter(other,self){
         let rootself = this;//当前根节点
+        if(rootself.GoUp){
+            return;
+        }
         Global.instance.KIND_FootHold = this.KIND_FootHold;
         Global.instance.TheHolder = this.node;
         if(other.tag == 111){
             console.log("我被撞到了");
             rootself.main.Score();
             rootself.gainSc = true;
+            rootself.GoUp = true;
             return;
         }
         // this.main.Score();

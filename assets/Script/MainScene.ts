@@ -75,6 +75,10 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.addChild(FHolder,10,"GD");
         FHolder.getComponent("GD").init(this,1);
         FHolder.y = -150;
+        // let FHolder2 = cc.instantiate(this.lvdai);
+        // this.FHolderNode.addChild(FHolder2,10,"lvdai");
+        // FHolder2.getComponent("lvdai").init(this);
+        // FHolder2.y = -300;
         let FHolder2 = cc.instantiate(this.tanhuang);
         this.FHolderNode.addChild(FHolder2,10,"tanhuang");
         FHolder2.getComponent("tanhuang").init(this);
@@ -120,11 +124,11 @@ export default class MainScene extends cc.Component {
         if(Global.instance.CollisionFlag){//左右传送带减速
             switch(Global.instance.KIND_FootHold){
                 case 3:{
-                    this.Player.x += 1;
+                    this.Player.x += 2;
                     break;
                 }
                 case 4:{
-                    this.Player.x -= 1;
+                    this.Player.x -= 2;
                     break;
                 }
                 case 7:{
@@ -197,7 +201,7 @@ export default class MainScene extends cc.Component {
             this.LEFT.node.on(cc.Node.EventType.TOUCH_START,this.BtnTurnLeft,this);
             this.LEFT.node.on(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnLeft,this);
             this.LEFT.node.on(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
-            btnClickArr.push(this.LEFT);
+            // btnClickArr.push(this.LEFT);
             this.LEFT.node.on(cc.Node.EventType.TOUCH_END,()=>{
                 this.onKeyUp;
             },this);
@@ -264,8 +268,8 @@ export default class MainScene extends cc.Component {
         if(Global.instance.OverFlag){
         }
         else{
-            Bg0.y+=Global.instance.FHFallSpeed;
-            Bg1.y+=Global.instance.FHFallSpeed;
+            Bg0.y+=Global.instance.FHFallSpeed+1;
+            Bg1.y+=Global.instance.FHFallSpeed+1;
             if(Bg0.y>946){
                 Bg0.y = -946;
             }
@@ -274,11 +278,6 @@ export default class MainScene extends cc.Component {
             }
         }
         
-    }
-    /**
-     * 移动落脚点,暂空
-     */
-    MoveFHold(){
     }
     /**
      * 生成落脚点
@@ -317,6 +316,7 @@ export default class MainScene extends cc.Component {
                 break;
             }
             case 2:{
+                // self.FootHoldGenerator();
                 FHolder = cc.instantiate(self.tanhuang);
                 self.FHolderNode.addChild(FHolder,5,"tanhuang");
                 FHolder.getComponent("tanhuang").init(self);
@@ -459,10 +459,12 @@ export default class MainScene extends cc.Component {
                 switch(Global.instance.KIND_FootHold){
                     case 2:{
                         moveByTime = 4.1;
+                        self.output.getComponent(cc.Label).string = Global.instance.KIND_FootHold+"2";
                         break;
                     }
                     case 5:{
                         moveByTime = 3.9;
+                        // self.output.getComponent(cc.Label).string = Global.instance.KIND_FootHold+"5";
                         break;
                     }
                 };
@@ -488,10 +490,12 @@ export default class MainScene extends cc.Component {
                 switch(Global.instance.KIND_FootHold){
                     case 2:{
                         moveByTime = 4.1;
+                        // self.output.getComponent(cc.Label).string = Global.instance.KIND_FootHold+"2";
                         break;
                     }
                     case 5:{
                         moveByTime = 3.9;
+                        // self.output.getComponent(cc.Label).string = Global.instance.KIND_FootHold+"5";
                         break;
                     }
                 };
@@ -564,24 +568,21 @@ export default class MainScene extends cc.Component {
             }
         }
         function func(){
-            // self.output.getComponent(cc.Label).string = self.moveFalg;
             if(funcFlag){
-                // self.output.getComponent(cc.Label).string = Anistring;
                 return;
             }
-            // self.output.getComponent(cc.Label).string = Anistring;
             if(Global.instance.CollisionFlag){
                 moveByTime = 1;
             }
+            
+
             let spawn = cc.spawn(cc.callFunc(function(){
                 self.Player.runAction(cc.moveBy(moveByTime,moveByDes,0)); 
-                // console.log(self.Player.y);
             }),cc.callFunc(function(){
                 Anistate = Ani.play(Anistring);
                 Anistate.speed = 1;
                 Anistate.repeatCount = 100;
                 Anistate = Ani.playAdditive(Anistring);
-                // self.output.getComponent(cc.Label).string = Anistring;
             }))
             self.Player.runAction(spawn);
             funcFlag = true;
@@ -777,6 +778,11 @@ export default class MainScene extends cc.Component {
         Global.instance.FHFallSpeed = 2;
         Global.instance.CollisionFlag = false;
         Global.instance.CollisionWithDing = false;
+        Global.instance.TheHolder = null;
+        Global.instance.KIND_FootHold = 0;
+        this.RIGHT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
+        this.RIGHT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
+        this.RIGHT.node.off(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
         this.LEFT.node.active = true;
         this.RIGHT.node.active = true;
         this.LkeyDown = false;
@@ -811,7 +817,7 @@ export default class MainScene extends cc.Component {
      */
     restart(){
         cc.director.loadScene("MainScene");
-        cc.director.resume();
+        // cc.director.resume();
         Global.instance.OverFlag = false;
         Global.instance.AniFalg = false;
         Global.instance.LorR = 0;
@@ -820,12 +826,17 @@ export default class MainScene extends cc.Component {
         Global.instance.FHFallSpeed = 2;
         Global.instance.CollisionFlag = false;
         Global.instance.CollisionWithDing = false;
-        
+        Global.instance.TheHolder = null;
+        Global.instance.KIND_FootHold = 0;
+        this.RIGHT.node.off(cc.Node.EventType.TOUCH_START,this.BtnTurnRight,this);
+        this.RIGHT.node.off(cc.Node.EventType.TOUCH_MOVE,this.BtnTurnRight,this);
+        this.RIGHT.node.off(cc.Node.EventType.TOUCH_CANCEL,this.onKeyUp,this);
         this.LEFT.node.active = true;
         this.RIGHT.node.active = true;
         this.LkeyDown = false;
         this.RkeyDown = false;
         this.moveFalg = "";
+        this.Player.y = 300;
         this.destroy();
         // this.Score();
     }
