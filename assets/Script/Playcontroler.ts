@@ -38,6 +38,7 @@ export default class Playcontroler extends cc.Component {
         if(Global.instance.CollisionWithDing){
             this.node.stopAllActions();
             Global.instance.CollisionWithDing = false;
+            Global.instance.CollisionFlag = false;
         }
     }
 
@@ -81,7 +82,7 @@ export default class Playcontroler extends cc.Component {
                 self.node.getComponent(cc.BoxCollider).enabled = false;
                 rootSelf.scheduleOnce(function(err){
                     self.node.getComponent(cc.BoxCollider).enabled = true;
-                });
+                },0.3);
                 break;
             }
             default:{

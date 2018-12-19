@@ -75,14 +75,14 @@ export default class MainScene extends cc.Component {
         this.FHolderNode.addChild(FHolder,10,"GD");
         FHolder.getComponent("GD").init(this,1);
         FHolder.y = -150;
-        // let FHolder2 = cc.instantiate(this.lvdai);
-        // this.FHolderNode.addChild(FHolder2,10,"lvdai");
-        // FHolder2.getComponent("lvdai").init(this);
-        // FHolder2.y = -300;
-        let FHolder2 = cc.instantiate(this.tanhuang);
-        this.FHolderNode.addChild(FHolder2,10,"tanhuang");
-        FHolder2.getComponent("tanhuang").init(this);
+        let FHolder2 = cc.instantiate(this.lvdai);
+        this.FHolderNode.addChild(FHolder2,10,"lvdai");
+        FHolder2.getComponent("lvdai").init(this);
         FHolder2.y = -300;
+        // let FHolder2 = cc.instantiate(this.tanhuang);
+        // this.FHolderNode.addChild(FHolder2,10,"tanhuang");
+        // FHolder2.getComponent("tanhuang").init(this);
+        // FHolder2.y = -300;
         let FHolder3 = cc.instantiate(this.GD);
         this.FHolderNode.addChild(FHolder3,10,"GD");
         FHolder3.getComponent("GD").init(this,1);
@@ -301,7 +301,7 @@ export default class MainScene extends cc.Component {
             Magnification = 8;
         }
         let KindHolder = Math.ceil(Math.random()*Magnification);
-        // KindHolder = 2;
+        // KindHolder = 7;
         let FHolder;
         // KindHolder = Math.ceil(Math.random()*7);
         this.ETime = Date.now();
@@ -659,6 +659,7 @@ export default class MainScene extends cc.Component {
     gameOver(){
         let self = this;
         self.Player.stopAllActions();
+        Global.instance.CollisionFlag = false;
         // self.Player.getComponent(cc.BoxCollider).enabled = false;
         self.Player.getComponent("Playcontroler").enabled = false;
         try {
@@ -770,7 +771,7 @@ export default class MainScene extends cc.Component {
         Global.instance.LorR = 0;
         Global.instance.InitSpeed = 8.5;
         Global.instance.moveSpeed = 1;
-        Global.instance.FHFallSpeed = 2;
+        // Global.instance.FHFallSpeed = 2;
         Global.instance.CollisionFlag = false;
         Global.instance.CollisionWithDing = false;
         Global.instance.TheHolder = null;
@@ -844,18 +845,6 @@ export default class MainScene extends cc.Component {
         let Ls = new Array();
         let reLCount=0;
         let FHolder = self.node.getChildByName("BgNode").getChildByName("FHolder").children;
-        for(let i=self.LifeDing.children.length-1;i>=0;i--){
-            if(self.LifeDing.children[i].name=="lifeBG"){
-                if(Global.instance.Injured||Global.instance.CollisionWithDing){
-                    if(self.LifeDing.children[i].active){
-                        self.LifeDing.children[i].active = false;
-                        Global.instance.Injured = false;
-                        Global.instance.CollisionWithDing = false;
-                    }
-                }
-                Ls.push(self.LifeDing.children[i]);
-            }
-        }
         for(let i=0;i<FHolder.length;i++){
             if(FHolder[i].isHold){
                 if(!Global.instance.CollisionFlag){
@@ -865,6 +854,20 @@ export default class MainScene extends cc.Component {
                 }
             }
         }
+        for(let i=self.LifeDing.children.length-1;i>=0;i--){
+            if(self.LifeDing.children[i].name=="lifeBG"){
+                if(Global.instance.Injured||Global.instance.CollisionWithDing){
+                    if(self.LifeDing.children[i].active){
+                        self.LifeDing.children[i].active = false;
+                        Global.instance.Injured = false;
+                        Global.instance.CollisionFlag = false;
+                        Global.instance.CollisionWithDing = false;
+                    }
+                }
+                Ls.push(self.LifeDing.children[i]);
+            }
+        }
+        
         Global.instance.reLife = [];
         for(let i=0;i<Ls.length;i++){
             if(Ls[i].active){

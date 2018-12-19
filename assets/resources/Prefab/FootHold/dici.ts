@@ -91,7 +91,8 @@ export default class NewClass extends cc.Component {
         else{
             Global.instance.TheHolder = this.node;
             Global.instance.KIND_FootHold = this.KIND_FootHold;
-            this.node.isHold = true;
+            rootself.node.isHold = true;
+            self.node.isHold = true;
             if(!rootself.InjuredF){
                 Global.instance.Injured = true;
                 rootself.InjuredF = true;
@@ -99,6 +100,8 @@ export default class NewClass extends cc.Component {
             // this.main.Score();
             if(!Global.instance.CollisionFlag){
                 Global.instance.CollisionFlag = true;
+                rootself.node.isHold = true;
+                self.node.isHold = true;
                 rootself.AniState = rootself.Ani.play("dici");
                 rootself.AniState.repeatCount = 100;
             }
